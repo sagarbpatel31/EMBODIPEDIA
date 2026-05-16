@@ -1,0 +1,885 @@
+# seed_sources.yaml
+#
+# Curated source list for Embodipedia ingestion.
+# Target: ~120 sources across 4 source types covering ~12 entities.
+#
+# Priority tiers:
+#   p0 = must-have for demo (Figure 02, Optimus, π0, G1 deep coverage)
+#   p1 = should-have (other major entities)
+#   p2 = nice-to-have (depth, contradictions, lesser entities)
+#
+# Format:
+#   source_type: tweet | paper | transcript | news | dev_report
+#   subject_entities: [list of primary entities this source is about]
+#   actor: who made the claims (for primary sources)
+#   priority: p0 | p1 | p2
+#   notes: ingestion hints, perspective flavor
+#
+# NOTE: URLs marked PLACEHOLDER need Sagar to fill in the real one.
+# Some are real URLs known from public coverage; others are templates.
+# Validate before ingesting — links may have changed.
+
+# =============================================================================
+# TWEETS (target: 40 sources)
+# =============================================================================
+
+tweets:
+
+  # Brett Adcock (Figure AI CEO) — most prolific source, bullish stance
+  - url: PLACEHOLDER_adcock_figure02_launch
+    source_type: tweet
+    subject_entities: [Figure 02, Figure AI]
+    actor: Brett Adcock
+    priority: p0
+    notes: Original Figure 02 launch tweet, August 2024
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_adcock_bmw_deployment
+    source_type: tweet
+    subject_entities: [Figure 02, BMW]
+    actor: Brett Adcock
+    priority: p0
+    notes: BMW deployment claim, Oct 2024
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_adcock_series_b
+    source_type: tweet
+    subject_entities: [Figure AI]
+    actor: Brett Adcock
+    priority: p0
+    notes: $675M Series B announcement
+    perspective_hint: neutral
+
+  - url: PLACEHOLDER_adcock_helix_release
+    source_type: tweet
+    subject_entities: [Helix, Figure AI]
+    actor: Brett Adcock
+    priority: p0
+    notes: Helix VLA model announcement
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_adcock_fleet_scaling
+    source_type: tweet
+    subject_entities: [Figure 02]
+    actor: Brett Adcock
+    priority: p1
+    notes: Production scaling claims
+    perspective_hint: bull
+
+  # Additional Adcock tweets — fill in 7 more
+  - url: PLACEHOLDER_adcock_07
+    source_type: tweet
+    subject_entities: [Figure 02]
+    actor: Brett Adcock
+    priority: p2
+
+  # Bernt Bornich (1X CEO)
+  - url: PLACEHOLDER_bornich_neo_home
+    source_type: tweet
+    subject_entities: [1X Neo, 1X Technologies]
+    actor: Bernt Bornich
+    priority: p0
+    notes: Neo home deployment vision
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_bornich_redwood
+    source_type: tweet
+    subject_entities: [1X Redwood, 1X Technologies]
+    actor: Bernt Bornich
+    priority: p1
+    notes: Redwood world model launch
+
+  - url: PLACEHOLDER_bornich_04
+    source_type: tweet
+    subject_entities: [1X Neo]
+    actor: Bernt Bornich
+    priority: p1
+
+  - url: PLACEHOLDER_bornich_05
+    source_type: tweet
+    subject_entities: [1X Technologies]
+    actor: Bernt Bornich
+    priority: p2
+
+  - url: PLACEHOLDER_bornich_06
+    source_type: tweet
+    subject_entities: [1X Neo]
+    actor: Bernt Bornich
+    priority: p2
+
+  # Karol Hausman (Physical Intelligence co-founder)
+  - url: PLACEHOLDER_hausman_pi0_release
+    source_type: tweet
+    subject_entities: [π0, Physical Intelligence]
+    actor: Karol Hausman
+    priority: p0
+    notes: π0 model release announcement
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_hausman_pi05
+    source_type: tweet
+    subject_entities: [π0.5, Physical Intelligence]
+    actor: Karol Hausman
+    priority: p0
+    notes: π0.5 generalization announcement
+
+  - url: PLACEHOLDER_hausman_03
+    source_type: tweet
+    subject_entities: [Physical Intelligence]
+    actor: Karol Hausman
+    priority: p1
+
+  - url: PLACEHOLDER_hausman_04
+    source_type: tweet
+    subject_entities: [Physical Intelligence]
+    actor: Karol Hausman
+    priority: p2
+
+  - url: PLACEHOLDER_hausman_05
+    source_type: tweet
+    subject_entities: [Physical Intelligence]
+    actor: Karol Hausman
+    priority: p2
+
+  # Sergey Levine (Physical Intelligence co-founder, UC Berkeley)
+  - url: PLACEHOLDER_levine_research_direction
+    source_type: tweet
+    subject_entities: [Physical Intelligence, Robotics Foundation Models]
+    actor: Sergey Levine
+    priority: p1
+
+  - url: PLACEHOLDER_levine_02
+    source_type: tweet
+    subject_entities: [Physical Intelligence]
+    actor: Sergey Levine
+    priority: p2
+
+  - url: PLACEHOLDER_levine_03
+    source_type: tweet
+    subject_entities: [Robotics Foundation Models]
+    actor: Sergey Levine
+    priority: p2
+
+  # Pieter Abbeel (Robot Brains, Berkeley)
+  - url: PLACEHOLDER_abbeel_humanoid_outlook
+    source_type: tweet
+    subject_entities: [Humanoid Robotics, Skild AI]
+    actor: Pieter Abbeel
+    priority: p1
+    notes: Skeptical takes — good for bear narrative
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_abbeel_02
+    source_type: tweet
+    subject_entities: [Skild AI]
+    actor: Pieter Abbeel
+    priority: p2
+
+  # Elon Musk (Tesla)
+  - url: PLACEHOLDER_musk_optimus_q4
+    source_type: tweet
+    subject_entities: [Tesla Optimus, Tesla]
+    actor: Elon Musk
+    priority: p0
+    notes: Optimus production claims — good for contradictions
+    perspective_hint: bull
+
+  - url: PLACEHOLDER_musk_optimus_million_units
+    source_type: tweet
+    subject_entities: [Tesla Optimus, Tesla]
+    actor: Elon Musk
+    priority: p0
+    notes: 1M units / 2030 timeline — likely to be contradicted by reality
+
+  - url: PLACEHOLDER_musk_03
+    source_type: tweet
+    subject_entities: [Tesla Optimus]
+    actor: Elon Musk
+    priority: p1
+
+  - url: PLACEHOLDER_musk_04
+    source_type: tweet
+    subject_entities: [Tesla Optimus]
+    actor: Elon Musk
+    priority: p2
+
+  # Jim Fan (NVIDIA, GR00T)
+  - url: PLACEHOLDER_jimfan_groot_announcement
+    source_type: tweet
+    subject_entities: [NVIDIA GR00T, NVIDIA Robotics]
+    actor: Jim Fan
+    priority: p0
+    notes: GR00T foundation model announcement
+
+  - url: PLACEHOLDER_jimfan_02
+    source_type: tweet
+    subject_entities: [NVIDIA GR00T]
+    actor: Jim Fan
+    priority: p1
+
+  # Deepak Pathak (Skild AI)
+  - url: PLACEHOLDER_pathak_skild_launch
+    source_type: tweet
+    subject_entities: [Skild AI]
+    actor: Deepak Pathak
+    priority: p1
+    notes: Skild AI emergence from stealth
+
+  - url: PLACEHOLDER_pathak_02
+    source_type: tweet
+    subject_entities: [Skild AI]
+    actor: Deepak Pathak
+    priority: p2
+
+  # Aaron Saunders (Boston Dynamics)
+  - url: PLACEHOLDER_saunders_atlas_electric
+    source_type: tweet
+    subject_entities: [Atlas, Boston Dynamics]
+    actor: Aaron Saunders
+    priority: p1
+    notes: Atlas electric version reveal
+
+  # Apptronik
+  - url: PLACEHOLDER_apptronik_apollo_launch
+    source_type: tweet
+    subject_entities: [Apollo, Apptronik]
+    actor: Apptronik
+    priority: p1
+
+  - url: PLACEHOLDER_apptronik_02
+    source_type: tweet
+    subject_entities: [Apollo, Apptronik]
+    actor: Jeff Cardenas
+    priority: p2
+
+  # Skeptics / journalists with bear takes (critical for bear narrative)
+  - url: PLACEHOLDER_skeptic_01
+    source_type: tweet
+    subject_entities: [Tesla Optimus, Figure 02]
+    actor: Anonymous Reporter
+    priority: p1
+    notes: Critical takes on humanoid claims
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_skeptic_02
+    source_type: tweet
+    subject_entities: [Humanoid Robotics]
+    actor: Anonymous Reporter
+    priority: p2
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_skeptic_03
+    source_type: tweet
+    subject_entities: [Tesla Optimus]
+    actor: Anonymous Reporter
+    priority: p2
+    perspective_hint: bear
+
+  # Researcher takes
+  - url: PLACEHOLDER_researcher_01
+    source_type: tweet
+    subject_entities: [Humanoid Robotics, VLA Models]
+    actor: Anonymous Researcher
+    priority: p2
+
+  - url: PLACEHOLDER_researcher_02
+    source_type: tweet
+    subject_entities: [Robotics Foundation Models]
+    actor: Anonymous Researcher
+    priority: p2
+
+  - url: PLACEHOLDER_researcher_03
+    source_type: tweet
+    subject_entities: [VLA Models]
+    actor: Anonymous Researcher
+    priority: p2
+
+  - url: PLACEHOLDER_researcher_04
+    source_type: tweet
+    subject_entities: [Humanoid Robotics]
+    actor: Anonymous Researcher
+    priority: p2
+
+  - url: PLACEHOLDER_researcher_05
+    source_type: tweet
+    subject_entities: [Robotics Benchmarks]
+    actor: Anonymous Researcher
+    priority: p2
+
+# =============================================================================
+# PAPERS (target: 20 sources)
+# =============================================================================
+
+papers:
+
+  # Foundation models — primary sources for capability claims
+  - url: https://arxiv.org/abs/2410.24164
+    source_type: paper
+    subject_entities: [π0, Physical Intelligence]
+    actor: Physical Intelligence
+    priority: p0
+    notes: π0 — A Vision-Language-Action Flow Model for General Robot Control
+
+  - url: PLACEHOLDER_pi05_paper
+    source_type: paper
+    subject_entities: [π0.5, Physical Intelligence]
+    actor: Physical Intelligence
+    priority: p0
+    notes: π0.5 generalization paper
+
+  - url: https://arxiv.org/abs/2503.14734
+    source_type: paper
+    subject_entities: [NVIDIA GR00T, GR00T N1]
+    actor: NVIDIA
+    priority: p0
+    notes: GR00T N1 technical report
+
+  - url: PLACEHOLDER_helix_paper
+    source_type: paper
+    subject_entities: [Helix, Figure AI]
+    actor: Figure AI
+    priority: p0
+    notes: Helix VLA architecture from Figure
+
+  - url: https://arxiv.org/abs/2307.15818
+    source_type: paper
+    subject_entities: [RT-2, Google DeepMind Robotics]
+    actor: Google DeepMind
+    priority: p1
+    notes: RT-2 — original VLA foundation
+
+  - url: https://arxiv.org/abs/2406.09246
+    source_type: paper
+    subject_entities: [OpenVLA, Stanford Robotics]
+    actor: Stanford / UC Berkeley
+    priority: p1
+    notes: OpenVLA — open-source 7B VLA
+
+  - url: https://arxiv.org/abs/2405.12213
+    source_type: paper
+    subject_entities: [Octo, UC Berkeley Robotics]
+    actor: UC Berkeley
+    priority: p1
+    notes: Octo generalist robot policy
+
+  - url: https://arxiv.org/abs/2303.04137
+    source_type: paper
+    subject_entities: [Diffusion Policy, Manipulation]
+    actor: Columbia / Toyota Research
+    priority: p1
+    notes: Diffusion Policy foundational paper
+
+  - url: https://arxiv.org/abs/2304.13705
+    source_type: paper
+    subject_entities: [ACT, Mobile ALOHA]
+    actor: Stanford
+    priority: p1
+    notes: Action Chunking Transformer
+
+  - url: https://arxiv.org/abs/2401.02117
+    source_type: paper
+    subject_entities: [Mobile ALOHA, Stanford]
+    actor: Stanford
+    priority: p1
+
+  - url: https://arxiv.org/abs/2406.10454
+    source_type: paper
+    subject_entities: [HumanPlus, Humanoid Robotics]
+    actor: Stanford
+    priority: p1
+    notes: Stanford HumanPlus learning from humans
+
+  - url: PLACEHOLDER_apollo_paper
+    source_type: paper
+    subject_entities: [Apollo, Apptronik]
+    actor: Apptronik
+    priority: p1
+    notes: Apollo technical paper or whitepaper
+
+  # Benchmarks
+  - url: PLACEHOLDER_roboarena_paper
+    source_type: paper
+    subject_entities: [RoboArena, Robotics Benchmarks]
+    actor: Robotics Community
+    priority: p1
+    notes: RoboArena benchmark spec
+
+  - url: PLACEHOLDER_libero_paper
+    source_type: paper
+    subject_entities: [LIBERO, Robotics Benchmarks]
+    actor: UC Berkeley
+    priority: p1
+
+  - url: PLACEHOLDER_behavior_paper
+    source_type: paper
+    subject_entities: [BEHAVIOR, Robotics Benchmarks]
+    actor: Stanford
+    priority: p2
+
+  - url: PLACEHOLDER_open_x_paper
+    source_type: paper
+    subject_entities: [Open-X-Embodiment, RT-X]
+    actor: Google DeepMind
+    priority: p1
+    notes: Open-X dataset paper
+
+  # Skeptical / critical papers — for bear narrative
+  - url: PLACEHOLDER_critical_paper_01
+    source_type: paper
+    subject_entities: [VLA Models, Humanoid Robotics]
+    actor: Various
+    priority: p2
+    notes: Critiques of generalist robot policies
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_paper_02
+    source_type: paper
+    subject_entities: [Robotics Benchmarks]
+    actor: Various
+    priority: p2
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_paper_03
+    source_type: paper
+    subject_entities: [Sim2Real, Humanoid Robotics]
+    actor: Various
+    priority: p2
+
+  - url: PLACEHOLDER_recent_paper
+    source_type: paper
+    subject_entities: [Foundation Models, Robotics]
+    actor: Various
+    priority: p2
+
+# =============================================================================
+# TRANSCRIPTS (target: 15 sources)
+# =============================================================================
+
+transcripts:
+
+  # Lex Fridman podcast — long-form, lots of attributed claims
+  - url: PLACEHOLDER_lex_hausman
+    source_type: transcript
+    subject_entities: [Karol Hausman, Physical Intelligence, π0]
+    actor: Karol Hausman
+    priority: p0
+    notes: Lex Fridman x Karol Hausman — primary source for Pi positioning
+
+  - url: PLACEHOLDER_lex_abbeel
+    source_type: transcript
+    subject_entities: [Pieter Abbeel, Skild AI, Robotics]
+    actor: Pieter Abbeel
+    priority: p0
+    notes: Lex Fridman x Pieter Abbeel
+
+  - url: PLACEHOLDER_lex_adcock
+    source_type: transcript
+    subject_entities: [Brett Adcock, Figure AI]
+    actor: Brett Adcock
+    priority: p1
+    notes: If a Lex x Adcock episode exists; else substitute
+
+  # NVIDIA GTC / CES keynotes
+  - url: PLACEHOLDER_gtc_jensen_2024
+    source_type: transcript
+    subject_entities: [NVIDIA, NVIDIA GR00T, Jensen Huang]
+    actor: Jensen Huang
+    priority: p0
+    notes: GTC 2024 keynote — humanoid robotics emphasis
+
+  - url: PLACEHOLDER_gtc_jimfan
+    source_type: transcript
+    subject_entities: [NVIDIA GR00T, Jim Fan]
+    actor: Jim Fan
+    priority: p1
+
+  # Latent Space podcast
+  - url: PLACEHOLDER_latentspace_figure
+    source_type: transcript
+    subject_entities: [Figure AI]
+    actor: Figure AI Team
+    priority: p1
+
+  # Robot Brains (Abbeel's podcast)
+  - url: PLACEHOLDER_robotbrains_01
+    source_type: transcript
+    subject_entities: [Robotics Research]
+    actor: Various Guests
+    priority: p2
+
+  - url: PLACEHOLDER_robotbrains_02
+    source_type: transcript
+    subject_entities: [Foundation Models, Robotics]
+    actor: Various Guests
+    priority: p2
+
+  # Conference talks
+  - url: PLACEHOLDER_corl_keynote_01
+    source_type: transcript
+    subject_entities: [Robotics Research]
+    actor: Various
+    priority: p2
+    notes: CoRL keynote
+
+  - url: PLACEHOLDER_corl_keynote_02
+    source_type: transcript
+    subject_entities: [Robotics Research]
+    actor: Various
+    priority: p2
+
+  # Tesla AI Day / Optimus events
+  - url: PLACEHOLDER_tesla_ai_day_optimus
+    source_type: transcript
+    subject_entities: [Tesla Optimus, Tesla, Elon Musk]
+    actor: Tesla
+    priority: p0
+    notes: Tesla AI Day Optimus segment — major claims to track
+
+  # Founder interviews
+  - url: PLACEHOLDER_founder_interview_01
+    source_type: transcript
+    subject_entities: [Humanoid Robotics]
+    actor: Founder
+    priority: p2
+
+  - url: PLACEHOLDER_founder_interview_02
+    source_type: transcript
+    subject_entities: [Humanoid Robotics]
+    actor: Founder
+    priority: p2
+
+  - url: PLACEHOLDER_founder_interview_03
+    source_type: transcript
+    subject_entities: [Humanoid Robotics]
+    actor: Founder
+    priority: p2
+
+  - url: PLACEHOLDER_founder_interview_04
+    source_type: transcript
+    subject_entities: [Humanoid Robotics]
+    actor: Founder
+    priority: p2
+
+# =============================================================================
+# NEWS (target: 45 sources)
+# =============================================================================
+
+news:
+
+  # TechCrunch — Figure coverage
+  - url: PLACEHOLDER_tc_figure_series_b
+    source_type: news
+    subject_entities: [Figure AI]
+    priority: p0
+    notes: TechCrunch — Figure Series B funding
+
+  - url: PLACEHOLDER_tc_figure_bmw
+    source_type: news
+    subject_entities: [Figure 02, BMW, Figure AI]
+    priority: p0
+    notes: TechCrunch — BMW deployment story
+
+  - url: PLACEHOLDER_tc_figure_02_launch
+    source_type: news
+    subject_entities: [Figure 02]
+    priority: p0
+
+  - url: PLACEHOLDER_tc_figure_helix
+    source_type: news
+    subject_entities: [Helix, Figure AI]
+    priority: p1
+
+  - url: PLACEHOLDER_tc_figure_03
+    source_type: news
+    subject_entities: [Figure AI]
+    priority: p1
+
+  # The Information — investigative
+  - url: PLACEHOLDER_theinfo_humanoid_valuations
+    source_type: news
+    subject_entities: [Humanoid Robotics, Figure AI, Physical Intelligence, Tesla Optimus]
+    priority: p0
+    notes: The Information's deep dive on valuations
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_theinfo_figure_skeptical
+    source_type: news
+    subject_entities: [Figure AI]
+    priority: p1
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_theinfo_03
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  # Reuters / Bloomberg — Tesla Optimus
+  - url: PLACEHOLDER_reuters_optimus_01
+    source_type: news
+    subject_entities: [Tesla Optimus, Tesla]
+    priority: p0
+
+  - url: PLACEHOLDER_bloomberg_optimus
+    source_type: news
+    subject_entities: [Tesla Optimus, Tesla]
+    priority: p0
+
+  - url: PLACEHOLDER_reuters_optimus_skeptical
+    source_type: news
+    subject_entities: [Tesla Optimus]
+    priority: p1
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_bloomberg_humanoid_market
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p1
+
+  # WSJ / FT
+  - url: PLACEHOLDER_wsj_pi_funding
+    source_type: news
+    subject_entities: [Physical Intelligence]
+    priority: p1
+
+  - url: PLACEHOLDER_wsj_skild_funding
+    source_type: news
+    subject_entities: [Skild AI]
+    priority: p1
+
+  - url: PLACEHOLDER_ft_humanoid_outlook
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  # IEEE Spectrum — technical depth
+  - url: PLACEHOLDER_ieee_figure_review
+    source_type: news
+    subject_entities: [Figure 02]
+    priority: p1
+    notes: IEEE Spectrum technical evaluation
+
+  - url: PLACEHOLDER_ieee_atlas_electric
+    source_type: news
+    subject_entities: [Atlas, Boston Dynamics]
+    priority: p1
+
+  - url: PLACEHOLDER_ieee_03
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  - url: PLACEHOLDER_ieee_04
+    source_type: news
+    subject_entities: [Robotics Foundation Models]
+    priority: p2
+
+  # 1X coverage
+  - url: PLACEHOLDER_1x_neo_launch
+    source_type: news
+    subject_entities: [1X Neo, 1X Technologies]
+    priority: p1
+
+  - url: PLACEHOLDER_1x_redwood
+    source_type: news
+    subject_entities: [1X Redwood, 1X Technologies]
+    priority: p2
+
+  - url: PLACEHOLDER_1x_03
+    source_type: news
+    subject_entities: [1X Technologies]
+    priority: p2
+
+  # Unitree coverage
+  - url: PLACEHOLDER_unitree_g1_launch
+    source_type: news
+    subject_entities: [Unitree G1, Unitree]
+    priority: p1
+
+  - url: PLACEHOLDER_unitree_pricing
+    source_type: news
+    subject_entities: [Unitree G1, Unitree]
+    priority: p2
+    notes: Unitree's aggressive pricing — relevant comparison
+
+  - url: PLACEHOLDER_unitree_03
+    source_type: news
+    subject_entities: [Unitree]
+    priority: p2
+
+  # Apptronik coverage
+  - url: PLACEHOLDER_apptronik_mercedes
+    source_type: news
+    subject_entities: [Apollo, Apptronik, Mercedes-Benz]
+    priority: p1
+
+  - url: PLACEHOLDER_apptronik_funding
+    source_type: news
+    subject_entities: [Apptronik]
+    priority: p2
+
+  # Skild AI coverage
+  - url: PLACEHOLDER_skild_emergence
+    source_type: news
+    subject_entities: [Skild AI]
+    priority: p1
+    notes: Skild emerging from stealth
+
+  - url: PLACEHOLDER_skild_funding
+    source_type: news
+    subject_entities: [Skild AI]
+    priority: p2
+
+  # Boston Dynamics
+  - url: PLACEHOLDER_bd_atlas_retirement
+    source_type: news
+    subject_entities: [Atlas, Boston Dynamics]
+    priority: p1
+    notes: Hydraulic Atlas retirement, electric reveal
+
+  - url: PLACEHOLDER_bd_02
+    source_type: news
+    subject_entities: [Boston Dynamics]
+    priority: p2
+
+  # Physical Intelligence press
+  - url: PLACEHOLDER_pi_press_01
+    source_type: news
+    subject_entities: [Physical Intelligence]
+    priority: p1
+
+  - url: PLACEHOLDER_pi_press_02
+    source_type: news
+    subject_entities: [Physical Intelligence]
+    priority: p2
+
+  # Critical / investigative coverage
+  - url: PLACEHOLDER_critical_news_01
+    source_type: news
+    subject_entities: [Humanoid Robotics, Tesla Optimus, Figure 02]
+    priority: p1
+    notes: Critical coverage of humanoid hype
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_news_02
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_news_03
+    source_type: news
+    subject_entities: [Tesla Optimus]
+    priority: p2
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_news_04
+    source_type: news
+    subject_entities: [Figure 02]
+    priority: p2
+    perspective_hint: bear
+
+  - url: PLACEHOLDER_critical_news_05
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+    perspective_hint: bear
+
+  # Sanctuary AI / Agility / Mentee
+  - url: PLACEHOLDER_sanctuary_news
+    source_type: news
+    subject_entities: [Sanctuary AI]
+    priority: p2
+
+  - url: PLACEHOLDER_agility_digit
+    source_type: news
+    subject_entities: [Digit, Agility Robotics]
+    priority: p2
+
+  - url: PLACEHOLDER_mentee_news
+    source_type: news
+    subject_entities: [Mentee Robotics]
+    priority: p2
+
+  # Industry analysis
+  - url: PLACEHOLDER_industry_01
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  - url: PLACEHOLDER_industry_02
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  - url: PLACEHOLDER_industry_03
+    source_type: news
+    subject_entities: [Humanoid Robotics]
+    priority: p2
+
+  - url: PLACEHOLDER_industry_04
+    source_type: news
+    subject_entities: [Robotics Foundation Models]
+    priority: p2
+
+# =============================================================================
+# DEV REPORTS (Sagar's authority hook — 4 sources)
+# =============================================================================
+
+dev_reports:
+
+  - url: https://github.com/sagarbpatel31/XG1   # PLACEHOLDER — replace with actual XG1 repo URL
+    source_type: dev_report
+    subject_entities: [Unitree G1, NVIDIA GR00T, NVIDIA Sonic, Nomadic AI]
+    actor: Sagar Patel
+    priority: p0
+    notes: |
+      Sagar's XG1 hackathon project — primary source for Unitree G1 + GR00T fine-tuning.
+      Cite on: Unitree G1 article (deployment evidence), GR00T article (developer implementation),
+      NVIDIA Sonic article (low-latency teleoperation reference).
+      THIS IS THE AUTHORITY SIGNATURE. Make sure it appears prominently.
+
+  - url: PLACEHOLDER_ciena_jetson_orin
+    source_type: dev_report
+    subject_entities: [NVIDIA Jetson Orin]
+    actor: Sagar Patel
+    priority: p1
+    notes: |
+      Anonymized developer report on Jetson Orin in carrier-grade networking
+      (Ciena work, do NOT name customer; describe as "industrial deployment of
+      Jetson Orin for AI-driven network anomaly detection")
+
+  - url: PLACEHOLDER_cisco_bluefield
+    source_type: dev_report
+    subject_entities: [NVIDIA BlueField DPU]
+    actor: Sagar Patel
+    priority: p2
+    notes: |
+      Anonymized BlueField DPU developer report.
+      Frame as "developer experience report on DOCA-based traffic intelligence"
+
+  - url: PLACEHOLDER_signalforge
+    source_type: dev_report
+    subject_entities: [Edge AI, Physical AI, Embedded Systems]
+    actor: Sagar Patel
+    priority: p2
+    notes: |
+      SignalForge as a content curation platform — cite on industry overview pages.
+      URL: https://frontendsf.vercel.app
+
+# =============================================================================
+# META — ingestion order and tips
+# =============================================================================
+
+ingestion_order:
+  - Phase 1: All p0 tweets (10 sources) — fastest path to working pipeline
+  - Phase 2: All p0 papers + p0 news (12 sources)
+  - Phase 3: All p0 transcripts + Sagar's dev_reports (4-5 sources)
+  - Phase 4: All p1 sources (~40 sources)
+  - Phase 5: p2 sources if time permits
+
+notes:
+  - Twitter URLs may need manual capture of tweet text (X often blocks scraping). Hand-paste content if needed.
+  - Papers should be downloaded as PDF or fetched via arxiv API.
+  - Transcripts may need yt-dlp + Whisper if published videos lack transcripts.
+  - News articles use trafilatura or readability for extraction.
+  - For PLACEHOLDER URLs, Sagar should fill in real URLs before ingestion. Where impossible to find, drop the source and replace with another from the same category.
