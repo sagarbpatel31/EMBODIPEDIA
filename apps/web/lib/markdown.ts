@@ -51,7 +51,8 @@ function buildConfMap(refs?: Reference[]): Map<number, number> {
   if (!refs) return m;
   for (const r of refs) {
     if (r.footnote_id != null && r.confidence != null) {
-      m.set(r.footnote_id, r.confidence);
+      const v = typeof r.confidence === "string" ? parseFloat(r.confidence as unknown as string) : r.confidence;
+      if (!isNaN(v)) m.set(r.footnote_id, v);
     }
   }
   return m;
@@ -63,8 +64,10 @@ function applyHeatmap(html: string, confMap: Map<number, number>): string {
   return html.replace(
     /(<sup class="footnote-ref"><a[^>]+>\[(\d+)\]<\/a><\/sup>)/g,
     (_m, tag, n) => {
-      const conf = confMap.get(parseInt(n, 10));
-      if (conf == null) return tag;
+      const raw = confMap.get(parseInt(n, 10));
+      if (raw == null) return tag;
+      const conf = typeof raw === "string" ? parseFloat(raw) : raw;
+      if (isNaN(conf)) return tag;
       const cls = conf >= 0.75 ? "conf-high" : conf >= 0.5 ? "conf-med" : "conf-low";
       return `${tag}<span class="${cls}" title="confidence ${conf.toFixed(2)}" style="width:6px;height:6px;display:inline-block;border-radius:50%;vertical-align:0.2em;margin-left:1px;"></span>`;
     },
