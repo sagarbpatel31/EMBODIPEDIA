@@ -23,6 +23,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from apps.agents import hydradb_client as hc  # noqa: E402
+from apps.agents.perspective_router import route_claim  # noqa: E402
 
 SEED_PATH = Path(__file__).resolve().parent.parent / "data" / "seed_claims.yaml"
 
@@ -87,22 +88,34 @@ def main() -> int:
 
         title = f"{subj} — {meta['claim_type']} ({meta['source_type']})"
 
+        targets = route_claim(
+            claim_text=meta["claim_text"],
+            perspective=meta["perspective"],
+            confidence=float(conf),
+            evidence_strength=meta["evidence_strength"],
+            source_type=meta["source_type"],
+        )
+
         if args.dry_run:
-            print(f"  [DRY] {source_id}: {meta['claim_text'][:70]}...")
+            print(f"  [DRY] {source_id} → {sorted(targets)}: {meta['claim_text'][:70]}...")
         else:
-            try:
-                hc.add_claim_memory(
-                    sub_tenant=hc.SUB_TENANT_CANONICAL,
-                    source_id=source_id,
-                    title=title,
-                    text=meta["claim_text"],
-                    metadata=meta,
-                )
+            ok = False
+            for target in targets:
+                try:
+                    hc.add_claim_memory(
+                        sub_tenant=target,
+                        source_id=source_id,
+                        title=title,
+                        text=meta["claim_text"],
+                        metadata=meta,
+                    )
+                    ok = True
+                except Exception as err:
+                    print(f"  FAILED {source_id} → {target}: {err}", file=sys.stderr)
+            if ok:
                 written += 1
                 entities[subj] = entities.get(subj, 0) + 1
-                print(f"  ✓ [{conf}] {subj}: {meta['claim_text'][:70]}...")
-            except Exception as err:
-                print(f"  FAILED {source_id}: {err}", file=sys.stderr)
+                print(f"  ✓ [{conf}] {sorted(targets)} {subj}: {meta['claim_text'][:70]}...")
 
     if args.dry_run:
         print(f"\ndry-run: would write {len(all_claims)} claims")

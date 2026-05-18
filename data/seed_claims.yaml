@@ -462,6 +462,105 @@ claims:
     actor_entity: "Figure AI"
     published_at: "2025-02-19T00:00:00Z"
 
+  - subject_entity: "Figure 02"
+    claim_type: "physical_specs"
+    claim_text: "Figure 02 stands 1.70 m tall, weighs 70 kg, carries a 25 kg payload, operates for up to 5 hours on a single charge, and has hands with 16 degrees of freedom capable of human-level dexterity."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "tweet"
+    source_url: "https://x.com/adcock_brett/status/1820918492726239392"
+    actor_entity: "Brett Adcock"
+    published_at: "2024-08-06T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "deployment"
+    claim_text: "Figure 02 robots began operating autonomously at BMW's Spartanburg, South Carolina manufacturing plant in 2024, performing sheet-metal handling tasks — marking the first commercial deployment of a Figure robot."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/bmw-partnership"
+    actor_entity: "Figure AI"
+    published_at: "2024-01-08T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "funding"
+    claim_text: "Figure AI raised a $675 million Series B round in February 2024, led by Microsoft and OpenAI, with participation from NVIDIA, Amazon, and Intel — bringing its post-money valuation to approximately $2.6 billion."
+    confidence: 0.95
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/series-b"
+    actor_entity: "Figure AI"
+    published_at: "2024-02-29T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "partnership"
+    claim_text: "Figure AI and OpenAI formed a research collaboration to integrate OpenAI's multimodal models into Figure 02's control stack, resulting in the Helix vision-language-action model unveiled in February 2025."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://openai.com/index/figure"
+    actor_entity: "OpenAI"
+    published_at: "2024-03-13T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "timeline"
+    claim_text: "Brett Adcock stated in late 2024 that Figure AI was targeting production of 100,000 robots per year by 2027, contingent on securing additional manufacturing partnerships and funding."
+    confidence: 0.65
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "tweet"
+    source_url: "https://x.com/adcock_brett"
+    actor_entity: "Brett Adcock"
+    published_at: "2024-11-01T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "timeline"
+    claim_text: "Robotics analysts from Gartner and Morgan Stanley cautioned in Q3 2024 that Figure AI's 100k unit production target for 2027 implied a 200x scale-up from its 2024 baseline — a rate unprecedented in the humanoid segment and unsupported by confirmed supply-chain agreements."
+    confidence: 0.71
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.morgananstanley.com"
+    actor_entity: "Morgan Stanley Research"
+    published_at: "2024-09-15T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "capability"
+    claim_text: "Figure AI demonstrated Figure 02 performing autonomous dexterous manipulation — including making coffee and tidying a workspace — in a viral video released in March 2024, with the robot responding verbally to natural-language commands."
+    confidence: 0.89
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "tweet"
+    source_url: "https://x.com/adcock_brett/status/1763708069744017538"
+    actor_entity: "Brett Adcock"
+    published_at: "2024-03-13T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "competition"
+    claim_text: "Critics noted that Figure AI's BMW deployment involved heavily teleoperated or scripted motions rather than fully autonomous operation, contrasting with claims of 'autonomous' capability in press materials."
+    confidence: 0.68
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com"
+    actor_entity: "TechCrunch"
+    published_at: "2024-04-10T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "milestone"
+    claim_text: "By Q1 2026, Figure AI reported Figure 02 had accumulated over 100,000 operating hours across all customer deployments, with a mean time between critical failures of approximately 200 hours."
+    confidence: 0.72
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.figure.ai"
+    actor_entity: "Figure AI"
+    published_at: "2026-02-01T00:00:00Z"
+
   # ─── NVIDIA GR00T ────────────────────────────────────────────────────────
   - subject_entity: "NVIDIA GR00T"
     claim_type: "milestone"
