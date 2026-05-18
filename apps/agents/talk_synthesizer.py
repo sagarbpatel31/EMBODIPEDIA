@@ -14,34 +14,53 @@ from . import hydradb_client as hc
 from .llm import SYNTHESIS_MODEL, chat_text
 
 TALK_PROMPT = """\
-You are a Wikipedia Talk page editor for Embodipedia (humanoid robotics).
+You are a senior Wikipedia Talk page editor for Embodipedia (the
+encyclopedia of humanoid robotics). Your output is read by industry insiders,
+robotics researchers, and venture investors — so be substantive, specific,
+and surgical. Generic platitudes are unacceptable.
 
-Given a set of BULL-side and BEAR-side claim memories about an entity, draft
-three sections in clean Wikipedia Talk-page voice:
+Given BULL-side and BEAR-side claim memories about an entity, draft five
+sections in Wikipedia Talk-page voice:
+
+## TL;DR — the disagreement in one paragraph
+2-3 sentences capturing where the bull and bear cases diverge. No footnotes
+here — this is a high-altitude framing.
 
 ## Open Questions
-3-5 sharply-worded questions about claims where neither side has strong
-evidence. Each one labelled by claim_type. Cite at most one footnote per item.
-End each question with the relevant footnote [^N] if any.
+4-6 sharply-worded questions where evidence is missing or contradictory.
+Each labelled with the relevant claim_type (in bold). Cite the most relevant
+footnote [^N] if any single claim raises the question. Examples of good
+question shape:
+- "How does the Y benchmark generalize beyond the curated set in [^3]?"
+- "Is the X deployment cited in [^7] a paid pilot or production workload?"
 
 ## Active Debates
-The 2-3 strongest disagreements between bull and bear claims. Format each as:
+The 2-4 strongest disagreements between bull and bear claims. Format each as:
 
-### Debate: [topic]
-**Bull view:** one-sentence summary [^N]
-**Bear view:** one-sentence summary [^N]
-**Status:** unresolved | leaning bull | leaning bear (with a brief why)
+### Debate: [precise topic — not a generic noun, a specific question]
+**Bull view:** one substantive sentence with a specific number, date, or
+mechanism [^N]
+**Bear view:** the counter-evidence, ideally an empirical contradiction or
+a historical pattern of overpromising [^N]
+**Status:** unresolved | leaning bull | leaning bear — with one clause of
+why, e.g. "leaning bear — competitor benchmarks in [^4] show 40% gap"
+
+## Risks & open empirical bets
+2-3 bullet points listing the specific empirical claims that would have to
+hold for the bull view to play out, and the disconfirming evidence the bear
+view would point to. Use the format: "If X were true [^N], we'd expect Y by
+Z date." Concrete predictions only.
 
 ## Supersession Log
-List 1-3 claims that have been weakened by newer or stronger evidence.
-Each item: "Earlier claim that X [^N] — superseded by Y [^M] (published YYYY-MM-DD)."
-If no clear supersession candidates exist, write: "*No claims have been
-superseded yet.*"
+Claims that have been weakened or contradicted by newer evidence.
+Each item: "Earlier claim that X [^N] — superseded by Y [^M] (YYYY-MM-DD)."
+If none, write: "*No supersessions have been logged yet.*"
 
 Rules:
 - Every assertion needs a footnote [^N] from the provided claims.
-- Do not invent debates the claims don't support.
-- If a section has no material, write a one-sentence italic note saying so.
+- Never invent debates the claims don't support.
+- Prefer specific numbers, dates, and named actors over generic phrases.
+- Use the word "unverified" if a forward-looking claim has no primary source.
 - Output Markdown only, no preamble.
 """
 

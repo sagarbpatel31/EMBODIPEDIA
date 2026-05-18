@@ -43,35 +43,25 @@ def route_claim(
 ) -> set[SubTenant]:
     """Return set of sub-tenants this claim should be written to.
 
-    Routing rules (CLAUDE.md §7 derivative):
-    - LLM-provided `perspective` is the primary signal
-    - Keyword heuristics catch obvious bull/bear language the LLM missed
-    - Strong evidence (primary + conf >= 0.85) always goes to canonical too
+    Design (revised): `canonical` is the *complete evidence corpus*; `bull`
+    and `bear` are perspective projections on top of it. Every claim always
+    lands in canonical (so the article body has full coverage), and is
+    additionally mirrored to bull/bear when its perspective is non-neutral.
     """
-    targets: set[SubTenant] = set()
     text_lower = (claim_text or "").lower()
+    targets: set[SubTenant] = {"canonical"}
 
     explicit = (perspective or "").lower()
     if explicit == "bull":
         targets.add("bull")
     elif explicit == "bear":
         targets.add("bear")
-    elif explicit in ("neutral", "canonical", ""):
-        targets.add("canonical")
 
     # Keyword fallback augments explicit perspective.
     if any(kw in text_lower for kw in BULL_KEYWORDS):
         targets.add("bull")
     if any(kw in text_lower for kw in BEAR_KEYWORDS):
         targets.add("bear")
-
-    # Strong evidence always lands in canonical for the main article.
-    if (evidence_strength == "primary" and confidence >= 0.85) or source_type == "paper":
-        targets.add("canonical")
-
-    # Safety: every claim goes somewhere.
-    if not targets:
-        targets.add("canonical")
 
     return targets
 

@@ -90,11 +90,30 @@ def synthesize_article(
     # initial test returned 0 results even when metadata clearly matched.
     # For Phase 1's small corpus we trust relevance ranking + post-filter on
     # subject_entity. Re-enable filter in Phase 4 once shape is confirmed.
+    # HYDRADB: pull from canonical first (the complete corpus); fall back to
+    # bull+bear if canonical recall is sparse (handles indexer lag / older
+    # writes that routed perspective-only before the routing fix).
     raw = hc.recall_subtenant(
         sub_tenant=hc.SUB_TENANT_CANONICAL,
         query=f"everything known about {entity}",
         max_results=max_claims,
     )
+    if len(raw) < 3:
+        seen = {(c.get("metadata") or {}).get("memory_id") for c in raw}
+        for sub in (hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+            try:
+                extra = hc.recall_subtenant(
+                    sub_tenant=sub,
+                    query=f"everything known about {entity}",
+                    max_results=max_claims,
+                )
+            except Exception:
+                continue
+            for c in extra:
+                mid = (c.get("metadata") or {}).get("memory_id")
+                if mid and mid not in seen:
+                    seen.add(mid)
+                    raw.append(c)
     # Post-filter: exact match → fuzzy match → unfiltered fallback.
     # Fuzzy handles cases where tweet agent writes "Figure AI" for entity "Figure 02".
     entity_lower = entity.lower()

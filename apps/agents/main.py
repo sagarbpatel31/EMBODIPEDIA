@@ -108,16 +108,33 @@ def get_wiki_article(slug: str, as_of: str | None = None) -> dict[str, Any]:
 def what_links_here(slug: str, max_per_entity: int = 3) -> dict[str, Any]:
     """Find other entities whose claims mention this entity.
 
-    Uses a global recall for the entity name and groups returned chunks by their
-    subject_entity. Filters out self-matches.
+    Combines two HydraDB recall strategies for completeness:
+    1. Global hybrid recall on the entity name (vector + lexical)
+    2. Per-sub-tenant fallback (canonical / bull / bear) so we don't miss
+       claims that were routed to perspective lanes only.
     """
     from . import hydradb_client as hc
 
     entity = _slug_to_entity(slug)
+    chunks: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
     try:
-        chunks = hc.recall_global(query=entity, max_results=40)
+        for c in hc.recall_global(query=entity, max_results=40):
+            mid = (c.get("metadata") or {}).get("memory_id") or c.get("id") or ""
+            if mid and mid not in seen_ids:
+                seen_ids.add(mid)
+                chunks.append(c)
     except Exception:
-        chunks = []
+        pass
+    for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+        try:
+            for c in hc.recall_subtenant(sub_tenant=sub, query=entity, max_results=20):
+                mid = (c.get("metadata") or {}).get("memory_id") or c.get("id") or ""
+                if mid and mid not in seen_ids:
+                    seen_ids.add(mid)
+                    chunks.append(c)
+        except Exception:
+            continue
 
     by_entity: dict[str, list[dict[str, Any]]] = {}
     for c in chunks:
@@ -247,11 +264,36 @@ def ask_embodipedia(q: str, k: int = 10) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail="empty query")
 
     # HYDRADB: full_recall is hybrid (vector + lexical) with graph_context=True
-    # so we get entity_paths back for multi-hop questions.
-    chunks = hc.recall_global(q, max_results=k)
+    # for multi-hop questions. Falls back to per-sub-tenant recall if global
+    # comes back empty (free-tier HydraDB indexer can be flaky).
+    chunks: list[dict[str, Any]] = []
+    try:
+        chunks = hc.recall_global(q, max_results=k)
+    except Exception:
+        chunks = []
+    if not chunks:
+        seen: set[str] = set()
+        for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+            try:
+                sub_chunks = hc.recall_subtenant(sub_tenant=sub, query=q, max_results=k)
+            except Exception:
+                continue
+            for c in sub_chunks:
+                sid = (c.get("metadata") or {}).get("memory_id") or c.get("id")
+                if not sid or sid in seen:
+                    continue
+                seen.add(sid)
+                chunks.append(c)
+        # Take top-k by score after merging.
+        chunks.sort(key=lambda c: c.get("score") or 0, reverse=True)
+        chunks = chunks[:k]
 
     if not chunks:
-        return {"answer": "_No matching claims found in Embodipedia._", "chunks": [], "entity_paths": []}
+        return {
+            "answer": "_No matching claims found in Embodipedia. The HydraDB indexer may still be catching up — try again in 30 seconds._",
+            "chunks": [],
+            "entity_paths": {"nodes": [], "edges": []},
+        }
 
     # Build a compact context block for the LLM.
     ctx_lines = ["Answer the question using ONLY the provided claims. Cite each fact as [^N] referencing the claim number. If the claims don't answer, say so."]
@@ -352,21 +394,51 @@ def article_history(slug: str) -> dict[str, Any]:
 
 
 @app.get("/api/recent")
-def recent_changes(limit: int = 30) -> dict[str, Any]:
-    """Recent claim ingestions across all sub-tenants."""
+def recent_changes(limit: int = 60) -> dict[str, Any]:
+    """Recent claim ingestions with full claim text + grouping support.
+
+    Pulls broadly via HydraDB recall on each sub-tenant and returns sorted by
+    ingested_at desc with full metadata so the frontend can group by date or
+    entity as needed.
+    """
     from . import hydradb_client as hc
 
-    # HYDRADB: list memories from canonical (where most claims land) and sort
-    # by ingested_at desc on the metadata side.
-    out: list[dict[str, Any]] = []
+    items: list[dict[str, Any]] = []
+    seen: set[str] = set()
     for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
         try:
-            ids = hc.list_memory_ids(sub)
+            chunks = hc.recall_subtenant(
+                sub_tenant=sub,
+                query="recent claims about humanoid robotics",
+                max_results=limit,
+            )
         except Exception:
-            ids = []
-        for mid in ids[:limit]:
-            out.append({"memory_id": mid, "sub_tenant": sub})
-    return {"count": len(out), "items": out[:limit]}
+            continue
+        for c in chunks:
+            meta = c.get("metadata") or {}
+            mid = meta.get("memory_id") or c.get("source_id")
+            if not mid or mid in seen:
+                continue
+            seen.add(mid)
+            items.append(
+                {
+                    "memory_id": mid,
+                    "sub_tenant": sub,
+                    "subject_entity": meta.get("subject_entity"),
+                    "claim_type": meta.get("claim_type"),
+                    "claim_text": meta.get("claim_text") or c.get("content"),
+                    "confidence": meta.get("confidence"),
+                    "perspective": meta.get("perspective"),
+                    "source_type": meta.get("source_type"),
+                    "source_url": meta.get("source_url"),
+                    "actor_entity": meta.get("actor_entity"),
+                    "published_at": meta.get("published_at"),
+                    "ingested_at": meta.get("ingested_at"),
+                }
+            )
+
+    items.sort(key=lambda e: e.get("ingested_at") or "", reverse=True)
+    return {"count": len(items), "items": items[:limit]}
 
 
 class TweetIn(BaseModel):

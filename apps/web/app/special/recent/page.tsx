@@ -1,13 +1,23 @@
 import { AGENTS_URL } from "@/lib/api";
 
-interface RecentItem {
+interface RichItem {
   memory_id: string;
   sub_tenant: string;
+  subject_entity: string | null;
+  claim_type: string | null;
+  claim_text: string | null;
+  confidence: string | null;
+  perspective: string | null;
+  source_type: string | null;
+  source_url: string | null;
+  actor_entity: string | null;
+  published_at: string | null;
+  ingested_at: string | null;
 }
 
 interface RecentResponse {
   count: number;
-  items: RecentItem[];
+  items: RichItem[];
 }
 
 async function fetchRecent(): Promise<RecentResponse | null> {
@@ -22,49 +32,39 @@ async function fetchRecent(): Promise<RecentResponse | null> {
   }
 }
 
-function entityFromMemoryId(mid: string): string {
-  // claim_figure_02_milestone_xxx → "Figure 02"
-  const parts = mid.replace(/^claim_/, "").split("_");
-  if (parts.length === 0) return mid;
-  const words: string[] = [];
-  for (const p of parts) {
-    if (
-      [
-        "tweet",
-        "paper",
-        "news",
-        "transcript",
-        "milestone",
-        "capability",
-        "deployment",
-        "timeline",
-        "funding",
-        "partnership",
-        "metric",
-        "benchmark",
-        "architecture",
-        "strategy",
-      ].includes(p)
-    )
-      break;
-    if (/^[a-f0-9]{6,12}$/.test(p)) break;
-    if (/^\d{1,3}$/.test(p)) break;
-    words.push(p);
-  }
-  return words.map((w) => w[0]?.toUpperCase() + w.slice(1)).join(" ");
+function dateKey(iso: string | null): string {
+  if (!iso) return "unknown";
+  return iso.slice(0, 10);
 }
 
 export default async function RecentChanges() {
   const data = await fetchRecent();
   const items = data?.items ?? [];
 
-  // Group by entity for readability.
-  const byEntity = new Map<string, RecentItem[]>();
+  // Group claims by ingestion date (newest first).
+  const byDate = new Map<string, RichItem[]>();
   for (const it of items) {
-    const e = entityFromMemoryId(it.memory_id) || "(unknown)";
-    if (!byEntity.has(e)) byEntity.set(e, []);
-    byEntity.get(e)!.push(it);
+    const k = dateKey(it.ingested_at);
+    if (!byDate.has(k)) byDate.set(k, []);
+    byDate.get(k)!.push(it);
   }
+  const dates = Array.from(byDate.keys()).sort((a, b) => (a < b ? 1 : -1));
+
+  // Entity activity summary across all items.
+  const entityCounts = new Map<string, { total: number; bull: number; bear: number; canonical: number }>();
+  for (const it of items) {
+    const e = it.subject_entity ?? "(unknown)";
+    const v =
+      entityCounts.get(e) ?? { total: 0, bull: 0, bear: 0, canonical: 0 };
+    v.total++;
+    if (it.sub_tenant === "bull") v.bull++;
+    if (it.sub_tenant === "bear") v.bear++;
+    if (it.sub_tenant === "canonical") v.canonical++;
+    entityCounts.set(e, v);
+  }
+  const topEntities = Array.from(entityCounts.entries())
+    .sort((a, b) => b[1].total - a[1].total)
+    .slice(0, 8);
 
   return (
     <main className="wiki-article">
@@ -79,65 +79,109 @@ export default async function RecentChanges() {
               fontSize: "0.85rem",
             }}
           >
-            Live feed of agent-written claim ingestions across all HydraDB sub-tenants
+            Live feed of agent-written claims across canonical / bull / bear
+            sub-tenants, sorted newest first.
           </p>
         </div>
       </header>
 
-      <section className="wiki-body">
-        <p>
-          <strong>{data?.count ?? 0}</strong> claim memories indexed.
-        </p>
+      <div className="talk-perspective-bar">
+        <span className="talk-pill talk-pill-info">{items.length} claims</span>
+        <span className="talk-pill talk-pill-info">{dates.length} ingestion days</span>
+        <span className="talk-pill talk-pill-info">{entityCounts.size} distinct entities</span>
+      </div>
 
-        {Array.from(byEntity.entries()).length === 0 ? (
+      {/* Activity summary */}
+      <section className="wiki-body" style={{ marginBottom: "1.5rem" }}>
+        <h2>Top entities by recent activity</h2>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          {topEntities.map(([entity, v]) => {
+            const slug = entity.replace(/ /g, "_");
+            return (
+              <li
+                key={entity}
+                style={{ padding: "0.3rem 0", borderBottom: "1px solid #eaecf0" }}
+              >
+                <a href={`/wiki/${slug}`} style={{ fontSize: "0.95rem" }}>
+                  {entity}
+                </a>
+                <span style={{ marginLeft: "0.7rem", fontSize: "0.78rem", color: "#54595d" }}>
+                  {v.total} total
+                </span>
+                {v.canonical > 0 && (
+                  <span className="talk-pill talk-pill-canonical" style={{ marginLeft: "0.4rem" }}>
+                    canonical {v.canonical}
+                  </span>
+                )}
+                {v.bull > 0 && (
+                  <span className="talk-pill talk-pill-bull" style={{ marginLeft: "0.4rem" }}>
+                    bull {v.bull}
+                  </span>
+                )}
+                {v.bear > 0 && (
+                  <span className="talk-pill talk-pill-bear" style={{ marginLeft: "0.4rem" }}>
+                    bear {v.bear}
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* Date-grouped feed */}
+      {dates.map((d) => (
+        <section key={d} className="recent-day">
+          <h2 className="recent-day-title">{d}</h2>
+          {byDate.get(d)!.map((it) => {
+            const slug = (it.subject_entity ?? "").replace(/ /g, "_");
+            return (
+              <div key={it.memory_id} className="history-row">
+                <div className="history-row-meta">
+                  <span className="history-row-time">
+                    {it.ingested_at ? it.ingested_at.slice(11, 19) + "Z" : "—"}
+                  </span>
+                  <span className={`talk-pill talk-pill-${it.sub_tenant}`}>
+                    {it.sub_tenant}
+                  </span>
+                  {it.perspective && it.perspective !== it.sub_tenant && (
+                    <span className={`talk-pill talk-pill-${it.perspective}`}>
+                      {it.perspective}
+                    </span>
+                  )}
+                  <a href={`/wiki/${slug}`}>{it.subject_entity}</a>
+                  <span className="history-row-claimtype">{it.claim_type}</span>
+                  {it.confidence && (
+                    <span className="history-row-conf">
+                      conf {parseFloat(it.confidence).toFixed(2)}
+                    </span>
+                  )}
+                </div>
+                <div className="history-row-text">{it.claim_text}</div>
+                <div className="history-row-source">
+                  {it.actor_entity && <span>{it.actor_entity} · </span>}
+                  {it.source_url ? (
+                    <a href={it.source_url} target="_blank" rel="noopener noreferrer">
+                      {it.source_type || "source"}
+                    </a>
+                  ) : null}
+                  {it.published_at && (
+                    <span> · published {it.published_at.slice(0, 10)}</span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </section>
+      ))}
+
+      {items.length === 0 && (
+        <section className="wiki-body">
           <p>
             <em>No memories indexed yet. Run an ingest script and wait ~60s.</em>
           </p>
-        ) : (
-          Array.from(byEntity.entries())
-            .sort((a, b) => b[1].length - a[1].length)
-            .map(([entity, group]) => {
-              const slug = entity.replace(/ /g, "_");
-              const byLane = new Map<string, number>();
-              for (const it of group) {
-                byLane.set(it.sub_tenant, (byLane.get(it.sub_tenant) ?? 0) + 1);
-              }
-              return (
-                <div
-                  key={entity}
-                  style={{
-                    borderBottom: "1px solid #eaecf0",
-                    padding: "0.5rem 0",
-                  }}
-                >
-                  <a href={`/wiki/${slug}`} style={{ fontSize: "1rem" }}>
-                    {entity}
-                  </a>
-                  <span
-                    style={{
-                      marginLeft: "0.6rem",
-                      fontSize: "0.78rem",
-                      color: "#54595d",
-                    }}
-                  >
-                    {group.length} claim{group.length === 1 ? "" : "s"}
-                  </span>
-                  <span style={{ marginLeft: "0.8rem" }}>
-                    {Array.from(byLane.entries()).map(([lane, count]) => (
-                      <span
-                        key={lane}
-                        className={`talk-pill talk-pill-${lane}`}
-                        style={{ marginRight: "0.3rem" }}
-                      >
-                        {lane}: {count}
-                      </span>
-                    ))}
-                  </span>
-                </div>
-              );
-            })
-        )}
-      </section>
+        </section>
+      )}
     </main>
   );
 }
