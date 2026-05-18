@@ -1,0 +1,80 @@
+# seed_tweets.yaml
+#
+# Hand-pasted Brett Adcock (@adcock_brett) tweets for Phase 1 Figure 02 ingestion.
+# Goal: 5 tweets producing ~10-15 claim memories across 5 claim_types
+#   (capability, deployment, timeline, funding, partnership).
+
+tweets:
+  - url: https://x.com/adcock_brett/status/1820792697315348640
+    author: Brett Adcock
+    author_role: Figure AI CEO
+    published_at: "2024-08-06T12:03:02Z"
+    text: |
+      Introducing Figure 02
+
+      The world's most advanced AI hardware
+
+      Exclusive pics + technical writeup👇
+
+      Meet Figure 02
+
+      F.02 was a ground-up redesign to achieve:
+
+      - 6x Cameras
+      - 50%+ Battery
+      - Onboard VLM
+      - 3x CPU / GPU
+      - 4th Gen Hands
+      - Integrated wiring
+      - Exoskeleton structure
+      - Speech-to-speech reasoning
+
+      Technical write-up below
+
+  - url: https://x.com/adcock_brett/status/1748067775841697822
+    author: Brett Adcock
+    author_role: Figure AI CEO
+    published_at: "2024-01-18T19:40:09Z"
+    text: |
+      Today, we're revealing our plans for real-world humanoid robots
+
+      Excited to share: Figure has entered into a commercial agreement with BMW 🤝
+
+      We're hoping to ship in 2024 🤖
+
+      More details below:
+
+  - url: https://x.com/adcock_brett/status/1763356340179915249
+    author: Brett Adcock
+    author_role: Figure AI CEO
+    published_at: "2024-03-01T00:11:27Z"
+    text: |
+      Big press day for Figure
+
+      $675M Series B + OpenAI collaboration
+
+      Here are today's top news articles:
+
+  - url: https://x.com/adcock_brett/status/1892692966294048897
+    author: Brett Adcock
+    author_role: Figure AI CEO
+    published_at: "2025-02-20T21:49:02Z"
+    text: |
+      The Helix team has been tasked to solve general robotics - a robot in every home
+
+      We have a ways to go, but this is working
+
+      Special congrats to @coreylynch and @YevgenChebotar on launching Helix! 🧬🖤
+
+      Corey, who leads Helix at Figure, shared a deep dive - worth a read:
+
+  - url: https://x.com/adcock_brett/status/1886860098980733197
+    author: Brett Adcock
+    author_role: Figure AI CEO
+    published_at: "2025-02-04T16:31:00Z"
+    text: |
+      Today, I made the decision to leave our Collaboration Agreement with OpenAI
+
+      Figure made a major breakthrough on fully end-to-end robot AI, built entirely in-house
+
+      We're excited to show you in the next 30 days something no one has ever seen on a humanoid

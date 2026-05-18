@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+/* ---------- base ---------- */
+/* Wikipedia is light-only by spec (CLAUDE.md out-of-scope: dark mode). */
+:root {
+  --background: #ffffff;
+  --foreground: #202122;
+  --wiki-link: #0645ad;
+  --wiki-link-visited: #0b0080;
+  --wiki-link-red: #ba0000;
+  --wiki-rule: #a2a9b1;
+  --wiki-soft: #f8f9fa;
+  --wiki-soft-border: #c8ccd1;
+  --citation-needed: #d33;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Linux Libertine", "Georgia", "Times New Roman", serif;
+}
+
+a {
+  color: var(--wiki-link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:visited {
+  color: var(--wiki-link-visited);
+}
+
+/* ---------- article shell ---------- */
+.wiki-article {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 4rem;
+}
+
+.wiki-header {
+  border-bottom: 1px solid var(--wiki-rule);
+  margin-bottom: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.wiki-title {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 2.2rem;
+  font-weight: normal;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--wiki-rule);
+}
+
+.wiki-tabs {
+  display: flex;
+  gap: 1rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+}
+
+.wiki-tab {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  color: var(--wiki-link);
+}
+
+.wiki-tab--active {
+  background: var(--wiki-soft);
+  border: 1px solid var(--wiki-soft-border);
+  border-bottom-color: var(--wiki-soft);
+  color: var(--foreground);
+  cursor: default;
+}
+
+/* ---------- prose body ---------- */
+.wiki-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.wiki-body h1,
+.wiki-body h2,
+.wiki-body h3 {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-weight: normal;
+  border-bottom: 1px solid var(--wiki-rule);
+  padding-bottom: 0.2rem;
+  margin: 1.4rem 0 0.6rem;
+}
+
+.wiki-body h2 {
+  font-size: 1.5rem;
+}
+.wiki-body h3 {
+  font-size: 1.2rem;
+  border-bottom: none;
+}
+
+.wiki-body p {
+  margin: 0 0 0.8rem;
+}
+
+/* ---------- footnotes + citation needed ---------- */
+.footnote-ref {
+  font-size: 0.75rem;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 1px;
+}
+
+.footnote-ref a {
+  color: var(--wiki-link);
+}
+
+.citation-needed,
+.citation-needed-inline {
+  font-size: 0.75rem;
+  color: var(--citation-needed);
+  font-style: italic;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 2px;
+  cursor: help;
+}
+
+/* ---------- references section ---------- */
+.wiki-references {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+}
+
+.wiki-references h2 {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 1.4rem;
+  font-weight: normal;
+  border-bottom: 1px solid var(--wiki-rule);
+  padding-bottom: 0.2rem;
+}
+
+.wiki-references ol {
+  padding-left: 1.5rem;
+}
+
+.wiki-references li {
+  margin: 0.2rem 0;
+  line-height: 1.45;
+}
+
+.wiki-ref-date {
+  color: #54595d;
+}
+
+.wiki-ref-jump a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ---------- meta footer ---------- */
+.wiki-meta {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #54595d;
+}

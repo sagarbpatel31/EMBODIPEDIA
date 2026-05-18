@@ -1,0 +1,38 @@
+# env
+.env
+.env.local
+.env.*.local
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# node / next
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# vercel
+.vercel
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# run outputs
+data/last_extraction.json

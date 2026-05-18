@@ -1,0 +1,9 @@
+hydradb-sdk
+fastapi
+uvicorn[standard]
+openai
+python-dotenv
+pydantic>=2.0
+httpx
+pyyaml
+pytest
