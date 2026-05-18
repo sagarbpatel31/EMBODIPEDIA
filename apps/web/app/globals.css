@@ -263,3 +263,178 @@ a:visited {
   font-size: 0.85rem;
   color: #54595d;
 }
+
+/* ---------- portal / homepage ---------- */
+.portal-hero {
+  background: #eaecf0;
+  border-bottom: 1px solid var(--wiki-soft-border);
+  padding: 2.5rem 2.5rem 2rem;
+}
+
+.portal-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.portal-title {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 3rem;
+  font-weight: normal;
+  margin: 0 0 0.3rem;
+  color: var(--foreground);
+}
+
+.portal-tagline {
+  font-size: 1rem;
+  color: #54595d;
+  margin: 0 0 1.5rem;
+}
+
+.portal-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.portal-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.portal-stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Linux Libertine", "Georgia", serif;
+  color: var(--foreground);
+  line-height: 1;
+}
+
+.portal-stat-label {
+  font-size: 0.78rem;
+  color: #54595d;
+  margin-top: 0.2rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.portal-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 2.5rem 0;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .portal-body { grid-template-columns: 1fr; }
+}
+
+.portal-box {
+  border: 1px solid var(--wiki-soft-border);
+  background: var(--wiki-soft);
+}
+
+.portal-box-title {
+  background: #c8ccd1;
+  padding: 0.4rem 0.7rem;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--wiki-soft-border);
+}
+
+.portal-box-body {
+  padding: 0.8rem 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.portal-box-body p {
+  margin: 0 0 0.7rem;
+}
+.portal-box-body p:last-child {
+  margin-bottom: 0;
+}
+
+.portal-section {
+  max-width: 1100px;
+  margin: 1.5rem auto 0;
+  padding: 0 2.5rem;
+}
+
+.portal-section-title {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  border-bottom: 1px solid var(--wiki-rule);
+  padding-bottom: 0.2rem;
+  margin: 0 0 1rem;
+}
+
+.entity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .entity-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .entity-grid { grid-template-columns: 1fr; }
+}
+
+.entity-card {
+  display: block;
+  border: 1px solid var(--wiki-soft-border);
+  padding: 0.9rem 1rem;
+  background: var(--wiki-soft);
+  text-decoration: none;
+  color: var(--foreground);
+  transition: background 0.1s;
+}
+
+.entity-card:hover {
+  background: #eaecf0;
+  text-decoration: none;
+}
+
+.entity-card:visited {
+  color: var(--foreground);
+}
+
+.entity-card-label {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 1.15rem;
+  color: var(--wiki-link);
+  margin-bottom: 0.15rem;
+}
+
+.entity-card-meta {
+  font-size: 0.75rem;
+  color: #54595d;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.entity-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #36393d;
+}
+
+.portal-footer {
+  max-width: 1100px;
+  margin: 1.5rem auto 3rem;
+  padding: 0.8rem 2.5rem;
+  border-top: 1px solid var(--wiki-rule);
+  font-size: 0.82rem;
+  color: #54595d;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.portal-footer p {
+  margin: 0;
+}
