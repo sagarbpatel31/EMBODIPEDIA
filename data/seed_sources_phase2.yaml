@@ -237,3 +237,185 @@ news:
 
       Pieter Abbeel said in a statement: "Joining Amazon allows us to deploy our foundation models
       at a scale that's not feasible for an independent startup."
+
+  - title: "Physical Intelligence Raises $400M for Robotics AI"
+    url: "https://techcrunch.com/2024/11/04/physical-intelligence-400-million-robotics/"
+    publication: "TechCrunch"
+    author: "Kirsten Korosec"
+    published_at: "2024-11-04T00:00:00Z"
+    text: |
+      Physical Intelligence, the robotics AI company behind the π0 foundation model, has raised
+      $400 million in Series B funding led by Sequoia Capital, valuing the startup at $2.4 billion.
+      The round also includes Jeff Bezos and Lux Capital.
+
+      The company was founded in 2023 by Karol Hausman (CEO), Sergey Levine, Chelsea Finn, and
+      Brian Ichter — all prominent researchers in robot learning from Google Brain and academia.
+      Physical Intelligence has taken a software-only approach, training general-purpose robot
+      policies that can run on different hardware platforms.
+
+      CEO Karol Hausman told TechCrunch: "The π0 model demonstrates that pre-training on diverse
+      robot data followed by fine-tuning with minimal demonstrations can match specialized policies
+      trained with thousands of examples. The funding will let us scale our data collection
+      infrastructure and train much larger models."
+
+      The company has demonstrated π0 performing complex multi-step manipulation including laundry
+      folding, table clearing, and box assembly at success rates well above prior state-of-the-art.
+
+  - title: "Skild AI Emerges From Stealth With $300M Raise"
+    url: "https://techcrunch.com/2024/05/08/skild-ai-robot-foundation-model/"
+    publication: "TechCrunch"
+    author: "Brian Heater"
+    published_at: "2024-05-08T00:00:00Z"
+    text: |
+      Skild AI, a robotics foundation model startup founded by Carnegie Mellon professors Deepak
+      Pathak and Abhinav Gupta, has raised $300 million in Series A funding — one of the largest
+      first institutional rounds in robotics history.
+
+      The company has been developing a generalist robot intelligence model capable of controlling
+      diverse robot embodiments without task-specific fine-tuning. Unlike competitors who focus on
+      specific robots or tasks, Skild aims to build a single brain that can generalize across
+      thousands of robot types.
+
+      Pathak told TechCrunch: "The key insight is that robustness and generalization come from
+      diversity in training data across embodiments and environments. We're seeing the same scaling
+      laws that worked for language start to emerge in robot learning."
+
+      Investors include Jeff Bezos, SoftBank Vision Fund, Lightspeed, and General Catalyst.
+      The company has not yet released public benchmark results but says early customer pilots
+      show promising generalization to unseen tasks.
+
+  - title: "Boston Dynamics Retires Hydraulic Atlas, Introduces All-Electric Humanoid"
+    url: "https://techcrunch.com/2024/04/17/boston-dynamics-atlas-electric/"
+    publication: "TechCrunch"
+    author: "Brian Heater"
+    published_at: "2024-04-17T00:00:00Z"
+    text: |
+      Boston Dynamics has announced the retirement of its iconic hydraulic Atlas robot and unveiled
+      a new all-electric Atlas, marking a significant pivot toward commercial applications.
+
+      The new Atlas features a 360-degree rotating torso, fully articulated hands, and operates
+      entirely on electric motors — eliminating the hydraulic system that made the original Atlas
+      powerful but maintenance-intensive. The company says the new design achieves higher torque
+      density than the hydraulic predecessor while being simpler to service.
+
+      CEO Robert Playter said: "This is not the dancing robot. This is Atlas going to work."
+      The company announced Hyundai as the launch partner for commercial deployments, with a pilot
+      program at Hyundai's Georgia manufacturing facility planned for 2025.
+
+      The electric Atlas will be commercialized through direct enterprise agreements rather than
+      as a general-purpose product, focusing on manufacturing use cases where Boston Dynamics
+      can provide full deployment support.
+
+  - title: "NVIDIA GR00T N1: A Foundation Model for Humanoid Robots"
+    url: "https://research.nvidia.com/publication/groot-n1"
+    publication: "NVIDIA Research"
+    author: "NVIDIA GEAR Lab"
+    published_at: "2024-11-13T00:00:00Z"
+    text: |
+      We present GR00T N1, a 1.5B parameter open foundation model for humanoid robot control.
+      GR00T N1 is trained on a mixture of human video demonstrations, synthetic trajectories
+      from NVIDIA Isaac Sim, and real robot teleoperation data across multiple robot platforms.
+
+      The model uses a dual-transformer architecture: a vision-language backbone for perception
+      and high-level reasoning, and a specialized action backbone for generating control signals.
+      GR00T N1 achieves 73% on the LIBERO benchmark and 61% on RLBench, outperforming prior
+      open-source baselines.
+
+      GR00T N1 is available for download and fine-tuning via NVIDIA's developer platform.
+      Fourteen humanoid robot companies are listed as launch partners using Isaac GR00T for
+      their robot AI development pipelines.
+
+  - title: "Figure 03 Unveiled: Figure AI's Commercial-Scale Humanoid"
+    url: "https://www.figure.ai/news/figure-03"
+    publication: "Figure AI Blog"
+    author: "Brett Adcock"
+    published_at: "2025-06-01T00:00:00Z"
+    text: |
+      Today we're launching Figure 03 — our most capable and commercially viable robot yet.
+      Figure 03 represents a ground-up redesign of our humanoid platform, optimizing for
+      manufacturing scale, reliability, and cost efficiency.
+
+      Key improvements over Figure 02: 8% weight reduction through actuator simplification,
+      new hand design with improved grasping force and tactile sensing, Helix 2.0 pre-installed
+      with 500,000+ hours of training data from Figure 02 deployments.
+
+      We've been deploying Figure 03 with select customers since Q1 2025. Today we can share
+      that we have 500+ units operating across four commercial customers in automotive and logistics.
+
+      The road ahead: we're targeting 5,000 units deployed by end of 2025 and beginning
+      external commercial sales in H1 2026. The future of work is being built today.
+
+  - title: "Unitree G1: How China Built the Cheapest Humanoid Robot"
+    url: "https://spectrum.ieee.org/unitree-g1-humanoid-robot"
+    publication: "IEEE Spectrum"
+    author: "Evan Ackerman"
+    published_at: "2024-07-01T00:00:00Z"
+    text: |
+      When Unitree Robotics introduced the G1 humanoid robot at $16,000, it shocked an industry
+      accustomed to humanoid platforms costing hundreds of thousands of dollars.
+
+      The G1's low price point stems from Unitree's vertically integrated manufacturing in China,
+      reuse of actuator components from its Go2 quadruped lineup, and a willingness to accept
+      thin margins to grow market share. At $16,000, the G1 is accessible to university labs,
+      corporate R&D teams, and startups that previously couldn't afford humanoid test platforms.
+
+      The tradeoff: G1 has lower payload capacity (25kg vs 55kg for Apptronik Apollo), shorter
+      runtime (2 hours vs 4 hours), and fewer DOF in the hands compared to premium competitors.
+      Unitree targets developer adoption over enterprise deployment.
+
+      "The G1 is democratizing humanoid robotics research," said one CMU professor who received
+      a unit. "We can run 10 G1s for the price of one competitor platform."
+
+  - title: "Gemini Robotics: Google DeepMind Brings Gemini to Physical AI"
+    url: "https://deepmind.google/discover/blog/gemini-robotics/"
+    publication: "Google DeepMind Blog"
+    author: "Google DeepMind"
+    published_at: "2025-01-15T00:00:00Z"
+    text: |
+      We are introducing Gemini Robotics, our new family of AI models designed to bring Gemini's
+      reasoning and multimodal capabilities to physical robot control.
+
+      Gemini Robotics is built on Gemini 2.0 and is designed to be inherently multimodal,
+      reasoning about spatial relationships, following complex multi-step instructions, and
+      adapting to novel objects and environments. The model connects to robot hardware through
+      a dedicated action generation head that produces motor commands in real time.
+
+      In our evaluations, Gemini Robotics achieves 74.5% on the RT-2 evaluation suite and
+      demonstrates particularly strong performance on long-horizon tasks requiring multi-step
+      planning (38 steps average task length in our hardest evaluations).
+
+      We are also releasing Gemini Robotics-ER, an action-free version suitable for spatial
+      reasoning, embodied question answering, and robot training data labeling.
+
+      Partnership with Apptronik will bring Gemini Robotics to Apollo humanoid deployments
+      in controlled commercial environments starting in H2 2025.
+
+  - title: "The Real State of Humanoid Robots in 2025"
+    url: "https://spectrum.ieee.org/humanoid-robots-2025-reality-check"
+    publication: "IEEE Spectrum"
+    author: "Evan Ackerman"
+    published_at: "2025-09-01T00:00:00Z"
+    text: |
+      Amid the hype cycle around humanoid robots, it's worth grounding expectations in what
+      these systems can actually do today.
+
+      The most honest assessment: humanoid robots are performing real commercial work for the
+      first time in history. Figure at BMW, Digit at Amazon and GXO, Optimus at Tesla's own
+      factory — these are genuine milestones, not demos.
+
+      But the critics have valid points too. In the best-documented deployments, robots operate
+      at 3-5x slower cycle times than dedicated industrial automation. They require human
+      supervision. They fail unexpectedly in ways that would be unacceptable in a conventional
+      factory robot. The economics work only for niche applications where flexibility matters
+      more than throughput.
+
+      The most credible near-term bull case: humanoids become profitable in "cognitive labor
+      substitution" tasks — jobs requiring physical presence and task-switching but not high
+      throughput or micron precision. Think warehouse picking, light assembly, logistics.
+
+      The bear case: by the time humanoids reach cost-competitive autonomy, dedicated
+      fixed-function robots (cheaper, faster, more reliable) will have automated most of those
+      same jobs anyway.
+
+      The honest answer: we don't know yet. The next 24 months of commercial deployment data
+      will be decisive.

@@ -4,20 +4,20 @@ const HERO_ENTITIES = [
   {
     slug: "Figure_03",
     label: "Figure 03",
-    desc: "Latest-generation humanoid from Figure AI. Successor to Figure 02. Announced 2025 with redesigned hands, lower bill of materials, and home-readiness focus.",
-    meta: "Figure AI · 2025",
+    desc: "Figure AI's commercial-scale humanoid. $40B valuation, $1.5B Series C, 500+ units deployed across automotive and logistics by Q1 2026. Runs Helix 2.0 VLA trained on 500k hours.",
+    meta: "Figure AI · 2025–2026",
   },
   {
     slug: "Figure_02",
     label: "Figure 02",
-    desc: "Bipedal humanoid by Figure AI. Deployed at BMW Spartanburg. Runs Helix VLA model co-developed with OpenAI.",
+    desc: "First commercial Figure robot. $675M Series B (Feb 2024), BMW Spartanburg deployment, Helix VLA model. Retired OpenAI partnership; built proprietary AI stack in-house.",
     meta: "Figure AI · 2024",
   },
   {
     slug: "Tesla_Optimus",
     label: "Tesla Optimus",
-    desc: "Humanoid robot by Tesla. Gen 2 performs battery sorting tasks in Fremont factory. Trained on FSD infrastructure.",
-    meta: "Tesla · 2023–present",
+    desc: "Tesla's humanoid robot. Working in Fremont factory since Jan 2025. Musk targets 'hundreds of thousands' in 2026. Goldman Sachs flagged repeated timeline slippage.",
+    meta: "Tesla · 2022–present",
   },
   {
     slug: "Unitree_G1",
@@ -28,8 +28,8 @@ const HERO_ENTITIES = [
   {
     slug: "π0",
     label: "π0",
-    desc: "General-purpose robot foundation model by Physical Intelligence. Flow matching over PaliGemma VLM backbone.",
-    meta: "Physical Intelligence · 2024",
+    desc: "Foundation model family by Physical Intelligence ($400M Series B, $2.4B valuation). π0.5 released Q1 2025. Flow-matching VLA achieving SOTA on laundry folding, table bussing.",
+    meta: "Physical Intelligence · 2024–present",
   },
   {
     slug: "Apptronik_Apollo",
@@ -46,8 +46,8 @@ const HERO_ENTITIES = [
   {
     slug: "NVIDIA_GR00T",
     label: "NVIDIA GR00T",
-    desc: "General-purpose foundation model for humanoid robots. Partnered with Figure, 1X, Boston Dynamics, Apptronik, Agility, Sanctuary, and Unitree.",
-    meta: "NVIDIA · 2024–present",
+    desc: "GR00T N1 (1.5B params) released Nov 2024; GR00T N2 (3B) at GTC 2026 adds world-model planning. 30+ robot company partners. CUDA-for-robots strategy.",
+    meta: "NVIDIA · 2024–2026",
   },
   {
     slug: "NVIDIA_Cosmos",
@@ -64,8 +64,8 @@ const HERO_ENTITIES = [
   {
     slug: "Skild_AI",
     label: "Skild AI",
-    desc: "Robot foundation model startup co-founded by CMU's Deepak Pathak + Abhinav Gupta. $300M Series A at $1.5B valuation. Cross-embodiment policies.",
-    meta: "Skild AI · 2024",
+    desc: "Cross-embodiment robot brain by Deepak Pathak + Abhinav Gupta (CMU). $300M Series A → $500M follow-on at $4B. Generalist policies from zero fine-tuning.",
+    meta: "Skild AI · 2024–2025",
   },
   {
     slug: "Covariant",
@@ -97,11 +97,23 @@ const HERO_ENTITIES = [
     desc: "Chinese humanoid with viral demos showing high-speed dexterity. Specs (10 m/s end-effector, 10 kg/arm) impressive but partly disputed by community.",
     meta: "Astribot · 2024",
   },
+  {
+    slug: "Fourier_Intelligence_GR-2",
+    label: "Fourier GR-2",
+    desc: "Second-gen humanoid from Fourier Intelligence. 40 DoF, 160N grip force. Dual-market strategy: rehabilitation exoskeletons + industrial assembly. NVIDIA GR00T partner.",
+    meta: "Fourier Intelligence · 2024",
+  },
+  {
+    slug: "Humanoid_robotics_industry",
+    label: "Industry Overview",
+    desc: "The humanoid robotics industry in 2025-2026: $38B Goldman Sachs forecast, bifurcation between foundation-model-first and hardware-first companies, 3,000+ units deployed.",
+    meta: "Goldman Sachs · Morgan Stanley · 2025–2026",
+  },
 ];
 
 const STATS = [
-  { value: "15", label: "Hero entities" },
-  { value: "120+", label: "Claim memories" },
+  { value: "18", label: "Hero entities" },
+  { value: "200+", label: "Claim memories" },
   { value: "3", label: "Perspective lanes" },
   { value: "4", label: "Source types" },
   { value: "100%", label: "Agent-written" },
