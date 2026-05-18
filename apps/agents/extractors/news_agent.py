@@ -53,7 +53,7 @@ Article text:
 
 Extract claims about humanoid robots from this article."""
 
-    raw = chat_extract(SYSTEM, user_msg)
+    raw = chat_extract(system=SYSTEM, user=user_msg)
     claims_raw = raw.get("claims") or []
 
     source_prefix = hashlib.md5(url.encode()).hexdigest()[:8]
