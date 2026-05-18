@@ -88,11 +88,28 @@ def synthesize_article(entity: str, *, max_claims: int = 30) -> dict[str, Any]:
         query=f"everything known about {entity}",
         max_results=max_claims,
     )
-    # Post-filter on subject_entity for precision.
-    chunks = [
-        c for c in raw
-        if (c.get("metadata") or {}).get("subject_entity", "").lower() == entity.lower()
-    ] or raw
+    # Post-filter: exact match → fuzzy match → unfiltered fallback.
+    # Fuzzy handles cases where tweet agent writes "Figure AI" for entity "Figure 02".
+    entity_lower = entity.lower()
+    entity_words = set(entity_lower.split())
+
+    def _entity_match(chunk: dict) -> bool:
+        subj = (chunk.get("metadata") or {}).get("subject_entity", "").lower()
+        if subj == entity_lower:
+            return True
+        # Partial: one name contains the other (e.g. "figure ai" ↔ "figure 02")
+        if entity_lower in subj or subj in entity_lower:
+            return True
+        # Word overlap: ≥1 non-trivial word shared
+        subj_words = set(subj.split()) - {"the", "a", "an", "of", "and"}
+        significant = entity_words - {"the", "a", "an", "of", "and", "02", "gen", "2"}
+        if significant and significant & subj_words:
+            return True
+        return False
+
+    exact = [c for c in raw if (c.get("metadata") or {}).get("subject_entity", "").lower() == entity_lower]
+    fuzzy = [c for c in raw if _entity_match(c)] if not exact else exact
+    chunks = fuzzy or raw
 
     # Attach footnote IDs in stable order.
     for i, chunk in enumerate(chunks, start=1):

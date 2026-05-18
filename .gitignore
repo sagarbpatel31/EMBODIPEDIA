@@ -36,3 +36,4 @@ yarn-debug.log*
 
 # run outputs
 data/last_extraction.json
+.claude/
