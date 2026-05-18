@@ -17,7 +17,7 @@ The architectural distinctive is the three perspective sub-tenants. Where ordina
 | Surface | URL | What it does |
 | ------- | --- | ------------ |
 | Portal homepage | `/` | 15 hero entities, 4-step pipeline flow diagram, stats banner |
-| Entity article | `/wiki/<Entity>` | Wikipedia-grade prose, infobox, citations, hover footnotes, quality badge |
+| Entity article | `/wiki/<Entity>` | Wikipedia-grade prose, infobox, citations, **entity hover tooltips**, quality badge |
 | Time-travel slider | top of every article | 5 snapshot dots — drag to past date, article re-renders with only claims published by then |
 | Stale + self-heal | top of stale articles | Banner shows article age, "refresh now" button POSTs `/api/refresh/<slug>` |
 | Talk page | `/wiki/Talk:<Entity>` | Real bull-vs-bear debate sections with color-coded perspective pills + Supersession Log |
@@ -56,17 +56,22 @@ apps/
       special/links/            What Links Here
     components/
       CommandPalette.tsx        ⌘K global shortcut → /api/ask
-      EntityGraph.tsx           SVG force-directed graph viz
+      EntityGraph.tsx           Canvas force-directed graph viz
       TimeTravelSlider.tsx      Snapshot-date scrubber
-      StaleBanner.tsx           Self-healing trigger
+      StaleBanner.tsx           Self-healing trigger (POST /api/refresh)
       Infobox.tsx               Wikipedia-style sidebar
+      WikiBody.tsx              Entity hover tooltips (fetches /api/preview)
+      PerspectiveToggle.tsx     Bull / bear / canonical switcher
+      DidYouKnow.tsx            Dynamic facts from /api/did-you-know
+      AnimatedStats.tsx         IntersectionObserver count-up animation
     lib/
       api.ts                    Typed FastAPI client
       markdown.ts               Tiny Wikipedia-flavoured renderer
 
   agents/                       Python FastAPI + HydraDB SDK
     main.py                     /api/wiki, /api/talk, /api/ask, /api/links,
-                                /api/history, /api/recent, /api/refresh
+                                /api/history, /api/recent, /api/refresh,
+                                /api/preview, /api/did-you-know
     hydradb_client.py           Wrapper over hydra_db SDK (commented per call)
     perspective_router.py       Claim → {canonical, bull, bear} routing
     synthesis_agent.py          Article body synthesis + as_of time-travel
@@ -86,6 +91,28 @@ scripts/
   ingest_tweets.py              Ingest seed tweets via LLM extractor
   ingest_seed_claims.py         Ingest hand-curated claims directly
   ingest_sources.py             Run LLM extraction on phase 2 sources
+```
+
+---
+
+## 🌐 Deployment
+
+### Frontend → Vercel
+
+```bash
+cd apps/web && npx vercel --prod
+# Set env var in Vercel dashboard:
+# NEXT_PUBLIC_AGENTS_URL = https://your-railway-app.railway.app
+```
+
+### Backend → Railway
+
+```bash
+# 1. Push repo to GitHub
+git push origin main
+# 2. Create new Railway project → "Deploy from GitHub repo"
+# 3. Set env vars: HYDRADB_API_KEY, OPENAI_API_KEY
+# 4. Railway auto-detects railway.json and starts uvicorn
 ```
 
 ---

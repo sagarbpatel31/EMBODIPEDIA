@@ -480,6 +480,86 @@ def ingest_one_tweet(tweet: TweetIn) -> dict[str, Any]:
     return {"claims_written": len(claims), "claims": claims}
 
 
+@app.get("/api/preview/{slug}")
+def entity_preview(slug: str) -> dict[str, Any]:
+    """Mini entity summary for hover tooltips — first 2 claims + count."""
+    from . import hydradb_client as hc
+    entity = _slug_to_entity(slug)
+    try:
+        chunks = hc.recall_subtenant(
+            sub_tenant=hc.SUB_TENANT_CANONICAL,
+            query=entity,
+            max_results=10,
+        )
+    except Exception:
+        chunks = []
+
+    claims: list[str] = []
+    source_types: set[str] = set()
+    for c in chunks:
+        meta = c.get("metadata") or {}
+        if meta.get("subject_entity", "").lower() == entity.lower():
+            text = meta.get("claim_text") or c.get("content", "")
+            if text and len(text) > 20:
+                claims.append(text)
+            st = meta.get("source_type")
+            if st:
+                source_types.add(st)
+
+    summary = " ".join(claims[:2]) if claims else f"No indexed claims for {entity}."
+    if len(summary) > 220:
+        summary = summary[:217] + "…"
+    return {
+        "entity": entity,
+        "summary": summary,
+        "claim_count": len(claims),
+        "source_types": sorted(source_types),
+    }
+
+
+@app.get("/api/did-you-know")
+def did_you_know() -> dict[str, Any]:
+    """Five high-confidence, entity-diverse facts for the homepage."""
+    from . import hydradb_client as hc
+    import random
+
+    try:
+        chunks = hc.recall_subtenant(
+            sub_tenant=hc.SUB_TENANT_CANONICAL,
+            query="humanoid robot milestone capability funding deployment",
+            max_results=80,
+        )
+    except Exception:
+        chunks = []
+
+    facts: list[dict[str, Any]] = []
+    seen_entities: set[str] = set()
+    for c in chunks:
+        meta = c.get("metadata") or {}
+        try:
+            conf = float(meta.get("confidence") or 0)
+        except (ValueError, TypeError):
+            conf = 0.0
+        if conf < 0.80:
+            continue
+        text = meta.get("claim_text") or c.get("content", "")
+        entity = meta.get("subject_entity", "")
+        if not text or len(text) < 40 or not entity:
+            continue
+        if entity in seen_entities:
+            continue
+        seen_entities.add(entity)
+        facts.append({
+            "text": text,
+            "entity": entity,
+            "slug": entity.replace(" ", "_"),
+            "source_type": meta.get("source_type", ""),
+        })
+
+    random.shuffle(facts)
+    return {"facts": facts[:6]}
+
+
 if __name__ == "__main__":
     import uvicorn
 

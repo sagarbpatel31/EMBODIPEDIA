@@ -4,6 +4,7 @@ import { Infobox } from "@/components/Infobox";
 import { PerspectiveToggle } from "@/components/PerspectiveToggle";
 import { StaleBanner } from "@/components/StaleBanner";
 import { TimeTravelSlider } from "@/components/TimeTravelSlider";
+import { WikiBody } from "@/components/WikiBody";
 import {
   fetchArticle,
   fetchHistory,
@@ -300,7 +301,7 @@ export default async function WikiSlugPage({
   const article = await fetchArticle(baseSlug, asOf, perspective);
   if (!article) notFound();
 
-  const html = renderArticleMarkdown(article.markdown, article.references);
+  const html = renderArticleMarkdown(article.markdown, article.references, article.entity);
   const age = dayDiff(article.last_ingested_at);
   const activePerspective = perspective || "canonical";
   // Demo-friendly stale threshold (article older than this triggers banner).
@@ -358,10 +359,7 @@ export default async function WikiSlugPage({
       )}
 
       <div className="wiki-main">
-        <div
-          className="wiki-body"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        <WikiBody html={html} />
         <Infobox entity={article.entity} references={article.references} />
       </div>
 

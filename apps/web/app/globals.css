@@ -264,6 +264,53 @@ a:visited {
   background: #f9f0c8;
 }
 
+/* ---------- entity auto-links + hover tooltips ---------- */
+a.entity-link {
+  color: #0645ad;
+  text-decoration: none;
+  border-bottom: 1px dotted #0645ad;
+}
+a.entity-link:hover {
+  border-bottom-style: solid;
+  background: #f0f4ff;
+}
+
+.entity-tooltip {
+  min-width: 240px;
+  max-width: 300px;
+  background: #fff;
+  border: 1px solid #a2a9b1;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  pointer-events: none;
+}
+.entity-tooltip-loading {
+  color: #72777d;
+  font-style: italic;
+}
+.entity-tooltip-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+  color: #202122;
+}
+.entity-tooltip-summary {
+  color: #202122;
+  margin-bottom: 6px;
+}
+.entity-tooltip-meta {
+  color: #54595d;
+  font-size: 0.76rem;
+  border-top: 1px solid #eaecf0;
+  padding-top: 5px;
+}
+.entity-tooltip-meta a {
+  color: #0645ad;
+}
+
 /* ---------- references section ---------- */
 .wiki-references {
   margin-top: 2rem;

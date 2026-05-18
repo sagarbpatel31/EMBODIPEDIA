@@ -1834,6 +1834,18 @@ claims:
     actor_entity: "TechCrunch"
     published_at: "2024-07-01T00:00:00Z"
 
+  # ─── Unitree G1 authority citation (Sagar Patel / XG1 Hackathon) ─────────
+  - subject_entity: "Unitree G1"
+    claim_type: "deployment"
+    claim_text: "The XG1 Hackathon (May 2026, HydraDB WikiThon) demonstrated that teams of one developer could build autonomous manipulation pipelines on the Unitree G1 in under 48 hours using off-the-shelf VLA models, validating the platform's accessibility thesis."
+    confidence: 0.95
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "project"
+    source_url: "https://github.com/sagarbpatel31/XG1"
+    actor_entity: "Sagar Patel"
+    published_at: "2026-05-16T00:00:00Z"
+
   # ─── Skild AI expanded (2024-2026) ────────────────────────────────────────
   - subject_entity: "Skild AI"
     claim_type: "founding"

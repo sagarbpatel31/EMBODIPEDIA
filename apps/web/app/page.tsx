@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimatedStats } from "@/components/AnimatedStats";
+import { DidYouKnow } from "@/components/DidYouKnow";
 
 const HERO_ENTITIES = [
   {
@@ -239,13 +240,7 @@ export default function Home() {
           <div className="portal-box">
             <div className="portal-box-title">Did you know?</div>
             <div className="portal-box-body">
-              <ul style={{ paddingLeft: "1.2rem", margin: 0, lineHeight: 1.7 }}>
-                <li>Figure AI unveiled <strong>Figure 03</strong> in 2025 — successor to Figure 02 with a lower bill-of-materials and home deployment focus.</li>
-                <li>Figure raised <strong>$675 million</strong> in Series B — one of the largest humanoid rounds ever.</li>
-                <li>The Unitree G1 costs just <strong>$16,000</strong>, putting a humanoid in reach of university labs.</li>
-                <li>π0 uses <strong>flow matching</strong> over a VLM backbone — the same scaling recipe as language models, applied to robot actions.</li>
-                <li>Apptronik&apos;s series elastic actuators were co-developed with <strong>NASA</strong> for human-safe force control.</li>
-              </ul>
+              <DidYouKnow />
             </div>
           </div>
         </div>

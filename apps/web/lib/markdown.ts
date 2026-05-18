@@ -1,4 +1,5 @@
 // Tiny Wikipedia-flavoured markdown renderer.
+// Auto-links known entity names to their /wiki/ pages for hover tooltips.
 // Supports: # / ## / ### headers, paragraphs, **bold**, _italic_,
 // [text](url) links, [^N] footnote markers, [unverified] inline badge.
 
@@ -74,7 +75,63 @@ function applyHeatmap(html: string, confMap: Map<number, number>): string {
   );
 }
 
-export function renderArticleMarkdown(md: string, refs?: Reference[]): string {
+// Sorted longest-first so "Tesla Optimus Gen 3" matches before "Tesla Optimus".
+const WIKI_ENTITY_LINKS: [string, string][] = [
+  ["NVIDIA GR00T N2", "NVIDIA_GR00T"],
+  ["NVIDIA GR00T N1", "NVIDIA_GR00T"],
+  ["NVIDIA GR00T", "NVIDIA_GR00T"],
+  ["Physical Intelligence", "Physical_Intelligence"],
+  ["Tesla Optimus Gen 3", "Tesla_Optimus"],
+  ["Tesla Optimus", "Tesla_Optimus"],
+  ["Apptronik Apollo", "Apptronik_Apollo"],
+  ["Boston Dynamics Atlas", "Boston_Dynamics_Atlas"],
+  ["Boston Dynamics", "Boston_Dynamics_Atlas"],
+  ["Agility Robotics Digit", "Agility_Robotics_Digit"],
+  ["Agility Robotics", "Agility_Robotics_Digit"],
+  ["Sanctuary AI Phoenix", "Sanctuary_AI_Phoenix"],
+  ["Sanctuary AI", "Sanctuary_AI_Phoenix"],
+  ["Skild AI", "Skild_AI"],
+  ["Unitree G1", "Unitree_G1"],
+  ["Figure 03", "Figure_03"],
+  ["Figure 02", "Figure_02"],
+  ["Gemini Robotics", "Gemini_Robotics"],
+  ["Astribot S1", "Astribot_S1"],
+  ["Covariant", "Covariant"],
+  ["GR00T N2", "NVIDIA_GR00T"],
+  ["GR00T N1", "NVIDIA_GR00T"],
+  ["Figure AI", "Figure_02"],
+].sort((a, b) => b[0].length - a[0].length);
+
+// Link entity names in text nodes only — splits on HTML tags so we never
+// mutate tag attributes or already-linked text.
+function autoLinkEntities(html: string, skipEntity?: string): string {
+  const parts = html.split(/(<[^>]+>)/g);
+  let insideAnchor = 0;
+  return parts
+    .map((part, i) => {
+      if (i % 2 === 1) {
+        // Tag — track anchor depth to avoid double-linking.
+        if (/^<a[\s>]/i.test(part)) insideAnchor++;
+        else if (/^<\/a>/i.test(part)) insideAnchor = Math.max(0, insideAnchor - 1);
+        return part;
+      }
+      if (insideAnchor > 0 || !part) return part;
+      let out = part;
+      for (const [name, slug] of WIKI_ENTITY_LINKS) {
+        if (skipEntity && name.toLowerCase() === skipEntity.toLowerCase()) continue;
+        const esc = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        // Replace only the first occurrence per text segment.
+        out = out.replace(
+          new RegExp(`\\b${esc}\\b`),
+          `<a href="/wiki/${slug}" class="entity-link">${name}</a>`,
+        );
+      }
+      return out;
+    })
+    .join("");
+}
+
+export function renderArticleMarkdown(md: string, refs?: Reference[], currentEntity?: string): string {
   const confMap = buildConfMap(refs);
   const lines = md.replace(/\r\n?/g, "\n").split("\n");
   const html: string[] = [];
@@ -103,5 +160,5 @@ export function renderArticleMarkdown(md: string, refs?: Reference[]): string {
     paragraph.push(line.trim());
   }
   flushParagraph();
-  return html.join("\n");
+  return autoLinkEntities(html.join("\n"), currentEntity);
 }
