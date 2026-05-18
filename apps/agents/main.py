@@ -480,6 +480,63 @@ def ingest_one_tweet(tweet: TweetIn) -> dict[str, Any]:
     return {"claims_written": len(claims), "claims": claims}
 
 
+class QuickIngestIn(BaseModel):
+    text: str
+    url: str = ""
+    author: str = ""
+    source_type: str = "tweet"  # tweet | news | general
+
+
+@app.post("/api/ingest/quick")
+def quick_ingest(payload: QuickIngestIn) -> dict[str, Any]:
+    """Live demo ingest — paste any text, extract claims, write to HydraDB.
+
+    Uses tweet_agent for tweets/general; news_agent for news articles.
+    Returns extracted claims + affected entity slugs for UI routing.
+    """
+    from datetime import datetime as dt
+    from .extractors.tweet_agent import ingest_tweet
+    from .extractors.news_agent import ingest_news
+
+    now_iso = dt.utcnow().isoformat() + "Z"
+
+    try:
+        if payload.source_type == "news":
+            article = {
+                "title": "Live ingestion",
+                "url": payload.url or f"live-ingest-{now_iso}",
+                "publication": payload.author or "user submission",
+                "author": payload.author or "",
+                "published_at": now_iso,
+                "text": payload.text,
+            }
+            claims = ingest_news(article, write_to_hydradb=True)
+        else:
+            tweet = {
+                "url": payload.url or f"live-ingest-{now_iso}",
+                "author": payload.author or "user submission",
+                "author_role": "live demo",
+                "published_at": now_iso,
+                "text": payload.text,
+            }
+            claims = ingest_tweet(tweet, write_to_hydradb=True)
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=str(err))
+
+    # Collect unique affected entities for UI "view article" links.
+    seen: dict[str, str] = {}
+    for c in claims:
+        e = (c.get("subject_entity") or "").strip()
+        if e and e not in seen:
+            seen[e] = e.replace(" ", "_")
+
+    return {
+        "claims_written": len(claims),
+        "claims": claims,
+        "entities": [{"entity": k, "slug": v} for k, v in seen.items()],
+    }
+
+
 @app.get("/api/preview/{slug}")
 def entity_preview(slug: str) -> dict[str, Any]:
     """Mini entity summary for hover tooltips — first 2 claims + count."""

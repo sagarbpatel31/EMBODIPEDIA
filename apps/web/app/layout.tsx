@@ -27,6 +27,7 @@ export default function RootLayout({
             </Link>
             <div className="wiki-topbar-links">
               <Link href="/special/recent">Recent changes</Link>
+              <Link href="/special/ingest" style={{ color: "#c27803", fontWeight: 600 }}>⚡ Live Ingest</Link>
               <Link href="/wiki/Figure_03">Figure 03</Link>
               <Link href="/wiki/π0">π0</Link>
               <Link href="/wiki/NVIDIA_GR00T">GR00T</Link>
