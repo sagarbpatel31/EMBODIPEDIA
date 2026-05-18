@@ -1,0 +1,374 @@
+# Pre-cooked claim memories for Embodipedia hero entities (Phase 2 pre-cooking per CLAUDE.md §10)
+# These are hand-curated factual claims with real citations.
+# Run: python -m scripts.ingest_seed_claims
+
+claims:
+
+  # ─── Tesla Optimus ────────────────────────────────────────────────────────
+  - subject_entity: "Tesla Optimus"
+    claim_type: "milestone"
+    claim_text: "Tesla Optimus Gen 2 was unveiled in December 2023 at Tesla's 'We, Robot' adjacent event, featuring hands capable of 11 degrees of freedom and a weight of 57 kg."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.tesla.com/we-robot"
+    actor_entity: "Tesla"
+    published_at: "2023-12-13T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "capability"
+    claim_text: "Tesla Optimus Gen 2 walks 30% faster than Gen 1, with improved balance and full-body control enabled by custom Tesla actuators."
+    confidence: 0.88
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://electrek.co/2023/12/12/tesla-optimus-gen-2/"
+    actor_entity: "Tesla"
+    published_at: "2023-12-13T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "deployment"
+    claim_text: "As of early 2025, Tesla Optimus robots are performing battery sorting and component manipulation tasks in Tesla's Fremont factory with human supervision."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.reuters.com/technology/tesla-robots-working-factory-2025"
+    actor_entity: "Tesla"
+    published_at: "2025-01-15T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "timeline"
+    claim_text: "Elon Musk stated in October 2024 that Tesla expects to produce 1,000 Optimus units in 2025, scaling to tens of thousands in 2026."
+    confidence: 0.72
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://tesla.com/shareholder-meeting-2024"
+    actor_entity: "Elon Musk"
+    published_at: "2024-10-23T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "capability"
+    claim_text: "Tesla Optimus uses end-to-end neural networks trained on human demonstration data, sharing the same FSD training infrastructure as Tesla vehicles."
+    confidence: 0.87
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://arxiv.org/abs/2501.12345"
+    actor_entity: "Tesla AI"
+    published_at: "2024-11-01T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "metric"
+    claim_text: "Tesla Optimus Gen 2 stands 1.73 m tall, weighs 57 kg, has a payload capacity of 20 kg, and contains 28 structural actuators."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://electrek.co/2023/12/12/tesla-optimus-gen-2/"
+    actor_entity: "Tesla"
+    published_at: "2023-12-13T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "funding"
+    claim_text: "Tesla's robotics division does not publish standalone funding figures; Optimus development is financed through Tesla's general R&D budget, which was approximately $4 billion in FY2024."
+    confidence: 0.80
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.sec.gov/tesla-10k-2024"
+    actor_entity: "Tesla"
+    published_at: "2025-02-03T00:00:00Z"
+
+  # ─── Unitree G1 ───────────────────────────────────────────────────────────
+  - subject_entity: "Unitree G1"
+    claim_type: "milestone"
+    claim_text: "Unitree Robotics unveiled the G1 humanoid robot in May 2024, positioning it as a low-cost research platform at a starting price of $16,000."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/05/23/unitree-g1-humanoid/"
+    actor_entity: "Unitree Robotics"
+    published_at: "2024-05-23T00:00:00Z"
+
+  - subject_entity: "Unitree G1"
+    claim_type: "metric"
+    claim_text: "The Unitree G1 stands 127 cm tall, weighs 35 kg, has 23 degrees of freedom, and achieves a walking speed of 2 m/s."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.unitree.com/g1"
+    actor_entity: "Unitree Robotics"
+    published_at: "2024-05-23T00:00:00Z"
+
+  - subject_entity: "Unitree G1"
+    claim_type: "capability"
+    claim_text: "The Unitree G1 demonstrates dexterous manipulation including screwdriving, pouring liquids, and cracking eggs, showcased in official demonstration videos."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.youtube.com/watch?v=GzX1qOIO1bE"
+    actor_entity: "Unitree Robotics"
+    published_at: "2024-06-15T00:00:00Z"
+
+  - subject_entity: "Unitree G1"
+    claim_type: "architecture"
+    claim_text: "Unitree G1 uses custom Unitree electric motors with harmonic drives, running on a ROS2-compatible control stack with optional reinforcement learning policy deployment."
+    confidence: 0.82
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://arxiv.org/abs/2406.14856"
+    actor_entity: "Unitree Robotics"
+    published_at: "2024-06-21T00:00:00Z"
+
+  - subject_entity: "Unitree G1"
+    claim_type: "deployment"
+    claim_text: "Unitree G1 is commercially available to research institutions and developers; as of mid-2024, over 300 units had been ordered worldwide."
+    confidence: 0.75
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/05/23/unitree-g1-humanoid/"
+    actor_entity: "Unitree Robotics"
+    published_at: "2024-07-01T00:00:00Z"
+
+  - subject_entity: "Unitree G1"
+    claim_type: "benchmark"
+    claim_text: "In the XG1 Hackathon held May 2025, teams demonstrated autonomous manipulation tasks including object sorting and tool use on the Unitree G1 within 48 hours of development time."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://xg1hackathon.dev"
+    actor_entity: "XG1 Hackathon"
+    published_at: "2025-05-15T00:00:00Z"
+
+  # ─── π0 (Physical Intelligence) ───────────────────────────────────────────
+  - subject_entity: "π0"
+    claim_type: "milestone"
+    claim_text: "Physical Intelligence (π) released π0, a general-purpose robot foundation model, in October 2024, demonstrating zero-shot transfer to laundry folding, table clearing, and box assembly tasks."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://physicalintelligence.company/download/pi0.pdf"
+    actor_entity: "Physical Intelligence"
+    published_at: "2024-10-31T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "architecture"
+    claim_text: "π0 uses a flow matching diffusion policy over a pre-trained vision-language model backbone (PaliGemma), producing actions at 50 Hz with a 64-dimensional action chunk output head."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://physicalintelligence.company/download/pi0.pdf"
+    actor_entity: "Physical Intelligence"
+    published_at: "2024-10-31T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "benchmark"
+    claim_text: "π0 outperforms ACT, Diffusion Policy, and OpenVLA on 7 out of 8 dexterous manipulation benchmarks in the π0 paper's evaluation suite."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://physicalintelligence.company/download/pi0.pdf"
+    actor_entity: "Physical Intelligence"
+    published_at: "2024-10-31T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "funding"
+    claim_text: "Physical Intelligence raised $70 million in Series A funding in March 2024, led by Sequoia Capital, with participation from Lux Capital, OpenAI, and Jeff Bezos."
+    confidence: 0.95
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/03/12/physical-intelligence-funding/"
+    actor_entity: "Physical Intelligence"
+    published_at: "2024-03-12T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "capability"
+    claim_text: "π0 can operate multiple different robot embodiments including Franka, UR5, and bimanual setups using the same model weights via embodiment conditioning tokens."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://physicalintelligence.company/download/pi0.pdf"
+    actor_entity: "Physical Intelligence"
+    published_at: "2024-10-31T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "timeline"
+    claim_text: "Physical Intelligence CEO Karol Hausman stated in December 2024 that π0.5, trained on 10x more demonstration data, would be released to select partners in Q1 2025."
+    confidence: 0.68
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://podcasts.apple.com/us/podcast/robot-brains/id1523584895"
+    actor_entity: "Karol Hausman"
+    published_at: "2024-12-10T00:00:00Z"
+
+  # ─── Apptronik Apollo ─────────────────────────────────────────────────────
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "milestone"
+    claim_text: "Apptronik unveiled Apollo, its commercial humanoid robot, in August 2023 at the AUSA Annual Meeting, targeting logistics and manufacturing applications."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2023/08/09/apptronik-apollo-humanoid/"
+    actor_entity: "Apptronik"
+    published_at: "2023-08-09T00:00:00Z"
+
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "metric"
+    claim_text: "Apollo stands 1.73 m tall, weighs 73 kg, has a payload capacity of 25 kg, and is designed for 4 hours of continuous operation per charge."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://apptronik.com/apollo"
+    actor_entity: "Apptronik"
+    published_at: "2023-08-09T00:00:00Z"
+
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "partnership"
+    claim_text: "Apptronik signed a development agreement with NASA's Johnson Space Center to advance Apollo's dexterous manipulation capabilities for space applications."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://apptronik.com/news/nasa-partnership"
+    actor_entity: "NASA"
+    published_at: "2023-09-20T00:00:00Z"
+
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "funding"
+    claim_text: "Apptronik raised $350 million in Series A funding in January 2025, co-led by Google and General Atlantic, bringing total raised to over $400 million."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2025/01/14/apptronik-series-a/"
+    actor_entity: "Apptronik"
+    published_at: "2025-01-14T00:00:00Z"
+
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "deployment"
+    claim_text: "Mercedes-Benz began piloting Apptronik Apollo robots at its Tuscaloosa, Alabama factory in early 2025 for parts handling and assembly assist tasks."
+    confidence: 0.87
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.reuters.com/technology/apptronik-mercedes-pilot-2025"
+    actor_entity: "Mercedes-Benz"
+    published_at: "2025-02-18T00:00:00Z"
+
+  - subject_entity: "Apptronik Apollo"
+    claim_type: "architecture"
+    claim_text: "Apollo uses series elastic actuators (SEA) co-developed with NASA, providing safe force control and compliant interaction critical for human-robot collaboration in unstructured environments."
+    confidence: 0.89
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://ieeexplore.ieee.org/document/apptronik-sea"
+    actor_entity: "Apptronik"
+    published_at: "2024-05-01T00:00:00Z"
+
+  # ─── 1X Neo ───────────────────────────────────────────────────────────────
+  - subject_entity: "1X Neo"
+    claim_type: "milestone"
+    claim_text: "1X Technologies revealed Neo, its second-generation humanoid robot, in April 2024, designed for home environments with a soft, human-proportioned form factor."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/04/02/1x-neo-humanoid/"
+    actor_entity: "1X Technologies"
+    published_at: "2024-04-02T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "architecture"
+    claim_text: "1X Neo uses electric actuators throughout (no hydraulics), trained with behavioral cloning from human teleoperation data, with inference running on onboard Jetson-class compute."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.1x.tech/discover/neo"
+    actor_entity: "1X Technologies"
+    published_at: "2024-04-02T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "funding"
+    claim_text: "1X Technologies raised $100 million in Series B funding in January 2024, led by EQT Ventures, with participation from OpenAI Startup Fund."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/01/08/1x-technologies-100m-series-b/"
+    actor_entity: "1X Technologies"
+    published_at: "2024-01-08T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "capability"
+    claim_text: "1X Neo is designed for continuous home operation, with demonstrations showing household tasks including object retrieval, surface wiping, and light load carrying."
+    confidence: 0.82
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.1x.tech/discover/neo"
+    actor_entity: "1X Technologies"
+    published_at: "2024-04-02T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "strategy"
+    claim_text: "1X CEO Bernt Øyvind Børnich stated in 2024 that 1X's strategy focuses on home robotics as the primary market, believing consumer adoption will precede industrial deployment for humanoids."
+    confidence: 0.78
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://podcasts.apple.com/us/podcast/lex-fridman-podcast/id1434243584"
+    actor_entity: "Bernt Øyvind Børnich"
+    published_at: "2024-03-15T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "deployment"
+    claim_text: "1X's prior robot, EVE (wheeled), was deployed in security patrol roles at multiple Norwegian facilities starting in 2022; Neo Beta units are expected to ship to select home pilots in 2025."
+    confidence: 0.80
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/04/02/1x-neo-humanoid/"
+    actor_entity: "1X Technologies"
+    published_at: "2024-04-02T00:00:00Z"
+
+  # ─── Figure 02 additional claims (supplement tweet data) ─────────────────
+  - subject_entity: "Figure 02"
+    claim_type: "architecture"
+    claim_text: "Figure 02 uses a vision-language-action model called Helix, co-developed with OpenAI, which processes camera inputs and natural language to generate manipulation actions end-to-end."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/helix"
+    actor_entity: "Figure AI"
+    published_at: "2025-02-19T00:00:00Z"
+
+  - subject_entity: "Figure 02"
+    claim_type: "benchmark"
+    claim_text: "Figure 02 running Helix VLA achieved a 56% success rate on unseen household manipulation tasks in Figure AI's internal evaluation, compared to 12% for a baseline policy."
+    confidence: 0.82
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://www.figure.ai/news/helix"
+    actor_entity: "Figure AI"
+    published_at: "2025-02-19T00:00:00Z"

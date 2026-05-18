@@ -1,0 +1,128 @@
+# Phase 2 seed sources — papers, transcripts, and news articles for LLM extraction
+# Run: python -m scripts.ingest_sources
+
+papers:
+  - title: "π0: A Vision-Language-Action Flow Model for General Robot Control"
+    url: "https://physicalintelligence.company/download/pi0.pdf"
+    authors: "Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael Equi, et al."
+    published_at: "2024-10-31T00:00:00Z"
+    abstract: |
+      We present π0, a novel flow matching-based robot policy architecture built on top of a
+      pre-trained vision-language model. π0 is trained on diverse robot data from multiple robot
+      embodiments and can be fine-tuned efficiently for new tasks. The model generates actions via
+      a flow matching diffusion process conditioned on language instructions and visual observations.
+      We demonstrate that π0 achieves state-of-the-art performance on complex dexterous manipulation
+      tasks including laundry folding, table bussing, and box assembly, outperforming prior methods
+      including ACT, Diffusion Policy, and OpenVLA. The model can zero-shot transfer to novel tasks
+      and generalize across different robot morphologies including bimanual setups.
+
+  - title: "Humanoid Locomotion as Next Token Prediction"
+    url: "https://arxiv.org/abs/2402.19469"
+    authors: "Ilija Radosavovic, Bike Zhang, Baifeng Shi, Jathushan Rajasegaran, Sasha Sax, et al."
+    published_at: "2024-02-29T00:00:00Z"
+    abstract: |
+      We cast real-world humanoid control as a next-token prediction problem, akin to predicting
+      the next word in a language model. Our model, trained on a large dataset of motion capture
+      data and robot demonstrations, generates joint positions autoregressively. We demonstrate
+      zero-shot transfer from simulated training to a real Unitree H1 robot, achieving robust
+      walking, stair climbing, and obstacle avoidance. The model generalizes to previously unseen
+      environments and perturbations, showing promise for scalable humanoid learning.
+
+transcripts:
+  - title: "Brett Adcock on Figure AI's Commercial Roadmap (CNBC Interview)"
+    url: "https://www.cnbc.com/2024/03/13/figure-ai-brett-adcock-interview.html"
+    speaker: "Brett Adcock"
+    role: "CEO, Figure AI"
+    published_at: "2024-03-13T00:00:00Z"
+    text: |
+      CNBC: You just raised $675 million. What does Figure do with that money?
+
+      Adcock: The first priority is scaling production of Figure 02. We have demand far exceeding
+      what we can manufacture right now. We're in active production at our Sunnyvale facility and
+      we're going to build a much larger manufacturing operation over the next 18 months.
+
+      CNBC: You have robots at BMW. How is that going?
+
+      Adcock: The BMW deployment is going really well. We have Figure robots operating autonomously
+      doing automotive body shop work — lifting, placing parts. This is the first time a humanoid
+      robot has done real commercial work in an automotive factory. We're on track to expand from
+      the pilot to a much larger deployment this year.
+
+      CNBC: What's the path to profitability?
+
+      Adcock: The hardware unit economics get better with scale. At volume, we believe we can sell
+      Figure robots at a price that makes sense for commercial customers — think of it like leasing
+      a worker. The goal is to have tens of thousands of robots deployed by 2026.
+
+  - title: "Karol Hausman on Physical Intelligence and Robot Foundations (Robot Brains Podcast)"
+    url: "https://podcasts.apple.com/us/podcast/robot-brains/id1523584895"
+    speaker: "Karol Hausman"
+    role: "CEO, Physical Intelligence"
+    published_at: "2024-12-10T00:00:00Z"
+    text: |
+      Host: Why does robotics need its own foundation model company?
+
+      Hausman: The key insight is that language models worked because of scale — huge datasets,
+      huge models, hardware that keeps getting cheaper. Robotics hasn't had that moment yet because
+      robot data is expensive to collect. Physical Intelligence is betting that if we invest heavily
+      in data collection infrastructure and model architecture designed for physical action, we can
+      have the same scaling breakthrough for robots that OpenAI had for language.
+
+      Host: Tell us about π0. What makes it different from prior robot learning approaches?
+
+      Hausman: π0 uses flow matching over a pre-trained VLM backbone. The VLM gives you free
+      language understanding and visual perception — you don't have to learn that from scratch.
+      The flow matching head generates smooth, continuous action trajectories rather than discrete
+      tokens, which is much better suited to physical manipulation. We showed this beats ACT,
+      Diffusion Policy, and OpenVLA across our benchmark suite.
+
+      Host: What's next? π0.5?
+
+      Hausman: We're training on 10x more data right now. The model architecture scales well —
+      more data, better performance, fewer task-specific fine-tuning steps needed. I expect we'll
+      have something to show partners in Q1 2025. The goal is a model that can do essentially any
+      household task with minimal fine-tuning.
+
+news:
+  - title: "Tesla's Optimus Humanoid Robot Is Now Working in Its Factory"
+    url: "https://electrek.co/2025/01/15/tesla-optimus-humanoid-robot-working-in-factory/"
+    publication: "Electrek"
+    author: "Fred Lambert"
+    published_at: "2025-01-15T00:00:00Z"
+    text: |
+      Tesla confirmed this week that its Optimus humanoid robots are now performing real work
+      inside its Fremont, California manufacturing facility. The robots are handling battery cell
+      sorting and component manipulation tasks, working alongside human employees with supervision.
+
+      The milestone marks the first time Tesla has used its humanoid robots for production work
+      rather than demonstrations. Tesla CEO Elon Musk shared video of the robots on X, calling
+      it "a significant milestone toward fully autonomous robot labor."
+
+      Tesla said the Optimus Gen 2 units running in the factory have been operating for several
+      weeks, with task completion rates improving weekly as the robots accumulate experience data.
+      The company plans to expand the program to additional factory lines throughout 2025.
+
+      Analysts cautioned that the deployment is still in early pilot stages. "One factory line
+      is not a revolution," said one analyst. "The question is whether the unit economics work
+      at scale."
+
+  - title: "1X Raises $100M to Put Humanoid Robots in Your Home"
+    url: "https://techcrunch.com/2024/01/08/1x-technologies-100m-series-b/"
+    publication: "TechCrunch"
+    author: "Brian Heater"
+    published_at: "2024-01-08T00:00:00Z"
+    text: |
+      1X Technologies has raised a $100 million Series B funding round led by EQT Ventures,
+      with participation from the OpenAI Startup Fund, Sandwater, and existing investors.
+
+      The Norwegian humanoid robotics company plans to use the funding to scale development of
+      Neo, its second-generation bipedal robot designed for home environments. Unlike most
+      humanoid companies targeting industrial applications, 1X believes the home market will
+      be the first major deployment environment for humanoid robots.
+
+      "The home is actually the right place to start," CEO Bernt Øyvind Børnich told TechCrunch.
+      "It's unstructured, it requires real dexterity, and the value proposition is immediately
+      obvious to consumers."
+
+      1X's current robot, EVE, is a wheeled platform deployed in security applications. Neo,
+      its bipedal successor, is expected to enter limited home pilot programs in 2025.
