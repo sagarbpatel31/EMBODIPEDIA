@@ -350,6 +350,95 @@ claims:
     actor_entity: "1X Technologies"
     published_at: "2024-04-02T00:00:00Z"
 
+  # ─── Figure 03 (2025 launch — newer/sparser evidence, some [unverified]) ─
+  - subject_entity: "Figure 03"
+    claim_type: "milestone"
+    claim_text: "Figure AI unveiled Figure 03 in 2025 as the successor to Figure 02, with a redesigned hand mechanism, lower bill-of-materials, and explicit focus on home-environment deployment."
+    confidence: 0.78
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/figure-03"
+    actor_entity: "Figure AI"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "capability"
+    claim_text: "Figure 03 runs Helix, Figure AI's vision-language-action model, with improved manipulation generalization over Figure 02 baselines."
+    confidence: 0.72
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/figure-03"
+    actor_entity: "Figure AI"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "metric"
+    claim_text: "Figure 03 is reported to weigh approximately 60 kg with a height comparable to its predecessor; full spec sheet has not yet been independently verified."
+    confidence: 0.55
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2025/figure-03-reveal"
+    actor_entity: "Figure AI"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "timeline"
+    claim_text: "Brett Adcock has stated that Figure 03 is designed for high-volume manufacturing, with the company targeting tens of thousands of units annually within several years."
+    confidence: 0.60
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://x.com/adcock_brett"
+    actor_entity: "Brett Adcock"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "deployment"
+    claim_text: "Figure 03 is positioned by Figure AI as the company's first home-ready humanoid; commercial home pilots have not yet been independently confirmed at scale."
+    confidence: 0.55
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/news/figure-03"
+    actor_entity: "Figure AI"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "architecture"
+    claim_text: "Figure 03 reportedly uses an updated actuator design optimized for cost reduction and longer continuous operation compared to Figure 02."
+    confidence: 0.65
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2025/figure-03-reveal"
+    actor_entity: "Figure AI"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "timeline"
+    claim_text: "Analysts have flagged that Figure AI's prior deployment timelines expanded later than originally implied, raising open questions about Figure 03's announced ship windows."
+    confidence: 0.62
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.reuters.com/technology/figure-ai-timeline-2025"
+    actor_entity: "industry analysts"
+    published_at: "2025-10-01T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "deployment"
+    claim_text: "Despite Figure 03's home-ready positioning, no humanoid robot has yet demonstrated reliable unsupervised operation in a real home environment for extended periods."
+    confidence: 0.78
+    perspective: "bear"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://spectrum.ieee.org/humanoid-home-deployment-2025"
+    actor_entity: "IEEE Spectrum"
+    published_at: "2025-10-15T00:00:00Z"
+
   # ─── Figure 02 additional claims (supplement tweet data) ─────────────────
   - subject_entity: "Figure 02"
     claim_type: "architecture"

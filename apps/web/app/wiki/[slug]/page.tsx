@@ -1,7 +1,13 @@
 import { notFound } from "next/navigation";
 
 import { Infobox } from "@/components/Infobox";
-import { fetchArticle, fetchTalkPage, type Reference } from "@/lib/api";
+import {
+  fetchArticle,
+  fetchHistory,
+  fetchTalkPage,
+  type HistoryEntry,
+  type Reference,
+} from "@/lib/api";
 import { renderArticleMarkdown } from "@/lib/markdown";
 
 interface Params {
@@ -173,20 +179,71 @@ export default async function WikiSlugPage({
 
   const action = typeof search.action === "string" ? search.action : null;
   if (action === "history") {
+    const history = await fetchHistory(baseSlug);
+    const entries: HistoryEntry[] = history?.entries ?? [];
+    const sourceCounts = new Map<string, number>();
+    for (const e of entries) {
+      const k = e.source_type || "?";
+      sourceCounts.set(k, (sourceCounts.get(k) ?? 0) + 1);
+    }
     return (
       <article className="wiki-article">
         <header className="wiki-header">
           <div>
-            <h1 className="wiki-title">{entity} — Edit History</h1>
+            <h1 className="wiki-title">{entity} — Revision History</h1>
             <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
-              Phase 4 surfaces a per-claim edit log here.
+              Every claim memory ingested by agents, sorted newest first
             </p>
           </div>
           <ArticleTabs baseSlug={baseSlug} active="history" />
         </header>
-        <section className="wiki-body">
-          <p>No revisions recorded yet. Phase 4 ships the audit log + time-travel slider.</p>
-        </section>
+
+        <div className="talk-perspective-bar">
+          <span className="talk-pill talk-pill-info">{entries.length} claim revisions</span>
+          {Array.from(sourceCounts.entries()).map(([src, n]) => (
+            <span key={src} className="talk-pill talk-pill-canonical">
+              {src}: {n}
+            </span>
+          ))}
+        </div>
+
+        {entries.length === 0 ? (
+          <section className="wiki-body">
+            <p><em>No revisions found. Agents haven&apos;t ingested any claims for this entity yet.</em></p>
+          </section>
+        ) : (
+          <section className="history-list">
+            {entries.map((e) => (
+              <div key={e.memory_id} className="history-row">
+                <div className="history-row-meta">
+                  <span className="history-row-time">
+                    {e.ingested_at ? e.ingested_at.slice(0, 19).replace("T", " ") + "Z" : "—"}
+                  </span>
+                  <span className={`talk-pill talk-pill-${e.sub_tenant}`}>{e.sub_tenant}</span>
+                  {e.perspective && e.perspective !== e.sub_tenant ? (
+                    <span className={`talk-pill talk-pill-${e.perspective}`}>{e.perspective}</span>
+                  ) : null}
+                  <span className="history-row-claimtype">{e.claim_type}</span>
+                  {e.confidence ? (
+                    <span className="history-row-conf">conf {parseFloat(e.confidence).toFixed(2)}</span>
+                  ) : null}
+                </div>
+                <div className="history-row-text">{e.claim_text}</div>
+                <div className="history-row-source">
+                  {e.actor_entity ? <span>{e.actor_entity} · </span> : null}
+                  {e.source_url ? (
+                    <a href={e.source_url} target="_blank" rel="noopener noreferrer">
+                      {e.source_type || "source"}
+                    </a>
+                  ) : null}
+                  {e.published_at ? (
+                    <span> · published {e.published_at.slice(0, 10)}</span>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
       </article>
     );
   }

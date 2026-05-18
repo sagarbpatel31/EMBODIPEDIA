@@ -57,6 +57,40 @@ export async function fetchTalkPage(slug: string): Promise<TalkPage | null> {
   }
 }
 
+export interface HistoryEntry {
+  memory_id: string;
+  sub_tenant: string;
+  subject_entity: string | null;
+  claim_type: string | null;
+  claim_text: string | null;
+  confidence: string | null;
+  perspective: string | null;
+  source_type: string | null;
+  source_url: string | null;
+  actor_entity: string | null;
+  published_at: string | null;
+  ingested_at: string | null;
+}
+
+export interface ArticleHistory {
+  entity: string;
+  slug: string;
+  count: number;
+  entries: HistoryEntry[];
+}
+
+export async function fetchHistory(slug: string): Promise<ArticleHistory | null> {
+  try {
+    const res = await fetch(`${AGENTS_URL}/api/history/${slug}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as ArticleHistory;
+  } catch {
+    return null;
+  }
+}
+
 export interface AskResponse {
   answer: string;
   chunks: Array<{

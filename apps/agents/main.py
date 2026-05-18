@@ -140,6 +140,56 @@ def ask_embodipedia(q: str, k: int = 10) -> dict[str, Any]:
     }
 
 
+@app.get("/api/history/{slug}")
+def article_history(slug: str) -> dict[str, Any]:
+    """Per-entity history feed — claims sorted by ingested_at desc.
+
+    Sourced from HydraDB recall metadata. Phase 4 will add immutable edit
+    log; for now we synthesize history from each claim's ingested_at +
+    published_at + confidence.
+    """
+    from . import hydradb_client as hc
+
+    entity = _slug_to_entity(slug)
+    entries: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+
+    for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+        try:
+            chunks = hc.recall_subtenant(
+                sub_tenant=sub,
+                query=f"everything known about {entity}",
+                max_results=40,
+            )
+        except Exception:
+            continue
+        for c in chunks:
+            meta = c.get("metadata") or {}
+            mid = meta.get("memory_id") or c.get("source_id")
+            if not mid or mid in seen_ids:
+                continue
+            seen_ids.add(mid)
+            entries.append(
+                {
+                    "memory_id": mid,
+                    "sub_tenant": sub,
+                    "subject_entity": meta.get("subject_entity"),
+                    "claim_type": meta.get("claim_type"),
+                    "claim_text": meta.get("claim_text") or c.get("content"),
+                    "confidence": meta.get("confidence"),
+                    "perspective": meta.get("perspective"),
+                    "source_type": meta.get("source_type"),
+                    "source_url": meta.get("source_url"),
+                    "actor_entity": meta.get("actor_entity"),
+                    "published_at": meta.get("published_at"),
+                    "ingested_at": meta.get("ingested_at"),
+                }
+            )
+
+    entries.sort(key=lambda e: e.get("ingested_at") or "", reverse=True)
+    return {"entity": entity, "slug": slug, "count": len(entries), "entries": entries}
+
+
 @app.get("/api/recent")
 def recent_changes(limit: int = 30) -> dict[str, Any]:
     """Recent claim ingestions across all sub-tenants."""
