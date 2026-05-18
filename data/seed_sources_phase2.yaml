@@ -1,4 +1,4 @@
-# Phase 2 seed sources — papers, transcripts, and news articles for LLM extraction
+# Phase 2 seed sources — papers, transcripts, and news for LLM extraction
 # Run: python -m scripts.ingest_sources
 
 papers:
@@ -25,8 +25,41 @@ papers:
       the next word in a language model. Our model, trained on a large dataset of motion capture
       data and robot demonstrations, generates joint positions autoregressively. We demonstrate
       zero-shot transfer from simulated training to a real Unitree H1 robot, achieving robust
-      walking, stair climbing, and obstacle avoidance. The model generalizes to previously unseen
-      environments and perturbations, showing promise for scalable humanoid learning.
+      walking, stair climbing, and obstacle avoidance.
+
+  - title: "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control"
+    url: "https://robotics-transformer2.github.io"
+    authors: "Anthony Brohan, Noah Brown, Justice Carbajal, Yevgen Chebotar, et al. (Google DeepMind)"
+    published_at: "2023-07-28T00:00:00Z"
+    abstract: |
+      We study how vision-language models trained on Internet-scale data can be incorporated directly
+      into end-to-end robotic control. We propose co-fine-tuning a state-of-the-art VLM on robotic
+      trajectory data and natural language responses. The resulting model, RT-2, exhibits remarkable
+      generalization: it can interpret novel commands, reason about previously unseen objects, and
+      perform multi-step semantic reasoning. RT-2 substantially outperforms RT-1 on a variety of
+      generalization metrics across diverse manipulation tasks.
+
+  - title: "Cosmos World Foundation Model Platform for Physical AI"
+    url: "https://research.nvidia.com/labs/dir/cosmos"
+    authors: "NVIDIA Research"
+    published_at: "2025-01-06T00:00:00Z"
+    abstract: |
+      Cosmos is a pre-trained, physics-aware world foundation model platform. We release diffusion
+      and autoregressive models at 4B, 7B, 12B, and 14B parameter scales, trained on 20 million
+      hours of curated video. Cosmos models can be conditioned on text, images, or video to produce
+      physically plausible future scenes, and are designed for downstream use in robot policy
+      training, autonomous driving, and synthetic data generation.
+
+  - title: "Open X-Embodiment: Robotic Learning Datasets and RT-X Models"
+    url: "https://robotics-transformer-x.github.io"
+    authors: "Open X-Embodiment Collaboration (60+ institutions)"
+    published_at: "2023-10-03T00:00:00Z"
+    abstract: |
+      We present a consolidated dataset of robot trajectories from 22 different robot embodiments
+      and 21 institutions, with over 1 million episodes. We train policies on this dataset (RT-X)
+      and show that joint training across embodiments improves single-embodiment performance,
+      providing evidence that scaling robot learning across heterogeneous datasets is a viable path
+      to general-purpose robotic foundation models.
 
 transcripts:
   - title: "Brett Adcock on Figure AI's Commercial Roadmap (CNBC Interview)"
@@ -45,8 +78,7 @@ transcripts:
 
       Adcock: The BMW deployment is going really well. We have Figure robots operating autonomously
       doing automotive body shop work — lifting, placing parts. This is the first time a humanoid
-      robot has done real commercial work in an automotive factory. We're on track to expand from
-      the pilot to a much larger deployment this year.
+      robot has done real commercial work in an automotive factory.
 
       CNBC: What's the path to profitability?
 
@@ -73,15 +105,69 @@ transcripts:
       Hausman: π0 uses flow matching over a pre-trained VLM backbone. The VLM gives you free
       language understanding and visual perception — you don't have to learn that from scratch.
       The flow matching head generates smooth, continuous action trajectories rather than discrete
-      tokens, which is much better suited to physical manipulation. We showed this beats ACT,
-      Diffusion Policy, and OpenVLA across our benchmark suite.
+      tokens, which is much better suited to physical manipulation.
 
       Host: What's next? π0.5?
 
       Hausman: We're training on 10x more data right now. The model architecture scales well —
       more data, better performance, fewer task-specific fine-tuning steps needed. I expect we'll
-      have something to show partners in Q1 2025. The goal is a model that can do essentially any
-      household task with minimal fine-tuning.
+      have something to show partners in Q1 2025.
+
+  - title: "Andrej Karpathy on the Future of Physical AI (No Priors Podcast)"
+    url: "https://www.youtube.com/watch?v=karpathy-physical-ai"
+    speaker: "Andrej Karpathy"
+    role: "Founder, Eureka Labs; former OpenAI and Tesla"
+    published_at: "2024-11-20T00:00:00Z"
+    text: |
+      Host: How do you think physical AI is going to play out over the next decade?
+
+      Karpathy: I think the foundation model approach is going to win in robotics, just like it
+      won in language. The recipe is the same: pre-train on huge diverse data, then fine-tune for
+      tasks. The hard part is that robot data is much more expensive than text data, and we don't
+      yet have an analog to the open web for actions. So the field is going to be bottlenecked by
+      data infrastructure for a while.
+
+      Host: Which companies are best positioned?
+
+      Karpathy: The hardware companies — Figure, Tesla, Boston Dynamics — have an advantage in
+      that they own the embodiment and the data collection. The pure-software companies —
+      Physical Intelligence, Skild — have an advantage in talent density and focus. I'd be
+      cautious about anyone claiming AGI-for-robots in the next 2 years; the bottleneck is really
+      hard physical reality, and humans have an enormous lead in dexterity and common sense.
+
+      Host: Do you think humanoids are the right form factor?
+
+      Karpathy: For general purpose, yes — the world is built for human form. But for narrow
+      tasks, you should probably use a quadruped or a fixed manipulator. I expect humanoids to be
+      the platform that wins the long tail and quadrupeds plus manipulators to dominate near-term
+      ROI cases like warehouses.
+
+  - title: "Jim Fan on Robot Foundation Models and Synthetic Data (Latent Space Podcast)"
+    url: "https://www.latent.space/p/jim-fan-robotics"
+    speaker: "Jim Fan"
+    role: "Senior Research Manager, NVIDIA GEAR Lab"
+    published_at: "2024-10-08T00:00:00Z"
+    text: |
+      Host: NVIDIA shipped GR00T, Cosmos, and Isaac all in one year. What's the unified vision?
+
+      Fan: The bet is that synthetic data and real data have to be combined. Real robot data is
+      scarce. Synthetic data from physics simulators is abundant but has a sim-to-real gap. World
+      foundation models like Cosmos give us a third option: generate physically plausible video
+      from text, then use that video as supervision for robot policies. If you can blend these
+      three sources, you get a path to scaling that's actually feasible.
+
+      Host: How does this compete with what Physical Intelligence and Skild are doing?
+
+      Fan: They're doing real-data-heavy approaches. We're doing real plus simulated plus generated.
+      I think both approaches will end up converging — the question is whether you bootstrap from
+      simulation, generated video, or real teleoperation data.
+
+      Host: What's the timeline for actually useful humanoids?
+
+      Fan: For controlled commercial environments — warehouses, factories — within 2-3 years.
+      For unstructured environments like homes, much longer. The hardest problem isn't perception
+      or planning, it's fine motor control plus reliability over millions of repetitions, and
+      that's a hardware problem as much as an AI problem.
 
 news:
   - title: "Tesla's Optimus Humanoid Robot Is Now Working in Its Factory"
@@ -98,13 +184,8 @@ news:
       rather than demonstrations. Tesla CEO Elon Musk shared video of the robots on X, calling
       it "a significant milestone toward fully autonomous robot labor."
 
-      Tesla said the Optimus Gen 2 units running in the factory have been operating for several
-      weeks, with task completion rates improving weekly as the robots accumulate experience data.
-      The company plans to expand the program to additional factory lines throughout 2025.
-
-      Analysts cautioned that the deployment is still in early pilot stages. "One factory line
-      is not a revolution," said one analyst. "The question is whether the unit economics work
-      at scale."
+      Analysts cautioned that the deployment is still in early pilot stages. "One factory line is
+      not a revolution," said one analyst. "The question is whether the unit economics work at scale."
 
   - title: "1X Raises $100M to Put Humanoid Robots in Your Home"
     url: "https://techcrunch.com/2024/01/08/1x-technologies-100m-series-b/"
@@ -112,17 +193,47 @@ news:
     author: "Brian Heater"
     published_at: "2024-01-08T00:00:00Z"
     text: |
-      1X Technologies has raised a $100 million Series B funding round led by EQT Ventures,
-      with participation from the OpenAI Startup Fund, Sandwater, and existing investors.
+      1X Technologies has raised a $100 million Series B funding round led by EQT Ventures, with
+      participation from the OpenAI Startup Fund, Sandwater, and existing investors. The Norwegian
+      humanoid robotics company plans to use the funding to scale development of Neo, its
+      second-generation bipedal robot designed for home environments.
 
-      The Norwegian humanoid robotics company plans to use the funding to scale development of
-      Neo, its second-generation bipedal robot designed for home environments. Unlike most
-      humanoid companies targeting industrial applications, 1X believes the home market will
-      be the first major deployment environment for humanoid robots.
+      Unlike most humanoid companies targeting industrial applications, 1X believes the home
+      market will be the first major deployment environment for humanoid robots.
 
-      "The home is actually the right place to start," CEO Bernt Øyvind Børnich told TechCrunch.
-      "It's unstructured, it requires real dexterity, and the value proposition is immediately
-      obvious to consumers."
+  - title: "NVIDIA Unveils Project GR00T at GTC 2024"
+    url: "https://nvidianews.nvidia.com/news/nvidia-announces-project-groot"
+    publication: "NVIDIA Newsroom"
+    author: "NVIDIA Communications"
+    published_at: "2024-03-18T00:00:00Z"
+    text: |
+      NVIDIA founder and CEO Jensen Huang announced Project GR00T, a general-purpose foundation
+      model for humanoid robots, at GTC 2024. GR00T-powered robots will be able to understand
+      natural language and emulate movement by observing human actions, the company said.
 
-      1X's current robot, EVE, is a wheeled platform deployed in security applications. Neo,
-      its bipedal successor, is expected to enter limited home pilot programs in 2025.
+      Initial partners announced include Agility Robotics, Apptronik, Boston Dynamics, Figure AI,
+      Fourier Intelligence, Sanctuary AI, Unitree Robotics, and 1X Technologies. NVIDIA also
+      announced Jetson Thor, a new computing platform based on the Blackwell architecture, designed
+      specifically for humanoid robotics workloads.
+
+      "The next wave of AI is robotics, and physical AI is the biggest opportunity ahead of us,"
+      Huang said during the keynote. Industry analysts noted that NVIDIA's positioning mirrors its
+      successful strategy with CUDA for general computing and Drive for autonomous vehicles.
+
+  - title: "Amazon Acquires Covariant Talent and Licenses Foundation Models"
+    url: "https://techcrunch.com/2024/08/30/amazon-covariant-licensing/"
+    publication: "TechCrunch"
+    author: "Devin Coldewey"
+    published_at: "2024-08-30T00:00:00Z"
+    text: |
+      Amazon has agreed to license robotic foundation models developed by Covariant and to hire
+      the company's three co-founders — Pieter Abbeel, Peter Chen, and Rocky Duan — along with
+      about a quarter of Covariant's staff, the companies confirmed Friday.
+
+      The deal, structured as an acqui-hire-plus-license rather than a traditional acquisition,
+      follows a similar pattern as Amazon's hiring of Adept's leadership in June. Covariant will
+      continue to operate independently and serve its existing customers, though many in the
+      industry view its long-term independent prospects as diminished.
+
+      Pieter Abbeel said in a statement: "Joining Amazon allows us to deploy our foundation models
+      at a scale that's not feasible for an independent startup."

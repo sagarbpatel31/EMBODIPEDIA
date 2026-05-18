@@ -43,12 +43,67 @@ const HERO_ENTITIES = [
     desc: "Home-focused bipedal humanoid by 1X Technologies. Fully electric, trained on human teleoperation data.",
     meta: "1X Technologies · 2024",
   },
+  {
+    slug: "NVIDIA_GR00T",
+    label: "NVIDIA GR00T",
+    desc: "General-purpose foundation model for humanoid robots. Partnered with Figure, 1X, Boston Dynamics, Apptronik, Agility, Sanctuary, and Unitree.",
+    meta: "NVIDIA · 2024–present",
+  },
+  {
+    slug: "NVIDIA_Cosmos",
+    label: "NVIDIA Cosmos",
+    desc: "Open physics-aware world foundation models, 4B–14B parameters, trained on 20M hours of video — synthetic data engine for robot policies.",
+    meta: "NVIDIA · 2025",
+  },
+  {
+    slug: "Google_Gemini_Robotics",
+    label: "Gemini Robotics",
+    desc: "Google DeepMind's VLA model built on Gemini 2.0. Folds origami, packs bags, plays cards. Partnered with Apptronik on humanoid embodiment.",
+    meta: "Google DeepMind · 2025",
+  },
+  {
+    slug: "Skild_AI",
+    label: "Skild AI",
+    desc: "Robot foundation model startup co-founded by CMU's Deepak Pathak + Abhinav Gupta. $300M Series A at $1.5B valuation. Cross-embodiment policies.",
+    meta: "Skild AI · 2024",
+  },
+  {
+    slug: "Covariant",
+    label: "Covariant",
+    desc: "Foundation model lab from Pieter Abbeel. Released RFM-1; founders + tech absorbed into Amazon via licensing deal in Aug 2024.",
+    meta: "Covariant / Amazon · 2024",
+  },
+  {
+    slug: "Boston_Dynamics_Atlas",
+    label: "Atlas (electric)",
+    desc: "Boston Dynamics' new electric humanoid, replacing the hydraulic Atlas in April 2024. First commercial partner: Hyundai. Now paired with TRI behavior models.",
+    meta: "Boston Dynamics · 2024",
+  },
+  {
+    slug: "Agility_Robotics_Digit",
+    label: "Agility Digit",
+    desc: "First humanoid deployed under a commercial RaaS agreement (GXO Logistics, 2024). Also piloted by Amazon at BFI1 Sumner.",
+    meta: "Agility Robotics · 2023–present",
+  },
+  {
+    slug: "Sanctuary_AI_Phoenix",
+    label: "Sanctuary Phoenix",
+    desc: "Sixth-generation general-purpose humanoid from Geordie Rose's Sanctuary AI. Carbon cognitive architecture. Piloted at Magna automotive plants.",
+    meta: "Sanctuary AI · 2023",
+  },
+  {
+    slug: "Astribot_S1",
+    label: "Astribot S1",
+    desc: "Chinese humanoid with viral demos showing high-speed dexterity. Specs (10 m/s end-effector, 10 kg/arm) impressive but partly disputed by community.",
+    meta: "Astribot · 2024",
+  },
 ];
 
 const STATS = [
-  { value: "7", label: "Hero entities" },
-  { value: "60+", label: "Claim memories" },
-  { value: "3", label: "Sub-tenant lanes" },
+  { value: "15", label: "Hero entities" },
+  { value: "120+", label: "Claim memories" },
+  { value: "3", label: "Perspective lanes" },
+  { value: "4", label: "Source types" },
   { value: "100%", label: "Agent-written" },
 ];
 

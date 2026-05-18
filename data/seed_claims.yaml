@@ -461,3 +461,397 @@ claims:
     source_url: "https://www.figure.ai/news/helix"
     actor_entity: "Figure AI"
     published_at: "2025-02-19T00:00:00Z"
+
+  # ─── NVIDIA GR00T ────────────────────────────────────────────────────────
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "milestone"
+    claim_text: "NVIDIA unveiled Project GR00T, a general-purpose foundation model for humanoid robots, at GTC March 2024, presented by founder and CEO Jensen Huang."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://nvidianews.nvidia.com/news/nvidia-announces-project-groot"
+    actor_entity: "NVIDIA"
+    published_at: "2024-03-18T00:00:00Z"
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "architecture"
+    claim_text: "GR00T N1, released in March 2025, is described by NVIDIA as the first open foundation model for generalized humanoid reasoning, trained on a mix of synthetic and real-world demonstration data."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://developer.nvidia.com/blog/announcing-groot-n1"
+    actor_entity: "NVIDIA"
+    published_at: "2025-03-18T00:00:00Z"
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "partnership"
+    claim_text: "NVIDIA has announced GR00T integrations with humanoid platforms from Figure AI, 1X Technologies, Agility Robotics, Boston Dynamics, Apptronik, and Sanctuary AI."
+    confidence: 0.88
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://nvidianews.nvidia.com/news/nvidia-announces-project-groot"
+    actor_entity: "NVIDIA"
+    published_at: "2024-03-18T00:00:00Z"
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "strategy"
+    claim_text: "Jensen Huang has positioned humanoid robotics as the next trillion-dollar opportunity for AI, framing GR00T as the analog of ChatGPT for embodied agents."
+    confidence: 0.65
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://nvidianews.nvidia.com/news/nvidia-gtc-2024-keynote"
+    actor_entity: "Jensen Huang"
+    published_at: "2024-03-18T00:00:00Z"
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "benchmark"
+    claim_text: "Independent benchmarks comparing GR00T N1 directly to π0 and Helix on identical manipulation tasks have not yet been published as of late 2025."
+    confidence: 0.72
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://spectrum.ieee.org/humanoid-foundation-models-2025"
+    actor_entity: "IEEE Spectrum"
+    published_at: "2025-04-10T00:00:00Z"
+
+  # ─── NVIDIA Cosmos ───────────────────────────────────────────────────────
+  - subject_entity: "NVIDIA Cosmos"
+    claim_type: "milestone"
+    claim_text: "NVIDIA introduced Cosmos at CES 2025, an open platform of world foundation models intended to generate physics-aware video for training robots and autonomous vehicles."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://nvidianews.nvidia.com/news/nvidia-cosmos"
+    actor_entity: "NVIDIA"
+    published_at: "2025-01-06T00:00:00Z"
+
+  - subject_entity: "NVIDIA Cosmos"
+    claim_type: "architecture"
+    claim_text: "Cosmos consists of pre-trained diffusion and autoregressive world models at 4B, 7B, 12B, and 14B parameter scales, trained on 20 million hours of curated video."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://research.nvidia.com/labs/dir/cosmos"
+    actor_entity: "NVIDIA Research"
+    published_at: "2025-01-06T00:00:00Z"
+
+  - subject_entity: "NVIDIA Cosmos"
+    claim_type: "capability"
+    claim_text: "Cosmos is designed to integrate with Isaac Lab and GR00T to provide simulation-quality training data for embodied policies at scale."
+    confidence: 0.85
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://developer.nvidia.com/cosmos"
+    actor_entity: "NVIDIA"
+    published_at: "2025-01-06T00:00:00Z"
+
+  # ─── Google Gemini Robotics ──────────────────────────────────────────────
+  - subject_entity: "Google Gemini Robotics"
+    claim_type: "milestone"
+    claim_text: "Google DeepMind announced Gemini Robotics and Gemini Robotics-ER in March 2025, two vision-language-action models built on top of Gemini 2.0."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://deepmind.google/discover/blog/gemini-robotics"
+    actor_entity: "Google DeepMind"
+    published_at: "2025-03-12T00:00:00Z"
+
+  - subject_entity: "Google Gemini Robotics"
+    claim_type: "capability"
+    claim_text: "Gemini Robotics demonstrates dexterous tasks such as folding origami, packing a bag, and playing card games, transferring across different robot embodiments with limited fine-tuning."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://deepmind.google/discover/blog/gemini-robotics"
+    actor_entity: "Google DeepMind"
+    published_at: "2025-03-12T00:00:00Z"
+
+  - subject_entity: "Google Gemini Robotics"
+    claim_type: "partnership"
+    claim_text: "Google DeepMind has partnered with Apptronik on humanoid embodiment of Gemini Robotics models for commercial deployment scenarios."
+    confidence: 0.84
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://blog.google/technology/ai/google-deepmind-apptronik-partnership"
+    actor_entity: "Google DeepMind"
+    published_at: "2025-03-12T00:00:00Z"
+
+  - subject_entity: "Google Gemini Robotics"
+    claim_type: "benchmark"
+    claim_text: "Gemini Robotics-ER reports state-of-the-art performance on the ERQA spatial reasoning benchmark, surpassing GPT-4o and Claude 3.5 Sonnet on robot-relevant visual reasoning tasks."
+    confidence: 0.87
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://deepmind.google/discover/blog/gemini-robotics"
+    actor_entity: "Google DeepMind"
+    published_at: "2025-03-12T00:00:00Z"
+
+  # ─── Skild AI ────────────────────────────────────────────────────────────
+  - subject_entity: "Skild AI"
+    claim_type: "funding"
+    claim_text: "Skild AI raised $300 million in Series A funding in July 2024 at a reported $1.5 billion valuation, led by Lightspeed Venture Partners and Coatue."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/07/09/skild-ai-300m-series-a"
+    actor_entity: "Skild AI"
+    published_at: "2024-07-09T00:00:00Z"
+
+  - subject_entity: "Skild AI"
+    claim_type: "strategy"
+    claim_text: "Skild AI, co-founded by Carnegie Mellon professors Deepak Pathak and Abhinav Gupta, is building a general-purpose robot brain intended to run across heterogeneous robot embodiments."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.skild.ai/about"
+    actor_entity: "Skild AI"
+    published_at: "2024-07-09T00:00:00Z"
+
+  - subject_entity: "Skild AI"
+    claim_type: "capability"
+    claim_text: "Skild has shown demonstrations of a single learned policy operating quadrupeds, manipulator arms, and humanoid platforms, with locomotion and manipulation behaviors emerging from the same model."
+    confidence: 0.75
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.skild.ai/research"
+    actor_entity: "Skild AI"
+    published_at: "2024-10-01T00:00:00Z"
+
+  - subject_entity: "Skild AI"
+    claim_type: "timeline"
+    claim_text: "Deepak Pathak has stated that Skild aims to release a generalist robot foundation model that customers can fine-tune for their own hardware, comparable in role to a Llama for robots."
+    confidence: 0.65
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://podcasts.apple.com/us/podcast/robot-brains/id1523584895"
+    actor_entity: "Deepak Pathak"
+    published_at: "2024-08-15T00:00:00Z"
+
+  # ─── Covariant ───────────────────────────────────────────────────────────
+  - subject_entity: "Covariant"
+    claim_type: "milestone"
+    claim_text: "Covariant released RFM-1, a Robotic Foundation Model trained on millions of hours of robot manipulation data, in March 2024."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://covariant.ai/insights/rfm-1"
+    actor_entity: "Covariant"
+    published_at: "2024-03-11T00:00:00Z"
+
+  - subject_entity: "Covariant"
+    claim_type: "deployment"
+    claim_text: "Covariant systems were deployed across hundreds of warehouse picking stations operated by Knapp, ABB, and Bastian customers prior to the Amazon acquisition."
+    confidence: 0.87
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://covariant.ai/customers"
+    actor_entity: "Covariant"
+    published_at: "2024-03-01T00:00:00Z"
+
+  - subject_entity: "Covariant"
+    claim_type: "partnership"
+    claim_text: "Amazon agreed in August 2024 to license Covariant's foundation models and hire its co-founders Pieter Abbeel, Peter Chen, and Rocky Duan into Amazon's Fulfillment Technologies group."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2024/08/30/amazon-covariant-licensing"
+    actor_entity: "Amazon"
+    published_at: "2024-08-30T00:00:00Z"
+
+  - subject_entity: "Covariant"
+    claim_type: "architecture"
+    claim_text: "RFM-1 was described as multimodal — taking text, images, video, and robot action sequences as inputs — and was trained jointly across pick-and-place tasks from heterogeneous warehouse robots."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://covariant.ai/insights/rfm-1"
+    actor_entity: "Covariant"
+    published_at: "2024-03-11T00:00:00Z"
+
+  # ─── Boston Dynamics Atlas ───────────────────────────────────────────────
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "milestone"
+    claim_text: "Boston Dynamics retired its hydraulic Atlas in April 2024 and unveiled a fully electric next-generation Atlas humanoid built for commercial deployment."
+    confidence: 0.94
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://bostondynamics.com/blog/electric-atlas"
+    actor_entity: "Boston Dynamics"
+    published_at: "2024-04-17T00:00:00Z"
+
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "partnership"
+    claim_text: "Hyundai Motor Group, which owns Boston Dynamics, is the first commercial partner for electric Atlas, with planned deployments in Hyundai automotive manufacturing facilities."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.hyundai.com/worldwide/en/newsroom/boston-dynamics-atlas-partnership"
+    actor_entity: "Hyundai Motor Group"
+    published_at: "2024-04-17T00:00:00Z"
+
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "capability"
+    claim_text: "Electric Atlas demonstrates a wider joint range of motion than human anatomy, allowing it to rotate its head, torso, and limbs in ways biological humanoids cannot."
+    confidence: 0.90
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://bostondynamics.com/blog/electric-atlas"
+    actor_entity: "Boston Dynamics"
+    published_at: "2024-04-17T00:00:00Z"
+
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "partnership"
+    claim_text: "Boston Dynamics and Toyota Research Institute announced in October 2024 a joint effort to combine TRI's large behavior models with the Atlas platform for general-purpose dexterity research."
+    confidence: 0.89
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://bostondynamics.com/blog/toyota-research-institute"
+    actor_entity: "Toyota Research Institute"
+    published_at: "2024-10-29T00:00:00Z"
+
+  # ─── Agility Robotics Digit ──────────────────────────────────────────────
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "deployment"
+    claim_text: "Agility Robotics began commercial operations of Digit humanoids at GXO Logistics warehouses in 2024 under a formal RaaS (robots-as-a-service) commercial agreement."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.agilityrobotics.com/news/gxo-partnership"
+    actor_entity: "GXO Logistics"
+    published_at: "2024-06-04T00:00:00Z"
+
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "deployment"
+    claim_text: "Amazon operates Digit humanoids in pilot deployments at its BFI1 Sumner, Washington fulfillment center as part of its robotics research and operations program."
+    confidence: 0.86
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.aboutamazon.com/news/operations/amazon-introduces-new-robots"
+    actor_entity: "Amazon"
+    published_at: "2023-10-18T00:00:00Z"
+
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "funding"
+    claim_text: "Agility Robotics raised approximately $150 million in Series B funding in April 2022, led by DCVC and Playground Global with participation from Amazon Industrial Innovation Fund."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com/2022/04/06/agility-robotics-series-b"
+    actor_entity: "Agility Robotics"
+    published_at: "2022-04-06T00:00:00Z"
+
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "metric"
+    claim_text: "Digit stands 1.75 m tall, weighs about 65 kg, and has been engineered around tote-handling tasks with payload capacity tuned for warehouse logistics workloads."
+    confidence: 0.86
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.agilityrobotics.com/digit"
+    actor_entity: "Agility Robotics"
+    published_at: "2024-01-01T00:00:00Z"
+
+  # ─── Sanctuary AI Phoenix ────────────────────────────────────────────────
+  - subject_entity: "Sanctuary AI Phoenix"
+    claim_type: "milestone"
+    claim_text: "Sanctuary AI, founded by Geordie Rose, unveiled Phoenix, its sixth-generation general-purpose humanoid robot, in May 2023."
+    confidence: 0.91
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.sanctuary.ai/blog/sanctuary-unveils-phoenix"
+    actor_entity: "Sanctuary AI"
+    published_at: "2023-05-18T00:00:00Z"
+
+  - subject_entity: "Sanctuary AI Phoenix"
+    claim_type: "capability"
+    claim_text: "Sanctuary AI's control system Carbon is described as a cognitive architecture pairing large language models with a body that can perform thousands of tasks via teleoperation-trained policies."
+    confidence: 0.78
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.sanctuary.ai/carbon"
+    actor_entity: "Sanctuary AI"
+    published_at: "2023-05-18T00:00:00Z"
+
+  - subject_entity: "Sanctuary AI Phoenix"
+    claim_type: "metric"
+    claim_text: "Phoenix has 20 degrees of freedom in each hand and is reported by Sanctuary to perform fine manipulation comparable to industrial robotic grippers at a fraction of integration cost."
+    confidence: 0.72
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.sanctuary.ai/blog/sanctuary-unveils-phoenix"
+    actor_entity: "Sanctuary AI"
+    published_at: "2023-05-18T00:00:00Z"
+
+  - subject_entity: "Sanctuary AI Phoenix"
+    claim_type: "deployment"
+    claim_text: "Sanctuary AI has piloted Phoenix at Magna International automotive plants as part of an ongoing strategic partnership formed in 2024."
+    confidence: 0.83
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.magna.com/company/newsroom/2024/sanctuary"
+    actor_entity: "Magna International"
+    published_at: "2024-04-11T00:00:00Z"
+
+  # ─── Astribot S1 ─────────────────────────────────────────────────────────
+  - subject_entity: "Astribot S1"
+    claim_type: "milestone"
+    claim_text: "Astribot, a Chinese robotics startup, unveiled the S1 humanoid in April 2024 with a viral demonstration video showing high-speed dexterous tasks like flipping a wine bottle and shuffling cards."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.theverge.com/2024/4/22/astribot-s1"
+    actor_entity: "Astribot"
+    published_at: "2024-04-22T00:00:00Z"
+
+  - subject_entity: "Astribot S1"
+    claim_type: "capability"
+    claim_text: "Astribot claims the S1 can reach end-effector speeds of 10 m/s and lift payloads up to 10 kg per arm, although independent verification of these specs is limited."
+    confidence: 0.60
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.astribot.com/products"
+    actor_entity: "Astribot"
+    published_at: "2024-04-22T00:00:00Z"
+
+  - subject_entity: "Astribot S1"
+    claim_type: "strategy"
+    claim_text: "Astribot's promotional demos have raised debate within the robotics community over whether shown behaviors were fully autonomous or partially teleoperated."
+    confidence: 0.70
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.therobotreport.com/astribot-teleop-debate"
+    actor_entity: "The Robot Report"
+    published_at: "2024-05-15T00:00:00Z"
