@@ -136,6 +136,47 @@ def add_claim_memory(
     )
 
 
+def delete_memory(sub_tenant: SubTenant, memory_id: str) -> None:
+    """Wipe a single memory by source_id. Swallows not-found errors."""
+    # HYDRADB: upsert preserves old metadata, so when claim shape changes we
+    # must delete + re-add to refresh stored fields.
+    client = _get_client()
+    try:
+        client.upload.delete_memory(
+            tenant_id=TENANT_ID,
+            sub_tenant_id=sub_tenant,
+            memory_id=memory_id,
+        )
+    except Exception as err:
+        msg = str(err).lower()
+        if "not found" in msg or "404" in msg:
+            return
+        # swallow other errors — best-effort cleanup
+
+
+def list_memory_ids(sub_tenant: SubTenant) -> list[str]:
+    """List every memory_id in a sub-tenant. Used for nuke-and-pave re-ingest."""
+    # HYDRADB: list_data with kind="memories" returns {user_memories: [{memory_id, ...}]}.
+    client = _get_client()
+    try:
+        result = client.fetch.list_data(
+            tenant_id=TENANT_ID,
+            sub_tenant_id=sub_tenant,
+            kind="memories",
+        )
+        data = _as_dict(result) if not isinstance(result, dict) else result
+        memories = data.get("user_memories") or data.get("memories") or data.get("sources") or []
+        ids: list[str] = []
+        for m in memories:
+            md = _as_dict(m) if not isinstance(m, dict) else m
+            mid = md.get("memory_id") or md.get("id") or md.get("source_id")
+            if mid:
+                ids.append(mid)
+        return ids
+    except Exception:
+        return []
+
+
 def add_hive_lesson(lesson_id: str, title: str, text: str, *, metadata: Optional[dict[str, Any]] = None) -> Any:
     """Write a cross-agent lesson to the `agents` sub-tenant."""
     # HYDRADB: agents sub-tenant is the hive — every extractor reads from here

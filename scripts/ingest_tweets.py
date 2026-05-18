@@ -44,6 +44,11 @@ def main() -> int:
         action="store_true",
         help="manually downgrade confidence on the last extracted claim to test [citation needed]",
     )
+    parser.add_argument(
+        "--wipe",
+        action="store_true",
+        help="delete every existing memory in the canonical sub-tenant before re-ingesting",
+    )
     args = parser.parse_args()
 
     tweets = load_tweets(SEED_PATH)
@@ -56,6 +61,13 @@ def main() -> int:
         except Exception as err:
             print(f"tenant setup failed: {err}", file=sys.stderr)
             return 1
+
+    if args.wipe and not args.dry_run:
+        existing = hc.list_memory_ids(hc.SUB_TENANT_CANONICAL)
+        print(f"wiping {len(existing)} existing memories from canonical...")
+        for mid in existing:
+            hc.delete_memory(hc.SUB_TENANT_CANONICAL, mid)
+        print("wipe complete")
 
     all_claims: list[dict] = []
     for i, tweet in enumerate(tweets, start=1):

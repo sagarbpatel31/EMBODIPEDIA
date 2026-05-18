@@ -40,15 +40,20 @@ a:visited {
 
 /* ---------- article shell ---------- */
 .wiki-article {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 2rem 4rem;
+  padding: 1.5rem 2.5rem 4rem;
 }
 
 .wiki-header {
   border-bottom: 1px solid var(--wiki-rule);
-  margin-bottom: 1rem;
-  padding-bottom: 0.25rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .wiki-title {
@@ -82,9 +87,27 @@ a:visited {
 }
 
 /* ---------- prose body ---------- */
+/* Two-column layout: prose left, infobox right. Stacks below 900px. */
+.wiki-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .wiki-main {
+    grid-template-columns: 1fr;
+  }
+}
+
 .wiki-body {
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+.wiki-body p {
+  margin: 0 0 0.9rem;
 }
 
 .wiki-body h1,
@@ -105,31 +128,90 @@ a:visited {
   border-bottom: none;
 }
 
-.wiki-body p {
-  margin: 0 0 0.8rem;
+/* ---------- infobox ---------- */
+.wiki-infobox {
+  border: 1px solid var(--wiki-soft-border);
+  background: var(--wiki-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  padding: 0;
+  width: 320px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.wiki-infobox-title {
+  background: #eaecf0;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--wiki-soft-border);
+  font-size: 0.95rem;
+}
+
+.wiki-infobox-sub {
+  text-align: center;
+  font-style: italic;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.78rem;
+  color: #54595d;
+  border-bottom: 1px solid var(--wiki-soft-border);
+}
+
+.wiki-infobox table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wiki-infobox th,
+.wiki-infobox td {
+  text-align: left;
+  padding: 0.35rem 0.6rem;
+  vertical-align: top;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.wiki-infobox th {
+  background: #f8f9fa;
+  font-weight: bold;
+  width: 35%;
+  white-space: nowrap;
+}
+
+.wiki-infobox td {
+  width: 65%;
 }
 
 /* ---------- footnotes + citation needed ---------- */
+/* Use position:relative instead of vertical-align:super to avoid line-height
+   collapse pushing whole paragraphs around. */
 .footnote-ref {
-  font-size: 0.75rem;
-  vertical-align: super;
-  line-height: 0;
+  font-size: 0.72rem;
+  position: relative;
+  top: -0.45em;
   margin-left: 1px;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .footnote-ref a {
   color: var(--wiki-link);
+  text-decoration: none;
+}
+.footnote-ref a:hover {
+  text-decoration: underline;
 }
 
 .citation-needed,
 .citation-needed-inline {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--citation-needed);
   font-style: italic;
-  vertical-align: super;
-  line-height: 0;
-  margin-left: 2px;
+  position: relative;
+  top: -0.4em;
+  margin-left: 3px;
+  white-space: nowrap;
   cursor: help;
+  line-height: 1;
 }
 
 /* ---------- references section ---------- */
@@ -151,12 +233,23 @@ a:visited {
 }
 
 .wiki-references li {
-  margin: 0.2rem 0;
+  margin: 0.4rem 0;
   line-height: 1.45;
+}
+
+.wiki-ref-claim {
+  font-style: italic;
+  color: #54595d;
+  margin-left: 0.25rem;
 }
 
 .wiki-ref-date {
   color: #54595d;
+}
+
+.wiki-ref-conf {
+  color: #54595d;
+  font-size: 0.78rem;
 }
 
 .wiki-ref-jump a {
