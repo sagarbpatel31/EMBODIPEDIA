@@ -98,15 +98,7 @@ scripts/
 
 ## 🌐 Deployment
 
-### Frontend → Vercel
-
-```bash
-cd apps/web && npx vercel --prod
-# Set env var in Vercel dashboard:
-# NEXT_PUBLIC_AGENTS_URL = https://your-railway-app.railway.app
-```
-
-### Backend → Railway
+### Backend → Railway (optional)
 
 ```bash
 # 1. Push repo to GitHub
@@ -114,7 +106,10 @@ git push origin main
 # 2. Create new Railway project → "Deploy from GitHub repo"
 # 3. Set env vars: HYDRADB_API_KEY, OPENAI_API_KEY
 # 4. Railway auto-detects railway.json and starts uvicorn
+# 5. Update NEXT_PUBLIC_AGENTS_URL in your frontend env to point to the Railway URL
 ```
+
+For demos, running locally (below) is simpler and faster.
 
 ---
 
