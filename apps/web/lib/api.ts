@@ -28,6 +28,7 @@ export interface WikiArticle {
   primary_source_count?: number;
   quality?: "featured" | "good" | "stub" | "empty";
   last_ingested_at?: string | null;
+  source_type_counts?: Record<string, number>;
 }
 
 export async function fetchArticle(

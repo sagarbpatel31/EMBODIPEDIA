@@ -84,6 +84,12 @@ def get_wiki_article(
     ingested_dates = [d for d in ingested_dates if d]
     last_ingested = max(ingested_dates) if ingested_dates else None
 
+    # Source type breakdown for diversity display.
+    source_type_counts: dict[str, int] = {}
+    for c in claims:
+        st = c.get("source_type") or (c.get("metadata") or {}).get("source_type") or "other"
+        source_type_counts[st] = source_type_counts.get(st, 0) + 1
+
     return {
         "slug": slug,
         "entity": entity,
@@ -95,6 +101,7 @@ def get_wiki_article(
         "primary_source_count": primary,
         "quality": quality,
         "last_ingested_at": last_ingested,
+        "source_type_counts": source_type_counts,
         "references": [
             {
                 "footnote_id": (c.get("metadata") or {}).get("footnote_id"),

@@ -233,6 +233,18 @@ export default function Home() {
               </ul>
             </div>
           </div>
+
+          <a href="/special/ingest" className="portal-ingest-callout">
+            <div className="portal-ingest-icon">⚡</div>
+            <div>
+              <div className="portal-ingest-title">Live Ingest — try it now</div>
+              <div className="portal-ingest-sub">
+                Paste any tweet or news snippet. GPT-4o extracts claims, routes
+                them to HydraDB sub-tenants, and updates the encyclopedia in real time.
+              </div>
+            </div>
+            <div className="portal-ingest-arrow">→</div>
+          </a>
         </div>
 
         {/* Right: Did you know + Recent */}

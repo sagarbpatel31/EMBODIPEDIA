@@ -25,6 +25,7 @@ The architectural distinctive is the three perspective sub-tenants. Where ordina
 | What Links Here | `/special/links/<Entity>` | Other entity articles whose claims mention this entity (HydraDB global recall + content match) |
 | Recent Changes | `/special/recent` | Live feed of every claim agents have written, grouped by entity and sub-tenant |
 | Cmd+K palette | `⌘K` anywhere | Ask Embodipedia anything → GPT-4o synthesizes a cited answer + draws an SVG entity graph |
+| **Live Ingest** | `/special/ingest` | Paste any tweet, news excerpt, or claim → GPT-4o extracts typed claims → writes to HydraDB in real time |
 
 ---
 
@@ -155,6 +156,7 @@ Then open <http://localhost:3000>.
 4. **Talk page** — bull vs bear debate sections with color pills + footnotes.
 5. **Cmd+K** — ask "How does NVIDIA GR00T connect to Figure AI?" — read cited answer, see entity graph, click a node.
 6. **History tab** — scroll the live ingestion log.
+7. **Live Ingest** (`/special/ingest`) — paste the Goldman Sachs bear note → watch GPT-4o extract bear claims → click entity link → article updated.
 
 ---
 
