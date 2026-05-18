@@ -137,7 +137,10 @@ export interface AskResponse {
     source_type: string | null;
     actor_entity: string | null;
   }>;
-  entity_paths: unknown[];
+  entity_paths: {
+    nodes: Array<{ id: string; label: string; kind: "entity" | "actor" }>;
+    edges: Array<{ source: string; target: string; relation: string }>;
+  };
 }
 
 export async function askEmbodipedia(query: string): Promise<AskResponse | null> {
