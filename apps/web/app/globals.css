@@ -1640,3 +1640,196 @@ a.entity-link:hover {
   margin: 0 0 1rem;
 }
 
+/* ── Live Ingest page ──────────────────────────────────────────── */
+.ingest-form {
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem;
+  background: var(--wiki-soft);
+  margin-bottom: 1.25rem;
+}
+
+.ingest-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.ingest-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #54595d;
+  font-family: var(--font-sans), sans-serif;
+}
+
+.ingest-input,
+.ingest-textarea {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--foreground);
+  resize: vertical;
+  box-sizing: border-box;
+}
+.ingest-input:focus,
+.ingest-textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.ingest-type-btn {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  background: #fff;
+  color: #54595d;
+  cursor: pointer;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-type-btn:hover { background: #e8f0fe; border-color: var(--accent-blue); }
+.ingest-type-btn.active {
+  background: var(--accent-blue);
+  color: #fff;
+  border-color: var(--accent-blue);
+}
+
+.ingest-demo-btn {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid #c8ccd1;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  background: #fff;
+  color: #36c;
+  cursor: pointer;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-demo-btn:hover { background: #eaf3fb; }
+
+.ingest-submit {
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.4rem;
+  background: var(--accent-navy);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-submit:hover:not(:disabled) { background: var(--accent-blue); }
+.ingest-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.ingest-progress {
+  margin: 0.75rem 0;
+}
+.ingest-progress-label {
+  font-size: 0.82rem;
+  color: #54595d;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-progress-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.ingest-progress-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.ingest-error {
+  padding: 0.65rem 0.9rem;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  color: #991b1b;
+  font-size: 0.87rem;
+  margin: 0.75rem 0;
+}
+
+.ingest-result {
+  border: 1px solid #a7d7a0;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  background: #f0fff4;
+  margin-top: 0.75rem;
+}
+.ingest-result-header {
+  font-size: 0.9rem;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.ingest-entity-link {
+  color: var(--accent-blue);
+  text-decoration: underline;
+}
+
+.ingest-view-btn {
+  margin-left: auto;
+  padding: 0.25rem 0.75rem;
+  background: var(--accent-navy);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-view-btn:hover { background: var(--accent-blue); color: #fff; }
+
+.ingest-claims-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.ingest-claim-row {
+  border: 1px solid #d1fae5;
+  border-radius: 4px;
+  padding: 0.55rem 0.8rem;
+  background: #fff;
+}
+.ingest-claim-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.3rem;
+}
+.ingest-claim-type {
+  font-size: 0.72rem;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-claim-conf {
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-family: var(--font-sans), sans-serif;
+}
+.ingest-claim-entity {
+  font-size: 0.72rem;
+  color: var(--accent-blue);
+  text-decoration: underline;
+}
+.ingest-claim-text {
+  font-size: 0.87rem;
+  color: #1f2937;
+  line-height: 1.4;
+}
+
