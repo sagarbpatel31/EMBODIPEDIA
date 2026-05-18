@@ -155,26 +155,34 @@ def delete_memory(sub_tenant: SubTenant, memory_id: str) -> None:
 
 
 def list_memory_ids(sub_tenant: SubTenant) -> list[str]:
-    """List every memory_id in a sub-tenant. Used for nuke-and-pave re-ingest."""
-    # HYDRADB: list_data with kind="memories" returns {user_memories: [{memory_id, ...}]}.
+    """List every memory_id in a sub-tenant. Paginates through all pages."""
+    # HYDRADB: list_data returns 50 per page with pagination metadata.
+    # Must iterate pages until has_next=False to get all IDs.
     client = _get_client()
-    try:
-        result = client.fetch.list_data(
-            tenant_id=TENANT_ID,
-            sub_tenant_id=sub_tenant,
-            kind="memories",
-        )
+    ids: list[str] = []
+    page = 1
+    while True:
+        try:
+            result = client.fetch.list_data(
+                tenant_id=TENANT_ID,
+                sub_tenant_id=sub_tenant,
+                kind="memories",
+                page=page,
+            )
+        except Exception:
+            break
         data = _as_dict(result) if not isinstance(result, dict) else result
         memories = data.get("user_memories") or data.get("memories") or data.get("sources") or []
-        ids: list[str] = []
         for m in memories:
             md = _as_dict(m) if not isinstance(m, dict) else m
             mid = md.get("memory_id") or md.get("id") or md.get("source_id")
             if mid:
                 ids.append(mid)
-        return ids
-    except Exception:
-        return []
+        pagination = data.get("pagination") or {}
+        if not pagination.get("has_next"):
+            break
+        page += 1
+    return ids
 
 
 def add_hive_lesson(lesson_id: str, title: str, text: str, *, metadata: Optional[dict[str, Any]] = None) -> Any:
