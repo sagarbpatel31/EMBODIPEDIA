@@ -41,21 +41,25 @@ export default async function RecentChanges() {
   const data = await fetchRecent();
   const items = data?.items ?? [];
 
-  // Group claims by ingestion date (newest first).
+  // Group claims by ingestion date (newest first). Push "unknown" to end.
   const byDate = new Map<string, RichItem[]>();
   for (const it of items) {
     const k = dateKey(it.ingested_at);
     if (!byDate.has(k)) byDate.set(k, []);
     byDate.get(k)!.push(it);
   }
-  const dates = Array.from(byDate.keys()).sort((a, b) => (a < b ? 1 : -1));
+  const dates = Array.from(byDate.keys()).sort((a, b) => {
+    if (a === "unknown") return 1;   // unknown sinks to bottom
+    if (b === "unknown") return -1;
+    return a < b ? 1 : -1;           // real dates descending
+  });
 
-  // Entity activity summary across all items.
+  // Entity activity summary — skip null/unknown entities.
   const entityCounts = new Map<string, { total: number; bull: number; bear: number; canonical: number }>();
   for (const it of items) {
-    const e = it.subject_entity ?? "(unknown)";
-    const v =
-      entityCounts.get(e) ?? { total: 0, bull: 0, bear: 0, canonical: 0 };
+    const e = it.subject_entity;
+    if (!e || e === "(unknown)" || e === "unknown") continue;
+    const v = entityCounts.get(e) ?? { total: 0, bull: 0, bear: 0, canonical: 0 };
     v.total++;
     if (it.sub_tenant === "bull") v.bull++;
     if (it.sub_tenant === "bear") v.bear++;
@@ -64,7 +68,7 @@ export default async function RecentChanges() {
   }
   const topEntities = Array.from(entityCounts.entries())
     .sort((a, b) => b[1].total - a[1].total)
-    .slice(0, 8);
+    .slice(0, 10);
 
   return (
     <main className="wiki-article">
@@ -130,10 +134,15 @@ export default async function RecentChanges() {
       </section>
 
       {/* Date-grouped feed */}
-      {dates.map((d) => (
+      {dates.map((d) => {
+        // Sort each day's items newest-first by full ingested_at timestamp.
+        const dayItems = [...byDate.get(d)!].sort((a, b) =>
+          (b.ingested_at ?? "") > (a.ingested_at ?? "") ? 1 : -1
+        );
+        return (
         <section key={d} className="recent-day">
-          <h2 className="recent-day-title">{d}</h2>
-          {byDate.get(d)!.map((it) => {
+          <h2 className="recent-day-title">{d === "unknown" ? "Unknown date" : d}</h2>
+          {dayItems.map((it) => {
             const slug = (it.subject_entity ?? "").replace(/ /g, "_");
             return (
               <div key={it.memory_id} className="history-row">
@@ -173,7 +182,8 @@ export default async function RecentChanges() {
             );
           })}
         </section>
-      ))}
+        );
+      })}
 
       {items.length === 0 && (
         <section className="wiki-body">

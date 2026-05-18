@@ -394,50 +394,58 @@ def article_history(slug: str) -> dict[str, Any]:
 
 
 @app.get("/api/recent")
-def recent_changes(limit: int = 60) -> dict[str, Any]:
-    """Recent claim ingestions with full claim text + grouping support.
+def recent_changes(limit: int = 80) -> dict[str, Any]:
+    """Recent claim ingestions sorted by ingested_at descending.
 
-    Pulls broadly via HydraDB recall on each sub-tenant and returns sorted by
-    ingested_at desc with full metadata so the frontend can group by date or
-    entity as needed.
+    Uses recall on canonical with a broad query and high max_results to
+    retrieve the full corpus with metadata, then sorts by ingested_at.
+    list_data only returns memory_id + empty content, so recall is the
+    correct path for metadata-bearing results.
     """
     from . import hydradb_client as hc
 
+    # HYDRADB: recall canonical with max_results=250 to cover the full corpus.
+    # The broad humanoid robotics query returns all stored claims ranked by
+    # relevance; we then re-sort by ingested_at for the chronological feed.
     items: list[dict[str, Any]] = []
     seen: set[str] = set()
-    for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
-        try:
-            chunks = hc.recall_subtenant(
-                sub_tenant=sub,
-                query="recent claims about humanoid robotics",
-                max_results=limit,
-            )
-        except Exception:
-            continue
-        for c in chunks:
-            meta = c.get("metadata") or {}
-            mid = meta.get("memory_id") or c.get("source_id")
-            if not mid or mid in seen:
-                continue
-            seen.add(mid)
-            items.append(
-                {
-                    "memory_id": mid,
-                    "sub_tenant": sub,
-                    "subject_entity": meta.get("subject_entity"),
-                    "claim_type": meta.get("claim_type"),
-                    "claim_text": meta.get("claim_text") or c.get("content"),
-                    "confidence": meta.get("confidence"),
-                    "perspective": meta.get("perspective"),
-                    "source_type": meta.get("source_type"),
-                    "source_url": meta.get("source_url"),
-                    "actor_entity": meta.get("actor_entity"),
-                    "published_at": meta.get("published_at"),
-                    "ingested_at": meta.get("ingested_at"),
-                }
-            )
+    try:
+        chunks = hc.recall_subtenant(
+            sub_tenant=hc.SUB_TENANT_CANONICAL,
+            query="humanoid robotics claims",
+            max_results=250,
+        )
+    except Exception:
+        chunks = []
 
-    items.sort(key=lambda e: e.get("ingested_at") or "", reverse=True)
+    for c in chunks:
+        meta = c.get("metadata") or {}
+        mid = meta.get("memory_id") or c.get("source_id") or c.get("id")
+        if not mid or mid in seen:
+            continue
+        seen.add(mid)
+        items.append(
+            {
+                "memory_id": mid,
+                "sub_tenant": hc.SUB_TENANT_CANONICAL,
+                "subject_entity": meta.get("subject_entity"),
+                "claim_type": meta.get("claim_type"),
+                "claim_text": meta.get("claim_text") or c.get("content"),
+                "confidence": meta.get("confidence"),
+                "perspective": meta.get("perspective"),
+                "source_type": meta.get("source_type"),
+                "source_url": meta.get("source_url"),
+                "actor_entity": meta.get("actor_entity"),
+                "published_at": meta.get("published_at"),
+                "ingested_at": meta.get("ingested_at"),
+            }
+        )
+
+    # Sort: real ingested_at timestamps descending; null timestamps sink to bottom.
+    items.sort(
+        key=lambda e: e.get("ingested_at") or "0",
+        reverse=True,
+    )
     return {"count": len(items), "items": items[:limit]}
 
 
