@@ -70,8 +70,22 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { slug } = await params;
   const { base, isTalk } = parseSlug(slug);
   const entity = slugToEntity(base);
+  const title = `${isTalk ? "Talk: " : ""}${entity} — Embodipedia`;
+  const description = `${entity} — AI-synthesized encyclopedia article with citations, bull/bear perspectives, and live claim tracing. From Embodipedia, the Wikipedia of humanoid robotics.`;
   return {
-    title: `${isTalk ? "Talk: " : ""}${entity} — Embodipedia`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      siteName: "Embodipedia",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
@@ -322,6 +336,12 @@ export default async function WikiSlugPage({
                 {" · "}{article.claim_count} claim{article.claim_count === 1 ? "" : "s"}
                 {" · "}{article.primary_source_count ?? 0} primary source
                 {(article.primary_source_count ?? 0) === 1 ? "" : "s"}
+                {article.source_type_counts && Object.keys(article.source_type_counts).length > 0 && (
+                  <> · {Object.entries(article.source_type_counts)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([t, n]) => `${n} ${t}`)
+                    .join(", ")}</>
+                )}
               </>
             )}
           </p>
@@ -361,6 +381,13 @@ export default async function WikiSlugPage({
       <div className="wiki-main">
         <WikiBody html={html} />
         <Infobox entity={article.entity} references={article.references} />
+      </div>
+
+      <div className="conf-legend">
+        <span className="conf-legend-label">Confidence:</span>
+        <span className="conf-legend-item"><span className="conf-dot conf-dot-high" />≥ 0.85 high</span>
+        <span className="conf-legend-item"><span className="conf-dot conf-dot-med" />0.70–0.84 medium</span>
+        <span className="conf-legend-item"><span className="conf-dot conf-dot-low" />&lt; 0.70 low</span>
       </div>
 
       <section className="wiki-references">

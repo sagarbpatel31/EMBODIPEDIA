@@ -637,6 +637,49 @@ a.entity-link:hover {
   border: 1px solid #cbd5e1;
 }
 
+/* ---------- Live Ingest homepage callout ---------- */
+.portal-ingest-callout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  padding: 0.9rem 1.1rem;
+  background: linear-gradient(135deg, #1a2744 0%, #1a56db 100%);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.portal-ingest-callout:hover { opacity: 0.9; color: #fff; }
+.portal-ingest-icon { font-size: 1.6rem; flex-shrink: 0; }
+.portal-ingest-title { font-weight: 700; font-size: 0.95rem; font-family: var(--font-sans), sans-serif; }
+.portal-ingest-sub { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; line-height: 1.4; }
+.portal-ingest-arrow { font-size: 1.4rem; margin-left: auto; opacity: 0.7; flex-shrink: 0; }
+
+/* ---------- Confidence legend ---------- */
+.conf-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 0.4rem;
+  font-size: 0.78rem;
+  color: #72777d;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.conf-legend-label { font-weight: 600; color: #54595d; }
+.conf-legend-item { display: flex; align-items: center; gap: 4px; }
+.conf-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.conf-dot-high { background: #4ade80; }
+.conf-dot-med  { background: #fbbf24; }
+.conf-dot-low  { background: #f87171; }
+
 /* ---------- What Links Here ---------- */
 .links-section {
   margin: 1.2rem 0;
