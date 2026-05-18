@@ -8,10 +8,42 @@ interface Params {
   slug: string;
 }
 
+// Strip any leading Talk:/History:/Special: prefixes so accidental clicks
+// don't accumulate (e.g. /wiki/Talk:Talk:Figure_02 → "Figure_02").
+function parseSlug(slug: string): { base: string; isTalk: boolean; isHistory: boolean } {
+  let cleaned = slug;
+  let isTalk = false;
+  let isHistory = false;
+  // Decode in case the URL got percent-encoded.
+  try {
+    cleaned = decodeURIComponent(cleaned);
+  } catch {
+    /* ignore */
+  }
+  while (true) {
+    if (cleaned.startsWith("Talk:")) {
+      cleaned = cleaned.slice(5);
+      isTalk = true;
+    } else if (cleaned.startsWith("History:")) {
+      cleaned = cleaned.slice(8);
+      isHistory = true;
+    } else {
+      break;
+    }
+  }
+  return { base: cleaned, isTalk, isHistory };
+}
+
+function slugToEntity(s: string): string {
+  return s.replace(/_+/g, " ").trim();
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
+  const { base, isTalk } = parseSlug(slug);
+  const entity = slugToEntity(base);
   return {
-    title: `${slug.replace(/_+/g, " ")} — Embodipedia`,
+    title: `${isTalk ? "Talk: " : ""}${entity} — Embodipedia`,
   };
 }
 
@@ -33,13 +65,103 @@ function confidenceBadge(c: string | number | null): string | null {
   return "low";
 }
 
-export default async function ArticlePage({
+function ArticleTabs({
+  baseSlug,
+  active,
+}: {
+  baseSlug: string;
+  active: "article" | "talk" | "history";
+}) {
+  const cls = (key: typeof active) =>
+    `wiki-tab${active === key ? " wiki-tab--active" : ""}`;
+  return (
+    <nav className="wiki-tabs">
+      <a className={cls("article")} href={`/wiki/${baseSlug}`}>
+        Article
+      </a>
+      <a className={cls("talk")} href={`/wiki/Talk:${baseSlug}`}>
+        Talk
+      </a>
+      <a className={cls("history")} href={`/wiki/${baseSlug}?action=history`}>
+        History
+      </a>
+    </nav>
+  );
+}
+
+function TalkPageStub({ baseSlug, entity }: { baseSlug: string; entity: string }) {
+  return (
+    <article className="wiki-article">
+      <header className="wiki-header">
+        <div>
+          <h1 className="wiki-title">Talk: {entity}</h1>
+          <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
+            Meta-discussion, debates, and open questions about <a href={`/wiki/${baseSlug}`}>{entity}</a>
+          </p>
+        </div>
+        <ArticleTabs baseSlug={baseSlug} active="talk" />
+      </header>
+
+      <section className="wiki-body">
+        <h2>Open Questions</h2>
+        <p>
+          Phase 3 will populate this section with claims where neither bull nor bear
+          perspectives have strong evidence. Currently empty — the dual-narrative
+          architecture (bull / bear / canonical sub-tenants) lands in Phase 3.
+        </p>
+
+        <h2>Active Debates</h2>
+        <p>
+          Phase 3 will surface bull vs. bear arguments here, each with citations.
+          Click <a href={`/wiki/${baseSlug}`}>back to the article</a> while we
+          finish the perspective routing.
+        </p>
+
+        <h2>Supersession Log</h2>
+        <p>Claims that have been overridden by newer evidence will appear here once the contradiction daemon ships.</p>
+      </section>
+    </article>
+  );
+}
+
+export default async function WikiSlugPage({
   params,
+  searchParams,
 }: {
   params: Promise<Params>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { slug } = await params;
-  const article = await fetchArticle(slug);
+  const search = await searchParams;
+  const { base, isTalk } = parseSlug(slug);
+  const baseSlug = base;
+  const entity = slugToEntity(base);
+
+  if (isTalk) {
+    return <TalkPageStub baseSlug={baseSlug} entity={entity} />;
+  }
+
+  const action = typeof search.action === "string" ? search.action : null;
+  if (action === "history") {
+    return (
+      <article className="wiki-article">
+        <header className="wiki-header">
+          <div>
+            <h1 className="wiki-title">{entity} — Edit History</h1>
+            <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
+              Phase 4 surfaces a per-claim edit log here.
+            </p>
+          </div>
+          <ArticleTabs baseSlug={baseSlug} active="history" />
+        </header>
+        <section className="wiki-body">
+          <p>No revisions recorded yet. Phase 4 ships the audit log + time-travel slider.</p>
+        </section>
+      </article>
+    );
+  }
+
+  const article = await fetchArticle(baseSlug);
   if (!article) notFound();
 
   const html = renderArticleMarkdown(article.markdown);
@@ -53,17 +175,7 @@ export default async function ArticlePage({
             From Embodipedia, the encyclopedia of humanoid robotics
           </p>
         </div>
-        <nav className="wiki-tabs">
-          <a className="wiki-tab wiki-tab--active" href={`/wiki/${slug}`}>
-            Article
-          </a>
-          <a className="wiki-tab" href={`/wiki/Talk:${slug}`}>
-            Talk
-          </a>
-          <a className="wiki-tab" href={`/wiki/${slug}?action=history`}>
-            History
-          </a>
-        </nav>
+        <ArticleTabs baseSlug={baseSlug} active="article" />
       </header>
 
       <div className="wiki-main">
@@ -114,7 +226,7 @@ export default async function ArticlePage({
             {article.citation_needed_count} claim
             {article.citation_needed_count === 1 ? "" : "s"} flagged{" "}
             <span className="citation-needed-inline">[citation needed]</span>.
-            See <a href={`/wiki/Talk:${slug}`}>Talk page</a> for open questions.
+            See <a href={`/wiki/Talk:${baseSlug}`}>Talk page</a> for open questions.
           </em>
         </footer>
       ) : null}
