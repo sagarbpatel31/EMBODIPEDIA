@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { Infobox } from "@/components/Infobox";
-import { fetchArticle, type Reference } from "@/lib/api";
+import { fetchArticle, fetchTalkPage, type Reference } from "@/lib/api";
 import { renderArticleMarkdown } from "@/lib/markdown";
 
 interface Params {
@@ -89,37 +89,67 @@ function ArticleTabs({
   );
 }
 
-function TalkPageStub({ baseSlug, entity }: { baseSlug: string; entity: string }) {
+async function TalkPage({ baseSlug, entity }: { baseSlug: string; entity: string }) {
+  const talk = await fetchTalkPage(baseSlug);
+  const md = talk?.markdown ?? `*Failed to load Talk page for ${entity}.*`;
+  const html = renderArticleMarkdown(md, talk?.references as Reference[] | undefined);
+
   return (
     <article className="wiki-article">
       <header className="wiki-header">
         <div>
           <h1 className="wiki-title">Talk: {entity}</h1>
           <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
-            Meta-discussion, debates, and open questions about <a href={`/wiki/${baseSlug}`}>{entity}</a>
+            Meta-discussion, debates, and open questions about{" "}
+            <a href={`/wiki/${baseSlug}`}>{entity}</a>
           </p>
         </div>
         <ArticleTabs baseSlug={baseSlug} active="talk" />
       </header>
 
-      <section className="wiki-body">
-        <h2>Open Questions</h2>
-        <p>
-          Phase 3 will populate this section with claims where neither bull nor bear
-          perspectives have strong evidence. Currently empty — the dual-narrative
-          architecture (bull / bear / canonical sub-tenants) lands in Phase 3.
-        </p>
+      <div className="talk-perspective-bar">
+        <span className="talk-pill talk-pill-bull">{talk?.bull_count ?? 0} bull claims</span>
+        <span className="talk-pill talk-pill-bear">{talk?.bear_count ?? 0} bear claims</span>
+        <span className="talk-pill talk-pill-info">
+          dual-narrative routing via HydraDB sub-tenants
+        </span>
+      </div>
 
-        <h2>Active Debates</h2>
-        <p>
-          Phase 3 will surface bull vs. bear arguments here, each with citations.
-          Click <a href={`/wiki/${baseSlug}`}>back to the article</a> while we
-          finish the perspective routing.
-        </p>
+      <div className="wiki-body" dangerouslySetInnerHTML={{ __html: html }} />
 
-        <h2>Supersession Log</h2>
-        <p>Claims that have been overridden by newer evidence will appear here once the contradiction daemon ships.</p>
-      </section>
+      {talk?.references?.length ? (
+        <section className="wiki-references">
+          <h2>References</h2>
+          <ol>
+            {talk.references.map((ref, idx) => {
+              const id = ref.footnote_id ?? idx + 1;
+              const persp = ref.perspective || "";
+              return (
+                <li id={`cite-${id}`} key={`talk-${id}-${idx}`}>
+                  <span className="wiki-ref-jump">
+                    <a href={`#ref-${id}`} aria-label={`Jump back to citation ${id}`}>↑</a>
+                  </span>{" "}
+                  {persp ? <span className={`talk-pill talk-pill-${persp}`}>{persp}</span> : null}{" "}
+                  {ref.actor_entity ? <span>{ref.actor_entity}, </span> : null}
+                  {ref.source_url ? (
+                    <a href={ref.source_url} target="_blank" rel="noopener noreferrer">
+                      {ref.source_type || "source"}
+                    </a>
+                  ) : (
+                    <span>(no URL)</span>
+                  )}
+                  {ref.published_at ? (
+                    <span className="wiki-ref-date"> · {ref.published_at.slice(0, 10)}</span>
+                  ) : null}
+                  {ref.claim_text ? (
+                    <span className="wiki-ref-claim"> — &ldquo;{ref.claim_text}&rdquo;</span>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ) : null}
     </article>
   );
 }
@@ -138,7 +168,7 @@ export default async function WikiSlugPage({
   const entity = slugToEntity(base);
 
   if (isTalk) {
-    return <TalkPageStub baseSlug={baseSlug} entity={entity} />;
+    return <TalkPage baseSlug={baseSlug} entity={entity} />;
   }
 
   const action = typeof search.action === "string" ? search.action : null;
@@ -164,7 +194,7 @@ export default async function WikiSlugPage({
   const article = await fetchArticle(baseSlug);
   if (!article) notFound();
 
-  const html = renderArticleMarkdown(article.markdown);
+  const html = renderArticleMarkdown(article.markdown, article.references);
 
   return (
     <article className="wiki-article">
@@ -224,9 +254,10 @@ export default async function WikiSlugPage({
         <footer className="wiki-meta">
           <em>
             {article.citation_needed_count} claim
-            {article.citation_needed_count === 1 ? "" : "s"} flagged{" "}
-            <span className="citation-needed-inline">[citation needed]</span>.
-            See <a href={`/wiki/Talk:${baseSlug}`}>Talk page</a> for open questions.
+            {article.citation_needed_count === 1 ? "" : "s"} marked{" "}
+            <span className="badge-unverified">unverified</span>.{" "}
+            <a href={`/wiki/Talk:${baseSlug}`}>Open the Talk page</a> to see the
+            evidence gap.
           </em>
         </footer>
       ) : null}

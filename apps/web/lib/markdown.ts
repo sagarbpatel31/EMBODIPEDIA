@@ -1,7 +1,8 @@
 // Tiny Wikipedia-flavoured markdown renderer.
 // Supports: # / ## / ### headers, paragraphs, **bold**, _italic_,
-// [text](url) links, [^N] footnote markers, [citation needed] inline tag.
-// Returns HTML string for use with dangerouslySetInnerHTML.
+// [text](url) links, [^N] footnote markers, [unverified] inline badge.
+
+import type { Reference } from "./api";
 
 const escapeHtml = (s: string): string =>
   s
@@ -9,18 +10,28 @@ const escapeHtml = (s: string): string =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-function renderInline(line: string): string {
+function renderInline(line: string, refs?: Reference[]): string {
   let out = escapeHtml(line);
-  // Footnote markers: [^N] -> superscript link.
+
+  // Footnote markers: [^N] -> superscript link with hover tooltip showing source.
+  out = out.replace(/\[\^(\d+)\]/g, (_m, n) => {
+    const idx = parseInt(n, 10) - 1;
+    const ref = refs?.[idx];
+    const tip = ref
+      ? `${ref.source_type || "source"}${ref.actor_entity ? " · " + ref.actor_entity : ""}${ref.published_at ? " · " + ref.published_at.slice(0, 10) : ""}${ref.claim_text ? "\n\n" + ref.claim_text : ""}`
+      : `Footnote ${n}`;
+    return `<sup class="footnote-ref"><a href="#cite-${n}" id="ref-${n}" title="${escapeHtml(tip)}">[${n}]</a></sup>`;
+  });
+
+  // [unverified] badge — clean grey pill linking to Talk page.
   out = out.replace(
-    /\[\^(\d+)\]/g,
-    (_m, n) =>
-      `<sup class="footnote-ref"><a href="#cite-${n}" id="ref-${n}">[${n}]</a></sup>`,
+    /\[unverified\]/gi,
+    `<span class="badge-unverified" title="Confidence below 0.70 or no primary source. See Talk page for open question.">unverified</span>`,
   );
-  // Citation needed tag — must come after footnote substitution.
+  // Legacy [citation needed] tag — render as same clean badge.
   out = out.replace(
     /\[citation needed\]/gi,
-    `<sup class="citation-needed" title="No primary source could be located. See Talk page.">[citation needed]</sup>`,
+    `<span class="badge-unverified" title="No primary source located. See Talk page.">needs source</span>`,
   );
   // Bold / italic.
   out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
@@ -34,14 +45,14 @@ function renderInline(line: string): string {
   return out;
 }
 
-export function renderArticleMarkdown(md: string): string {
+export function renderArticleMarkdown(md: string, refs?: Reference[]): string {
   const lines = md.replace(/\r\n?/g, "\n").split("\n");
   const html: string[] = [];
   let paragraph: string[] = [];
 
   const flushParagraph = () => {
     if (!paragraph.length) return;
-    html.push(`<p>${renderInline(paragraph.join(" "))}</p>`);
+    html.push(`<p>${renderInline(paragraph.join(" "), refs)}</p>`);
     paragraph = [];
   };
 
@@ -55,7 +66,7 @@ export function renderArticleMarkdown(md: string): string {
     if (h) {
       flushParagraph();
       const level = h[1].length;
-      html.push(`<h${level}>${renderInline(h[2])}</h${level}>`);
+      html.push(`<h${level}>${renderInline(h[2], refs)}</h${level}>`);
       continue;
     }
     paragraph.push(line.trim());

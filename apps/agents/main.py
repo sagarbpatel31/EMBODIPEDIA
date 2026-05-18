@@ -72,6 +72,92 @@ def get_wiki_article(slug: str) -> dict[str, Any]:
     }
 
 
+@app.get("/api/talk/{slug}")
+def get_talk_page(slug: str) -> dict[str, Any]:
+    from .talk_synthesizer import synthesize_talk_page
+
+    entity = _slug_to_entity(slug)
+    try:
+        result = synthesize_talk_page(entity)
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=str(err))
+    return {
+        "slug": slug,
+        "entity": entity,
+        "markdown": result["markdown"],
+        "references": result["references"],
+        "bull_count": result["bull_count"],
+        "bear_count": result["bear_count"],
+    }
+
+
+@app.get("/api/ask")
+def ask_embodipedia(q: str, k: int = 10) -> dict[str, Any]:
+    """Cmd+K command palette backend — global hybrid recall with synthesis."""
+    from . import hydradb_client as hc
+    from .llm import SYNTHESIS_MODEL, chat_text
+
+    if not q.strip():
+        raise HTTPException(status_code=400, detail="empty query")
+
+    # HYDRADB: full_recall is hybrid (vector + lexical) with graph_context=True
+    # so we get entity_paths back for multi-hop questions.
+    chunks = hc.recall_global(q, max_results=k)
+
+    if not chunks:
+        return {"answer": "_No matching claims found in Embodipedia._", "chunks": [], "entity_paths": []}
+
+    # Build a compact context block for the LLM.
+    ctx_lines = ["Answer the question using ONLY the provided claims. Cite each fact as [^N] referencing the claim number. If the claims don't answer, say so."]
+    ctx_lines.append(f"\nQuestion: {q}\n\nClaims:")
+    for i, c in enumerate(chunks, start=1):
+        meta = c.get("metadata") or {}
+        ctx_lines.append(
+            f"[{i}] {meta.get('subject_entity', '?')}: {meta.get('claim_text') or c.get('content', '')[:300]}"
+        )
+
+    answer = chat_text(
+        system="You are Embodipedia's question-answering agent. Be concise, cite every fact with [^N], and never invent claims.",
+        user="\n".join(ctx_lines),
+        model=SYNTHESIS_MODEL,
+        temperature=0.2,
+    )
+
+    return {
+        "answer": answer,
+        "chunks": [
+            {
+                "footnote_id": i + 1,
+                "subject_entity": (c.get("metadata") or {}).get("subject_entity"),
+                "claim_text": (c.get("metadata") or {}).get("claim_text") or c.get("content"),
+                "source_url": (c.get("metadata") or {}).get("source_url"),
+                "source_type": (c.get("metadata") or {}).get("source_type"),
+                "actor_entity": (c.get("metadata") or {}).get("actor_entity"),
+            }
+            for i, c in enumerate(chunks)
+        ],
+        "entity_paths": [],  # Phase 5 — populated from HydraDB graph_context
+    }
+
+
+@app.get("/api/recent")
+def recent_changes(limit: int = 30) -> dict[str, Any]:
+    """Recent claim ingestions across all sub-tenants."""
+    from . import hydradb_client as hc
+
+    # HYDRADB: list memories from canonical (where most claims land) and sort
+    # by ingested_at desc on the metadata side.
+    out: list[dict[str, Any]] = []
+    for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+        try:
+            ids = hc.list_memory_ids(sub)
+        except Exception:
+            ids = []
+        for mid in ids[:limit]:
+            out.append({"memory_id": mid, "sub_tenant": sub})
+    return {"count": len(out), "items": out[:limit]}
+
+
 class TweetIn(BaseModel):
     url: str
     author: str

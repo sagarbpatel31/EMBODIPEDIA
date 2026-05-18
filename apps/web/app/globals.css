@@ -214,6 +214,29 @@ a:visited {
   line-height: 1;
 }
 
+/* New clean "unverified" badge — replaces the red [citation needed] eyesore. */
+.badge-unverified {
+  display: inline-block;
+  padding: 1px 6px;
+  margin-left: 4px;
+  font-size: 0.68rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #8a6d3b;
+  background: #fcf8e3;
+  border: 1px solid #faebcc;
+  border-radius: 9px;
+  vertical-align: 0.15em;
+  line-height: 1.4;
+  cursor: help;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+}
+
+.badge-unverified:hover {
+  background: #f9f0c8;
+}
+
 /* ---------- references section ---------- */
 .wiki-references {
   margin-top: 2rem;
@@ -262,6 +285,286 @@ a:visited {
   margin-top: 1.5rem;
   font-size: 0.85rem;
   color: #54595d;
+}
+
+/* ---------- top nav bar ---------- */
+.wiki-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--wiki-rule);
+  padding: 0.5rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.wiki-topbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.wiki-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.wiki-topbar-brand:hover {
+  text-decoration: none;
+}
+
+.wiki-topbar-logo {
+  font-size: 1.4rem;
+}
+
+.wiki-topbar-links {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.wiki-topbar-links a {
+  color: var(--wiki-link);
+  text-decoration: none;
+}
+
+.wiki-topbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Cmd+K command palette ---------- */
+.cmdk-launcher {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--wiki-soft);
+  border: 1px solid var(--wiki-soft-border);
+  padding: 0.35rem 0.7rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #54595d;
+  cursor: pointer;
+  border-radius: 4px;
+  min-width: 240px;
+}
+
+.cmdk-launcher:hover {
+  background: #eaecf0;
+}
+
+.cmdk-launcher-icon {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: #eaecf0;
+  border: 1px solid var(--wiki-soft-border);
+  padding: 0 0.4rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
+}
+
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+}
+
+.cmdk-panel {
+  background: #fff;
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: 8px;
+  width: min(720px, 92vw);
+  max-height: 75vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.cmdk-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.cmdk-prefix {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: #eaecf0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  color: #54595d;
+}
+
+.cmdk-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: inherit;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.cmdk-submit {
+  background: var(--wiki-link);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cmdk-submit:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.cmdk-hint {
+  padding: 0.5rem 1rem;
+  font-size: 0.72rem;
+  color: #72777d;
+  border-bottom: 1px solid #eaecf0;
+  background: #fbfcfd;
+}
+
+.cmdk-results {
+  padding: 1rem;
+}
+
+.cmdk-answer {
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.cmdk-cite {
+  font-size: 0.72rem;
+  vertical-align: 0.4em;
+  margin-left: 1px;
+}
+
+.cmdk-cite a {
+  color: var(--wiki-link);
+  text-decoration: none;
+}
+
+.cmdk-chunks-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #54595d;
+  margin-bottom: 0.6rem;
+}
+
+.cmdk-chunk {
+  padding: 0.6rem 0.7rem;
+  font-size: 0.85rem;
+  border-left: 3px solid var(--wiki-soft-border);
+  background: #fbfcfd;
+  margin-bottom: 0.5rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.cmdk-chunk-id {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  color: #54595d;
+  font-size: 0.75rem;
+}
+
+.cmdk-chunk-meta {
+  font-size: 0.75rem;
+  color: #72777d;
+}
+
+.cmdk-chunk-text {
+  margin: 0.3rem 0;
+  color: #36393d;
+  line-height: 1.5;
+}
+
+.cmdk-chunk-link {
+  font-size: 0.78rem;
+  color: var(--wiki-link);
+  text-decoration: none;
+}
+
+.cmdk-chunk-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .wiki-topbar-links { display: none; }
+  .cmdk-launcher { min-width: 0; }
+  .cmdk-launcher-label { display: none; }
+}
+
+/* ---------- talk page perspective pills ---------- */
+.talk-perspective-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.8rem 0 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--wiki-rule);
+}
+
+.talk-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  font-size: 0.72rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  vertical-align: 0.05em;
+}
+
+.talk-pill-bull {
+  background: #e6f4ea;
+  color: #1e7e34;
+  border: 1px solid #b7dfbf;
+}
+
+.talk-pill-bear {
+  background: #fdecea;
+  color: #a52714;
+  border: 1px solid #f5b7ae;
+}
+
+.talk-pill-neutral,
+.talk-pill-canonical {
+  background: #e7f0fa;
+  color: #1f4e79;
+  border: 1px solid #b6cfeb;
+}
+
+.talk-pill-info {
+  background: #f8f9fa;
+  color: #54595d;
+  border: 1px solid var(--wiki-soft-border);
+  font-weight: 400;
 }
 
 /* ---------- portal / homepage ---------- */

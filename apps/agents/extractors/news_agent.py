@@ -5,8 +5,9 @@ import hashlib
 import re
 from typing import Any
 
-from ..hydradb_client import SUB_TENANT_CANONICAL, add_claim_memory
+from ..hydradb_client import add_claim_memory
 from ..llm import chat_json as chat_extract
+from ..perspective_router import route_claim
 
 SYSTEM = """\
 You are an evidence extractor for Embodipedia, a Wikipedia of humanoid robotics.
@@ -81,15 +82,25 @@ Extract claims about humanoid robots from this article."""
             "ingested_at": __import__("datetime").datetime.utcnow().isoformat() + "Z",
         }
 
+        targets = route_claim(
+            claim_text=meta["claim_text"],
+            perspective=meta["perspective"],
+            confidence=float(conf),
+            evidence_strength=meta["evidence_strength"],
+            source_type="news",
+        )
+        meta["routed_to"] = ",".join(sorted(targets))
+
         if write_to_hydradb:
-            # HYDRADB: canonical sub-tenant — news reporting is grounded evidence
-            add_claim_memory(
-                sub_tenant=SUB_TENANT_CANONICAL,
-                source_id=source_id,
-                title=f"{subj} — {meta['claim_type']} (news)",
-                text=meta["claim_text"],
-                metadata=meta,
-            )
+            # HYDRADB: route across canonical/bull/bear per perspective_router.
+            for target in targets:
+                add_claim_memory(
+                    sub_tenant=target,
+                    source_id=source_id,
+                    title=f"{subj} — {meta['claim_type']} (news)",
+                    text=meta["claim_text"],
+                    metadata=meta,
+                )
 
         results.append(meta)
 

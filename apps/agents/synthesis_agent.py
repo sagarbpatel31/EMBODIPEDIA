@@ -26,8 +26,10 @@ Editorial rules (non-negotiable):
    the claim's `footnote_id` value.
 
 3. If a claim has confidence < 0.7 OR no primary-source support, append the
-   inline tag [citation needed] AFTER the footnote marker. Example:
-   "Figure 02 will ship 100k units by 2027 [^4] [citation needed]."
+   inline tag [unverified] AFTER the footnote marker. Example:
+   "Figure 02 will ship 100k units by 2027 [^4] [unverified]."
+   The frontend renders [unverified] as a subtle badge linking to Talk page,
+   not as a red eyesore. Use sparingly — only for genuinely weak claims.
 
 4. Write in Wikipedia's encyclopedic voice: third person, neutral tone, no
    hype words ("revolutionary", "groundbreaking"), no marketing language,
@@ -66,7 +68,7 @@ def _build_user_prompt(entity: str, claims: list[dict[str, Any]]) -> str:
     lines += [
         "",
         "Output the Wikipedia article body. Use [^N] for footnotes and "
-        "[citation needed] after low-confidence claims per the rules.",
+        "[unverified] after low-confidence claims per the rules.",
     ]
     return "\n".join(lines)
 
@@ -120,9 +122,9 @@ def synthesize_article(entity: str, *, max_claims: int = 30) -> dict[str, Any]:
     if not chunks:
         return {
             "entity": entity,
-            "markdown": f"# {entity}\n\nNo claims available yet. [citation needed]\n",
+            "markdown": f"# {entity}\n\n*No claims have been indexed for this entity yet. Agents are still ingesting sources.*\n",
             "claims": [],
-            "citation_needed_count": 1,
+            "citation_needed_count": 0,
         }
 
     markdown = chat_text(
@@ -132,7 +134,7 @@ def synthesize_article(entity: str, *, max_claims: int = 30) -> dict[str, Any]:
         temperature=0.3,
     )
 
-    citation_needed_count = markdown.count("[citation needed]")
+    citation_needed_count = markdown.count("[unverified]") + markdown.count("[citation needed]")
     return {
         "entity": entity,
         "markdown": markdown,

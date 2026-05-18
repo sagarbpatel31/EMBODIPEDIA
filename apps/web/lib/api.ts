@@ -27,11 +27,57 @@ export interface WikiArticle {
 export async function fetchArticle(slug: string): Promise<WikiArticle | null> {
   try {
     const res = await fetch(`${AGENTS_URL}/api/wiki/${slug}`, {
-      // Server component fetch — short cache so live edits show up.
       next: { revalidate: 30 },
     });
     if (!res.ok) return null;
     return (await res.json()) as WikiArticle;
+  } catch {
+    return null;
+  }
+}
+
+export interface TalkPage {
+  slug: string;
+  entity: string;
+  markdown: string;
+  references: (Reference & { perspective?: string | null })[];
+  bull_count: number;
+  bear_count: number;
+}
+
+export async function fetchTalkPage(slug: string): Promise<TalkPage | null> {
+  try {
+    const res = await fetch(`${AGENTS_URL}/api/talk/${slug}`, {
+      next: { revalidate: 30 },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as TalkPage;
+  } catch {
+    return null;
+  }
+}
+
+export interface AskResponse {
+  answer: string;
+  chunks: Array<{
+    footnote_id: number;
+    subject_entity: string | null;
+    claim_text: string | null;
+    source_url: string | null;
+    source_type: string | null;
+    actor_entity: string | null;
+  }>;
+  entity_paths: unknown[];
+}
+
+export async function askEmbodipedia(query: string): Promise<AskResponse | null> {
+  try {
+    const res = await fetch(
+      `${AGENTS_URL}/api/ask?q=${encodeURIComponent(query)}`,
+      { cache: "no-store" },
+    );
+    if (!res.ok) return null;
+    return (await res.json()) as AskResponse;
   } catch {
     return null;
   }

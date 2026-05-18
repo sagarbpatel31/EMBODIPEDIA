@@ -12,6 +12,7 @@ from typing import Any, Optional
 
 from .. import hydradb_client as hc
 from ..llm import EXTRACTION_MODEL, chat_json
+from ..perspective_router import route_claim
 
 SYSTEM_PROMPT = """\
 You are an editorial agent for Embodipedia, an AI-maintained Wikipedia of the
@@ -116,7 +117,8 @@ def ingest_tweet(
     for idx, c in enumerate(claims):
         subject = c.get("subject_entity") or "unknown"
         memory_id = _memory_id(subject, url, idx)
-        target_sub_tenant = sub_tenant or hc.SUB_TENANT_CANONICAL
+        conf_f = float(c.get("confidence") or 0.5)
+        evidence = c.get("evidence_strength") or "primary"
         metadata = {
             "memory_id": memory_id,
             "entity_type": "claim",
@@ -124,25 +126,42 @@ def ingest_tweet(
             "actor_entity": c.get("actor_entity") or tweet.get("author"),
             "source_url": url,
             "source_type": "tweet",
-            "evidence_strength": c.get("evidence_strength") or "primary",
+            "evidence_strength": evidence,
             "source_publisher": tweet.get("author"),
             "published_at": published_at,
             "ingested_at": now,
             "perspective": c.get("perspective") or "neutral",
-            # HydraDB metadata strips non-string values — store confidence as string.
-            "confidence": f"{float(c.get('confidence') or 0.5):.2f}",
+            "confidence": f"{conf_f:.2f}",
             "claim_type": c.get("claim_type") or "capability",
             "claim_polarity": c.get("claim_polarity") or "positive",
             "claim_text": c["claim_text"],
             "verification_status": "unverified",
         }
-        if write_to_hydradb:
-            hc.add_claim_memory(
-                sub_tenant=target_sub_tenant,
-                source_id=memory_id,
-                title=f"{subject} — {c.get('claim_type', 'claim')}",
-                text=c["claim_text"],
-                metadata=metadata,
+
+        # Phase 3: route to bull/bear/canonical based on perspective + heuristics.
+        # If caller overrides sub_tenant, honor that (used by debug tools).
+        if sub_tenant:
+            targets = {sub_tenant}
+        else:
+            targets = route_claim(
+                claim_text=c["claim_text"],
+                perspective=c.get("perspective"),
+                confidence=conf_f,
+                evidence_strength=evidence,
+                source_type="tweet",
             )
+        metadata["routed_to"] = ",".join(sorted(targets))
+
+        if write_to_hydradb:
+            # HYDRADB: write to every targeted sub-tenant. Same source_id
+            # across sub-tenants is fine — sub-tenants are isolated namespaces.
+            for target in targets:
+                hc.add_claim_memory(
+                    sub_tenant=target,
+                    source_id=memory_id,
+                    title=f"{subject} — {c.get('claim_type', 'claim')}",
+                    text=c["claim_text"],
+                    metadata=metadata,
+                )
         written.append(metadata)
     return written
