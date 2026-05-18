@@ -6,7 +6,7 @@ import re
 from typing import Any
 
 from ..hydradb_client import SUB_TENANT_CANONICAL, add_claim_memory
-from ..llm import chat_extract
+from ..llm import chat_json as chat_extract
 
 SYSTEM = """\
 You are an evidence extractor for Embodipedia, a Wikipedia of humanoid robotics.
