@@ -245,7 +245,7 @@ a:visited {
 .badge-unverified {
   display: inline-block;
   padding: 1px 6px;
-  margin-left: 4px;
+  margin-left: 2px;
   font-size: 0.68rem;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
@@ -253,7 +253,7 @@ a:visited {
   background: #fcf8e3;
   border: 1px solid #faebcc;
   border-radius: 9px;
-  vertical-align: 0.15em;
+  vertical-align: -0.05em;
   line-height: 1.4;
   cursor: help;
   letter-spacing: 0.02em;
@@ -942,7 +942,7 @@ a.entity-link:hover {
 }
 
 .wiki-topbar-links a {
-  color: #94a3b8;
+  color: #e2e8f0;
   text-decoration: none;
   padding: 0.3rem 0.7rem;
   border-radius: var(--radius-sm);
