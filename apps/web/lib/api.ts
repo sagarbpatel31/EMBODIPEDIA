@@ -22,15 +22,51 @@ export interface WikiArticle {
   markdown: string;
   citation_needed_count: number;
   references: Reference[];
+  as_of?: string | null;
+  claim_count?: number;
+  primary_source_count?: number;
+  quality?: "featured" | "good" | "stub" | "empty";
+  last_ingested_at?: string | null;
 }
 
-export async function fetchArticle(slug: string): Promise<WikiArticle | null> {
+export async function fetchArticle(slug: string, asOf?: string | null): Promise<WikiArticle | null> {
   try {
-    const res = await fetch(`${AGENTS_URL}/api/wiki/${slug}`, {
+    const url = asOf
+      ? `${AGENTS_URL}/api/wiki/${slug}?as_of=${encodeURIComponent(asOf)}`
+      : `${AGENTS_URL}/api/wiki/${slug}`;
+    const res = await fetch(url, {
       next: { revalidate: 30 },
     });
     if (!res.ok) return null;
     return (await res.json()) as WikiArticle;
+  } catch {
+    return null;
+  }
+}
+
+export interface WhatLinksHere {
+  entity: string;
+  slug: string;
+  total: number;
+  incoming: Array<{
+    subject_entity: string;
+    slug: string;
+    count: number;
+    mentions: Array<{
+      claim_text: string;
+      source_url: string | null;
+      source_type: string | null;
+      perspective: string | null;
+      confidence: string | null;
+    }>;
+  }>;
+}
+
+export async function fetchWhatLinksHere(slug: string): Promise<WhatLinksHere | null> {
+  try {
+    const res = await fetch(`${AGENTS_URL}/api/links/${slug}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return (await res.json()) as WhatLinksHere;
   } catch {
     return null;
   }

@@ -73,7 +73,12 @@ def _build_user_prompt(entity: str, claims: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-def synthesize_article(entity: str, *, max_claims: int = 30) -> dict[str, Any]:
+def synthesize_article(
+    entity: str,
+    *,
+    max_claims: int = 30,
+    as_of: str | None = None,
+) -> dict[str, Any]:
     """Recall claims for an entity and synthesize an article body.
 
     Returns a dict with `entity`, `markdown`, `claims` (the source claims used,
@@ -112,6 +117,16 @@ def synthesize_article(entity: str, *, max_claims: int = 30) -> dict[str, Any]:
     exact = [c for c in raw if (c.get("metadata") or {}).get("subject_entity", "").lower() == entity_lower]
     fuzzy = [c for c in raw if _entity_match(c)] if not exact else exact
     chunks = fuzzy or raw
+
+    # Time-travel: drop claims whose published_at is after `as_of`.
+    if as_of:
+        cutoff = as_of[:10]
+        chunks = [
+            c
+            for c in chunks
+            if not (c.get("metadata") or {}).get("published_at")
+            or ((c.get("metadata") or {}).get("published_at") or "")[:10] <= cutoff
+        ]
 
     # Attach footnote IDs in stable order.
     for i, chunk in enumerate(chunks, start=1):

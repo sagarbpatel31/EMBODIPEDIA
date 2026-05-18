@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
 import { Infobox } from "@/components/Infobox";
+import { StaleBanner } from "@/components/StaleBanner";
+import { TimeTravelSlider } from "@/components/TimeTravelSlider";
 import {
   fetchArticle,
   fetchHistory,
@@ -9,6 +11,24 @@ import {
   type Reference,
 } from "@/lib/api";
 import { renderArticleMarkdown } from "@/lib/markdown";
+
+function QualityBadge({ quality }: { quality?: string | null }) {
+  if (!quality || quality === "empty") return null;
+  return (
+    <span className={`quality-badge quality-${quality}`}>
+      {quality === "featured" && "★ Featured article"}
+      {quality === "good" && "✓ Good article"}
+      {quality === "stub" && "Stub"}
+    </span>
+  );
+}
+
+function dayDiff(iso: string | null | undefined): number | null {
+  if (!iso) return null;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return null;
+  return Math.floor((Date.now() - t) / 86400000);
+}
 
 interface Params {
   slug: string;
@@ -90,6 +110,9 @@ function ArticleTabs({
       </a>
       <a className={cls("history")} href={`/wiki/${baseSlug}?action=history`}>
         History
+      </a>
+      <a className="wiki-tab" href={`/special/links/${baseSlug}`}>
+        What links here
       </a>
     </nav>
   );
@@ -248,22 +271,50 @@ export default async function WikiSlugPage({
     );
   }
 
-  const article = await fetchArticle(baseSlug);
+  const asOf = typeof search.as_of === "string" ? search.as_of : null;
+  const article = await fetchArticle(baseSlug, asOf);
   if (!article) notFound();
 
   const html = renderArticleMarkdown(article.markdown, article.references);
+  const age = dayDiff(article.last_ingested_at);
+  // Demo-friendly stale threshold (article older than this triggers banner).
+  const STALE_THRESHOLD_DAYS = 14;
 
   return (
     <article className="wiki-article">
       <header className="wiki-header">
         <div>
-          <h1 className="wiki-title">{article.entity}</h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", flexWrap: "wrap" }}>
+            <h1 className="wiki-title">{article.entity}</h1>
+            <QualityBadge quality={article.quality} />
+          </div>
           <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
             From Embodipedia, the encyclopedia of humanoid robotics
+            {article.claim_count != null && (
+              <>
+                {" · "}{article.claim_count} claim{article.claim_count === 1 ? "" : "s"}
+                {" · "}{article.primary_source_count ?? 0} primary source
+                {(article.primary_source_count ?? 0) === 1 ? "" : "s"}
+              </>
+            )}
           </p>
         </div>
         <ArticleTabs baseSlug={baseSlug} active="article" />
       </header>
+
+      <TimeTravelSlider />
+
+      {age != null && age >= STALE_THRESHOLD_DAYS && (
+        <StaleBanner slug={baseSlug} ageDays={age} />
+      )}
+
+      {asOf && (
+        <div className="time-warp-notice">
+          ⏳ Viewing article as it would have appeared on or before{" "}
+          <strong>{asOf}</strong>. {article.claim_count ?? 0} of total claims survive
+          this time filter. <a href={`/wiki/${baseSlug}`}>back to present</a>
+        </div>
+      )}
 
       <div className="wiki-main">
         <div

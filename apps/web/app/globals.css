@@ -287,6 +287,236 @@ a:visited {
   color: #54595d;
 }
 
+/* ---------- time-travel slider ---------- */
+.time-travel {
+  margin: 0 0 1.2rem;
+  padding: 0.7rem 0.9rem;
+  background: linear-gradient(to right, #f0f4ff, #fbfcfd);
+  border: 1px solid #c8d3e8;
+  border-radius: 6px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.time-travel-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: #36393d;
+  margin-bottom: 0.6rem;
+}
+
+.time-travel-icon {
+  font-size: 1rem;
+}
+
+.time-travel-note {
+  font-size: 0.74rem;
+  color: #54595d;
+  font-style: italic;
+  margin-left: 0.3rem;
+}
+
+.time-travel-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.time-travel-track::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 0.7rem;
+  right: 0.7rem;
+  height: 2px;
+  background: #c8d3e8;
+  z-index: 0;
+}
+
+.time-travel-stop {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  z-index: 1;
+}
+
+.time-travel-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #c8d3e8;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.time-travel-stop.filled .time-travel-dot {
+  background: var(--wiki-link);
+  border-color: var(--wiki-link);
+}
+
+.time-travel-stop.active .time-travel-dot {
+  background: var(--wiki-link);
+  border-color: var(--wiki-link);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 3px rgba(6, 69, 173, 0.18);
+}
+
+.time-travel-stop:hover .time-travel-dot {
+  transform: scale(1.15);
+}
+
+.time-travel-stop-label {
+  font-size: 0.72rem;
+  color: #54595d;
+  white-space: nowrap;
+}
+
+.time-travel-stop.active .time-travel-stop-label {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.time-warp-notice {
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.8rem;
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  font-size: 0.85rem;
+  color: #5d4e02;
+  border-radius: 0 4px 4px 0;
+}
+
+.time-warp-notice a {
+  margin-left: 0.4rem;
+}
+
+/* ---------- stale article banner ---------- */
+.stale-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.2rem;
+  padding: 0.6rem 0.9rem;
+  background: #fff4e5;
+  border-left: 4px solid #ed8936;
+  font-size: 0.88rem;
+  color: #5d3a1c;
+  border-radius: 0 4px 4px 0;
+  flex-wrap: wrap;
+}
+
+.stale-icon {
+  font-size: 1.1rem;
+}
+
+.stale-refresh {
+  margin-left: auto;
+  background: var(--wiki-link);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: inherit;
+}
+
+.stale-refresh:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.stale-refresh:hover:not(:disabled) {
+  background: #053fa0;
+}
+
+/* ---------- quality badge ---------- */
+.quality-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 11px;
+  font-size: 0.7rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  vertical-align: 0.3em;
+}
+
+.quality-featured {
+  background: #fff8e1;
+  color: #b88800;
+  border: 1px solid #f3d985;
+}
+
+.quality-good {
+  background: #e6f4ea;
+  color: #1e7e34;
+  border: 1px solid #b7dfbf;
+}
+
+.quality-stub {
+  background: #f8f9fa;
+  color: #54595d;
+  border: 1px solid var(--wiki-soft-border);
+}
+
+/* ---------- What Links Here ---------- */
+.links-section {
+  margin: 1.2rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.links-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  font-family: "Linux Libertine", "Georgia", serif;
+  font-weight: normal;
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+}
+
+.links-count {
+  font-size: 0.78rem;
+  color: #54595d;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.links-mention {
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.4rem;
+  background: #fbfcfd;
+  border-left: 3px solid var(--wiki-soft-border);
+  border-radius: 0 3px 3px 0;
+}
+
+.links-mention-text {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  margin-bottom: 0.3rem;
+  line-height: 1.55;
+}
+
+.links-mention-meta {
+  font-size: 0.78rem;
+  color: #54595d;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
 /* ---------- flow diagram on homepage ---------- */
 .flow-diagram {
   display: flex;
