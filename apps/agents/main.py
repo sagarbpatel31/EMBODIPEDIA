@@ -269,6 +269,21 @@ def ask_embodipedia(q: str, k: int = 10) -> dict[str, Any]:
         temperature=0.2,
     )
 
+    # Build entity graph for visualization: nodes = entities + actors,
+    # edges = "actor claims about entity" derived from chunks themselves.
+    nodes: dict[str, dict[str, Any]] = {}
+    edges: list[dict[str, Any]] = []
+    for c in chunks:
+        meta = c.get("metadata") or {}
+        subj = (meta.get("subject_entity") or "").strip()
+        actor = (meta.get("actor_entity") or "").strip()
+        if subj:
+            nodes.setdefault(subj, {"id": subj, "label": subj, "kind": "entity"})
+        if actor and actor != subj:
+            nodes.setdefault(actor, {"id": actor, "label": actor, "kind": "actor"})
+            if subj:
+                edges.append({"source": actor, "target": subj, "relation": "claims about"})
+
     return {
         "answer": answer,
         "chunks": [
@@ -282,7 +297,7 @@ def ask_embodipedia(q: str, k: int = 10) -> dict[str, Any]:
             }
             for i, c in enumerate(chunks)
         ],
-        "entity_paths": [],  # Phase 5 — populated from HydraDB graph_context
+        "entity_paths": {"nodes": list(nodes.values()), "edges": edges},
     }
 
 

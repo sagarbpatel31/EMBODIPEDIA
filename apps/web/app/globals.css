@@ -287,6 +287,60 @@ a:visited {
   color: #54595d;
 }
 
+/* ---------- entity graph (in Cmd+K) ---------- */
+.entity-graph {
+  margin: 1rem 0 0.5rem;
+  padding: 0.6rem;
+  background: #fbfcfd;
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: 6px;
+}
+
+.entity-graph-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #54595d;
+  margin-bottom: 0.5rem;
+}
+
+.entity-graph-svg {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.entity-graph-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.4rem;
+  font-size: 0.74rem;
+  color: #54595d;
+}
+
+.entity-graph-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.entity-graph-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.entity-graph-dot-entity {
+  background: #0645ad;
+}
+
+.entity-graph-dot-actor {
+  background: #54595d;
+}
+
 /* ---------- time-travel slider ---------- */
 .time-travel {
   margin: 0 0 1.2rem;

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { AGENTS_URL } from "@/lib/api";
+import { EntityGraph } from "./EntityGraph";
 
 interface Chunk {
   footnote_id: number;
@@ -13,12 +14,16 @@ interface Chunk {
   actor_entity: string | null;
 }
 
+interface GraphNode { id: string; label: string; kind: "entity" | "actor" }
+interface GraphEdge { source: string; target: string; relation: string }
+
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string>("");
   const [chunks, setChunks] = useState<Chunk[]>([]);
+  const [graph, setGraph] = useState<{ nodes: GraphNode[]; edges: GraphEdge[] } | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Global Cmd+K / Ctrl+K listener.
@@ -43,12 +48,16 @@ export function CommandPalette() {
     setLoading(true);
     setAnswer("");
     setChunks([]);
+    setGraph(null);
     try {
       const res = await fetch(`${AGENTS_URL}/api/ask?q=${encodeURIComponent(query)}`);
       if (res.ok) {
         const data = await res.json();
         setAnswer(data.answer || "");
         setChunks(data.chunks || []);
+        if (data.entity_paths && data.entity_paths.nodes) {
+          setGraph(data.entity_paths);
+        }
       } else {
         setAnswer("_Backend error — is the FastAPI service up on :8000?_");
       }
@@ -109,6 +118,9 @@ export function CommandPalette() {
                 className="cmdk-answer"
                 dangerouslySetInnerHTML={{ __html: renderAnswer(answer) }}
               />
+            )}
+            {graph && graph.nodes.length > 1 && (
+              <EntityGraph nodes={graph.nodes} edges={graph.edges} />
             )}
             {chunks.length > 0 && (
               <div className="cmdk-chunks">
