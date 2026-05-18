@@ -76,7 +76,7 @@ function applyHeatmap(html: string, confMap: Map<number, number>): string {
 }
 
 // Sorted longest-first so "Tesla Optimus Gen 3" matches before "Tesla Optimus".
-const WIKI_ENTITY_LINKS = (([
+const WIKI_ENTITY_LINKS: Array<[string, string]> = [
   ["NVIDIA GR00T N2", "NVIDIA_GR00T"],
   ["NVIDIA GR00T N1", "NVIDIA_GR00T"],
   ["NVIDIA GR00T", "NVIDIA_GR00T"],
@@ -100,7 +100,8 @@ const WIKI_ENTITY_LINKS = (([
   ["GR00T N2", "NVIDIA_GR00T"],
   ["GR00T N1", "NVIDIA_GR00T"],
   ["Figure AI", "Figure_02"],
-]) as [string, string][]).sort((a, b) => b[0].length - a[0].length);
+];
+WIKI_ENTITY_LINKS.sort((a, b) => b[0].length - a[0].length);
 
 // Link entity names in text nodes only — splits on HTML tags so we never
 // mutate tag attributes or already-linked text.

@@ -315,6 +315,31 @@ export default async function WikiSlugPage({
   const article = await fetchArticle(baseSlug, asOf, perspective);
   if (!article) notFound();
 
+  // Empty article — no claims yet, show stub notice before rendering.
+  if (article.quality === "empty" || (article.claim_count ?? 0) === 0) {
+    return (
+      <article className="wiki-article">
+        <header className="wiki-header">
+          <div>
+            <h1 className="wiki-title">{article.entity}</h1>
+            <p style={{ margin: 0, fontStyle: "italic", color: "#54595d", fontSize: "0.85rem" }}>
+              From Embodipedia, the encyclopedia of humanoid robotics
+            </p>
+          </div>
+          <ArticleTabs baseSlug={baseSlug} active="article" />
+        </header>
+        <div className="stub-notice">
+          <div className="stub-notice-icon">🤖</div>
+          <div>
+            <strong>Agents haven&apos;t written this article yet.</strong>
+            <p>No claims have been ingested for <em>{article.entity}</em>. Be the first to teach Embodipedia about this entity.</p>
+            <a href="/special/ingest" className="stub-notice-btn">⚡ Ingest a source now</a>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
   const html = renderArticleMarkdown(article.markdown, article.references, article.entity);
   const age = dayDiff(article.last_ingested_at);
   const activePerspective = perspective || "canonical";

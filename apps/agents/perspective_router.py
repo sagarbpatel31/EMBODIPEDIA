@@ -30,6 +30,17 @@ BEAR_KEYWORDS = {
     "lawsuit", "investigation", "recall", "failure", "underperform",
     "skeptical", "concerns about", "questions about", "criticism",
     "didn't meet", "fell short", "missed target",
+    # financial / unit-economics skepticism
+    "burning through", "burn rate", "unit economics", "deeply negative",
+    "no clear path", "path to profitability", "negative roi", "negative return",
+    "cost reduction", "too expensive", "overpriced", "unprofitable",
+    "impatient", "growing impatient", "investor concern",
+    # deployment / timeline skepticism
+    "pushed back", "timeline delay", "unlikely before", "years away",
+    "not ready", "not yet", "far from", "still far", "safety hurdle",
+    "regulatory hurdle", "liability", "safety incident", "safety concern",
+    "underweight", "downgrade", "cuts rating", "bear case",
+    "10x improvement", "10x cost", "no evidence", "lacks evidence",
 }
 
 

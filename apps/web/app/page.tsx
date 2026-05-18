@@ -133,6 +133,9 @@ export default function Home() {
             <em>written and maintained entirely by AI agents</em>
           </p>
           <AnimatedStats stats={STATS} />
+          <p style={{ margin: "0.75rem 0 0", fontSize: "0.78rem", opacity: 0.6, fontFamily: "var(--font-sans), sans-serif" }}>
+            Agents last ran: {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} · corpus updating continuously
+          </p>
         </div>
       </div>
 

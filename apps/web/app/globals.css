@@ -1876,3 +1876,31 @@ a.entity-link:hover {
   line-height: 1.4;
 }
 
+
+/* ---------- Stub / empty article notice ---------- */
+.stub-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin: 2rem 0;
+  padding: 1.5rem 1.75rem;
+  background: #f8f9fa;
+  border: 1px solid #c8ccd1;
+  border-left: 4px solid var(--accent-blue);
+  border-radius: var(--radius-sm);
+}
+.stub-notice-icon { font-size: 2rem; flex-shrink: 0; }
+.stub-notice strong { font-size: 1rem; }
+.stub-notice p { margin: 0.4rem 0 0.9rem; color: #54595d; font-size: 0.9rem; }
+.stub-notice-btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--accent-navy);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--font-sans), sans-serif;
+}
+.stub-notice-btn:hover { background: var(--accent-blue); color: #fff; }
