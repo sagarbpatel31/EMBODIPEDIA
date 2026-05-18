@@ -44,15 +44,20 @@ def _slug_to_entity(slug: str) -> str:
 
 
 @app.get("/api/wiki/{slug}")
-def get_wiki_article(slug: str, as_of: str | None = None) -> dict[str, Any]:
-    """Synthesize an entity article. Optional as_of=YYYY-MM-DD enables time-travel
-    by filtering claims to those whose published_at <= as_of before synthesis.
+def get_wiki_article(
+    slug: str,
+    as_of: str | None = None,
+    perspective: str | None = None,
+) -> dict[str, Any]:
+    """Synthesize an entity article.
+    - as_of=YYYY-MM-DD: time-travel filter
+    - perspective=bull|bear|canonical: render from a single sub-tenant POV
     """
     from .synthesis_agent import synthesize_article
 
     entity = _slug_to_entity(slug)
     try:
-        result = synthesize_article(entity, as_of=as_of)
+        result = synthesize_article(entity, as_of=as_of, perspective=perspective)
     except Exception as err:
         raise HTTPException(status_code=500, detail=str(err))
 
@@ -83,6 +88,7 @@ def get_wiki_article(slug: str, as_of: str | None = None) -> dict[str, Any]:
         "slug": slug,
         "entity": entity,
         "as_of": as_of,
+        "perspective": perspective or "canonical",
         "markdown": result["markdown"],
         "citation_needed_count": result["citation_needed_count"],
         "claim_count": n,

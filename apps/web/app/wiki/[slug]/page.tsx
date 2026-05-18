@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { Infobox } from "@/components/Infobox";
+import { PerspectiveToggle } from "@/components/PerspectiveToggle";
 import { StaleBanner } from "@/components/StaleBanner";
 import { TimeTravelSlider } from "@/components/TimeTravelSlider";
 import {
@@ -136,6 +137,29 @@ async function TalkPage({ baseSlug, entity }: { baseSlug: string; entity: string
         <ArticleTabs baseSlug={baseSlug} active="talk" />
       </header>
 
+      {/* Evidence scoreboard */}
+      {talk && (talk.bull_count > 0 || talk.bear_count > 0) && (() => {
+        const total = talk.bull_count + talk.bear_count;
+        const bullPct = total > 0 ? Math.round((talk.bull_count / total) * 100) : 50;
+        const bearPct = 100 - bullPct;
+        return (
+          <div className="talk-scoreboard">
+            <div className="talk-scoreboard-header">
+              <span className="talk-score-bull">↑ Bull · {talk.bull_count} claims</span>
+              <span className="talk-score-label">Evidence battle</span>
+              <span className="talk-score-bear">{talk.bear_count} claims · Bear ↓</span>
+            </div>
+            <div className="talk-scoreboard-bar">
+              <div className="talk-scoreboard-bull" style={{ width: `${bullPct}%` }}>
+                {bullPct > 12 && `${bullPct}%`}
+              </div>
+              <div className="talk-scoreboard-bear" style={{ width: `${bearPct}%` }}>
+                {bearPct > 12 && `${bearPct}%`}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
       <div className="talk-perspective-bar">
         <span className="talk-pill talk-pill-bull">{talk?.bull_count ?? 0} bull claims</span>
         <span className="talk-pill talk-pill-bear">{talk?.bear_count ?? 0} bear claims</span>
@@ -272,11 +296,13 @@ export default async function WikiSlugPage({
   }
 
   const asOf = typeof search.as_of === "string" ? search.as_of : null;
-  const article = await fetchArticle(baseSlug, asOf);
+  const perspective = typeof search.perspective === "string" ? search.perspective : null;
+  const article = await fetchArticle(baseSlug, asOf, perspective);
   if (!article) notFound();
 
   const html = renderArticleMarkdown(article.markdown, article.references);
   const age = dayDiff(article.last_ingested_at);
+  const activePerspective = perspective || "canonical";
   // Demo-friendly stale threshold (article older than this triggers banner).
   const STALE_THRESHOLD_DAYS = 14;
 
@@ -302,12 +328,27 @@ export default async function WikiSlugPage({
         <ArticleTabs baseSlug={baseSlug} active="article" />
       </header>
 
+      <PerspectiveToggle current={activePerspective} />
       <TimeTravelSlider />
 
       {age != null && age >= STALE_THRESHOLD_DAYS && (
         <StaleBanner slug={baseSlug} ageDays={age} />
       )}
 
+      {perspective === "bull" && (
+        <div className="perspective-notice perspective-notice-bull">
+          ↑ <strong>Bull perspective:</strong> This article is synthesized from optimistic,
+          growth-oriented claims. Bear and neutral claims are excluded.{" "}
+          <a href={`/wiki/${baseSlug}`}>Switch to balanced view</a>
+        </div>
+      )}
+      {perspective === "bear" && (
+        <div className="perspective-notice perspective-notice-bear">
+          ↓ <strong>Bear perspective:</strong> This article is synthesized from skeptical,
+          risk-focused claims. Bull and neutral claims are excluded.{" "}
+          <a href={`/wiki/${baseSlug}`}>Switch to balanced view</a>
+        </div>
+      )}
       {asOf && (
         <div className="time-warp-notice">
           ⏳ Viewing article as it would have appeared on or before{" "}

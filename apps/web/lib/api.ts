@@ -23,17 +23,24 @@ export interface WikiArticle {
   citation_needed_count: number;
   references: Reference[];
   as_of?: string | null;
+  perspective?: string | null;
   claim_count?: number;
   primary_source_count?: number;
   quality?: "featured" | "good" | "stub" | "empty";
   last_ingested_at?: string | null;
 }
 
-export async function fetchArticle(slug: string, asOf?: string | null): Promise<WikiArticle | null> {
+export async function fetchArticle(
+  slug: string,
+  asOf?: string | null,
+  perspective?: string | null,
+): Promise<WikiArticle | null> {
   try {
-    const url = asOf
-      ? `${AGENTS_URL}/api/wiki/${slug}?as_of=${encodeURIComponent(asOf)}`
-      : `${AGENTS_URL}/api/wiki/${slug}`;
+    const params = new URLSearchParams();
+    if (asOf) params.set("as_of", asOf);
+    if (perspective && perspective !== "canonical") params.set("perspective", perspective);
+    const qs = params.toString();
+    const url = `${AGENTS_URL}/api/wiki/${slug}${qs ? `?${qs}` : ""}`;
     const res = await fetch(url, {
       next: { revalidate: 30 },
     });

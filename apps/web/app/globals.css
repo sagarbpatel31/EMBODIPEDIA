@@ -1390,3 +1390,206 @@ a:visited {
 .portal-footer p {
   margin: 0;
 }
+
+/* ---------- perspective toggle ---------- */
+.perspective-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  flex-wrap: wrap;
+}
+
+.perspective-toggle-label {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #54595d;
+  margin-right: 0.3rem;
+}
+
+.perspective-btn {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.perspective-btn-canonical {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+.perspective-btn-canonical:hover,
+.perspective-btn-canonical.active {
+  background: #dbeafe;
+  color: #1e3a8a;
+  border-color: #93c5fd;
+}
+
+.perspective-btn-bull {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #86efac;
+}
+.perspective-btn-bull:hover,
+.perspective-btn-bull.active {
+  background: #bbf7d0;
+  color: #14532d;
+  border-color: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74,222,128,0.18);
+}
+
+.perspective-btn-bear {
+  background: #fff1f2;
+  color: #9f1239;
+  border-color: #fda4af;
+}
+.perspective-btn-bear:hover,
+.perspective-btn-bear.active {
+  background: #fecdd3;
+  color: #881337;
+  border-color: #fb7185;
+  box-shadow: 0 0 0 3px rgba(251,113,133,0.18);
+}
+
+.perspective-loading {
+  font-size: 1rem;
+  color: #94a3b8;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- perspective notice banners ---------- */
+.perspective-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  border-radius: var(--radius-sm);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.perspective-notice-bull {
+  background: linear-gradient(to right, #dcfce7, #f0fdf4);
+  border-left: 4px solid #4ade80;
+  color: #14532d;
+}
+
+.perspective-notice-bear {
+  background: linear-gradient(to right, #ffe4e6, #fff1f2);
+  border-left: 4px solid #fb7185;
+  color: #881337;
+}
+
+/* ---------- talk page evidence scoreboard ---------- */
+.talk-scoreboard {
+  margin: 0 0 1.2rem;
+  padding: 1rem 1.1rem;
+  background: var(--wiki-soft);
+  border: 1px solid var(--wiki-soft-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.talk-scoreboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.82rem;
+}
+
+.talk-score-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+.talk-score-bull {
+  color: #065f46;
+  font-weight: 700;
+}
+
+.talk-score-bear {
+  color: #991b1b;
+  font-weight: 700;
+}
+
+.talk-scoreboard-bar {
+  display: flex;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.72rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.talk-scoreboard-bull {
+  background: linear-gradient(to right, #16a34a, #4ade80);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 0;
+}
+
+.talk-scoreboard-bear {
+  background: linear-gradient(to right, #f87171, #dc2626);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 0;
+}
+
+/* ---------- confidence heatmap ---------- */
+.conf-high { background: rgba(74,222,128,0.12); border-radius: 2px; }
+.conf-med  { background: rgba(251,191,36,0.12); border-radius: 2px; }
+.conf-low  { background: rgba(248,113,113,0.12); border-radius: 2px; }
+
+/* Skeleton loader */
+@keyframes shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position: 800px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-line {
+  height: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.skeleton-line-wide { width: 100%; }
+.skeleton-line-med  { width: 75%; }
+.skeleton-line-short { width: 45%; }
+
+.skeleton-title {
+  height: 2rem;
+  width: 55%;
+  margin: 0 0 1rem;
+}
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 import { AGENTS_URL } from "@/lib/api";
 import { EntityGraph } from "./EntityGraph";
@@ -17,6 +17,57 @@ interface Chunk {
 interface GraphNode { id: string; label: string; kind: "entity" | "actor" }
 interface GraphEdge { source: string; target: string; relation: string }
 
+const PLACEHOLDER_QUERIES = [
+  "How is Karol Hausman connected to Skild AI?",
+  "What is Figure 03's commercial deployment status?",
+  "Compare Tesla Optimus vs Boston Dynamics Atlas",
+  "Which robots use VLA models in 2025?",
+  "Why are analysts bearish on Tesla Optimus timelines?",
+  "How does π0 flow matching differ from RLHF?",
+  "Who funded Physical Intelligence and why?",
+  "What is NVIDIA's CUDA-for-robots strategy?",
+];
+
+function useTypingPlaceholder(active: boolean): string {
+  const [placeholder, setPlaceholder] = useState(PLACEHOLDER_QUERIES[0]);
+  const [displayText, setDisplayText] = useState("");
+  const [phase, setPhase] = useState<"typing" | "pause" | "erasing">("typing");
+  const [charIdx, setCharIdx] = useState(0);
+  const [queryIdx, setQueryIdx] = useState(0);
+
+  useEffect(() => {
+    if (!active) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    if (phase === "typing") {
+      if (charIdx < placeholder.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(placeholder.slice(0, charIdx + 1));
+          setCharIdx((i) => i + 1);
+        }, 38);
+      } else {
+        timeout = setTimeout(() => setPhase("pause"), 1800);
+      }
+    } else if (phase === "pause") {
+      timeout = setTimeout(() => setPhase("erasing"), 600);
+    } else {
+      if (charIdx > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(placeholder.slice(0, charIdx - 1));
+          setCharIdx((i) => i - 1);
+        }, 18);
+      } else {
+        const next = (queryIdx + 1) % PLACEHOLDER_QUERIES.length;
+        setQueryIdx(next);
+        setPlaceholder(PLACEHOLDER_QUERIES[next]);
+        setPhase("typing");
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [active, phase, charIdx, placeholder, queryIdx]);
+
+  return displayText || "Ask Embodipedia anything…";
+}
+
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -25,6 +76,7 @@ export function CommandPalette() {
   const [chunks, setChunks] = useState<Chunk[]>([]);
   const [graph, setGraph] = useState<{ nodes: GraphNode[]; edges: GraphEdge[] } | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const animatedPlaceholder = useTypingPlaceholder(open && !query);
 
   // Global Cmd+K / Ctrl+K listener.
   useEffect(() => {
@@ -96,7 +148,7 @@ export function CommandPalette() {
           <input
             ref={inputRef}
             className="cmdk-input"
-            placeholder="How is Karol Hausman connected to Skild?"
+            placeholder={animatedPlaceholder}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {

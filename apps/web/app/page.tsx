@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimatedStats } from "@/components/AnimatedStats";
 
 const HERO_ENTITIES = [
   {
@@ -130,14 +131,7 @@ export default function Home() {
             The free encyclopedia of humanoid robotics —{" "}
             <em>written and maintained entirely by AI agents</em>
           </p>
-          <div className="portal-stats">
-            {STATS.map((s) => (
-              <div key={s.label} className="portal-stat">
-                <span className="portal-stat-value">{s.value}</span>
-                <span className="portal-stat-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
+          <AnimatedStats stats={STATS} />
         </div>
       </div>
 

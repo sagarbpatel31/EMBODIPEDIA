@@ -78,42 +78,58 @@ def synthesize_article(
     *,
     max_claims: int = 30,
     as_of: str | None = None,
+    perspective: str | None = None,
 ) -> dict[str, Any]:
     """Recall claims for an entity and synthesize an article body.
 
-    Returns a dict with `entity`, `markdown`, `claims` (the source claims used,
-    each with footnote_id), and `citation_needed_count` (post-render count).
+    perspective=bull|bear queries only that sub-tenant for a one-sided POV view.
+    Returns a dict with `entity`, `markdown`, `claims`, `citation_needed_count`.
     """
-    # HYDRADB: query canonical sub-tenant for this entity. Phase 3 will fan out
-    # to bull/bear and weave the debate hints into the prose.
-    # NOTE: metadata_filters shape on HydraDB recall is not yet pinned down —
-    # initial test returned 0 results even when metadata clearly matched.
-    # For Phase 1's small corpus we trust relevance ranking + post-filter on
-    # subject_entity. Re-enable filter in Phase 4 once shape is confirmed.
-    # HYDRADB: pull from canonical first (the complete corpus); fall back to
-    # bull+bear if canonical recall is sparse (handles indexer lag / older
-    # writes that routed perspective-only before the routing fix).
-    raw = hc.recall_subtenant(
-        sub_tenant=hc.SUB_TENANT_CANONICAL,
-        query=f"everything known about {entity}",
-        max_results=max_claims,
-    )
-    if len(raw) < 3:
-        seen = {(c.get("metadata") or {}).get("memory_id") for c in raw}
-        for sub in (hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
-            try:
-                extra = hc.recall_subtenant(
-                    sub_tenant=sub,
-                    query=f"everything known about {entity}",
-                    max_results=max_claims,
-                )
-            except Exception:
-                continue
-            for c in extra:
+    # HYDRADB: perspective toggle routes to single sub-tenant for POV articles;
+    # default canonical pulls all grounded evidence.
+    if perspective and perspective in ("bull", "bear"):
+        raw = hc.recall_subtenant(
+            sub_tenant=perspective,
+            query=f"everything known about {entity}",
+            max_results=max_claims,
+        )
+        # Also pull canonical to supplement sparse perspective tenants
+        if len(raw) < 3:
+            canon = hc.recall_subtenant(
+                sub_tenant=hc.SUB_TENANT_CANONICAL,
+                query=f"everything known about {entity}",
+                max_results=max_claims,
+            )
+            seen = {(c.get("metadata") or {}).get("memory_id") for c in raw}
+            for c in canon:
                 mid = (c.get("metadata") or {}).get("memory_id")
                 if mid and mid not in seen:
                     seen.add(mid)
                     raw.append(c)
+    else:
+        # HYDRADB: pull from canonical first (the complete corpus); fall back to
+        # bull+bear if canonical recall is sparse.
+        raw = hc.recall_subtenant(
+            sub_tenant=hc.SUB_TENANT_CANONICAL,
+            query=f"everything known about {entity}",
+            max_results=max_claims,
+        )
+        if len(raw) < 3:
+            seen = {(c.get("metadata") or {}).get("memory_id") for c in raw}
+            for sub in (hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
+                try:
+                    extra = hc.recall_subtenant(
+                        sub_tenant=sub,
+                        query=f"everything known about {entity}",
+                        max_results=max_claims,
+                    )
+                except Exception:
+                    continue
+                for c in extra:
+                    mid = (c.get("metadata") or {}).get("memory_id")
+                    if mid and mid not in seen:
+                        seen.add(mid)
+                        raw.append(c)
     # Post-filter: exact match → fuzzy match → unfiltered fallback.
     # Fuzzy handles cases where tweet agent writes "Figure AI" for entity "Figure 02".
     entity_lower = entity.lower()
