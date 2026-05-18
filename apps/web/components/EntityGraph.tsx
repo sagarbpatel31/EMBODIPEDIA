@@ -96,20 +96,38 @@ export function EntityGraph({ nodes, edges }: Props) {
         Entity graph ({nodes.length} nodes · {edges.length} edges)
       </div>
       <svg viewBox={`0 0 ${layout.w} ${layout.h}`} className="entity-graph-svg">
+        <rect x={0} y={0} width={layout.w} height={layout.h} fill="rgba(15,23,42,0.5)" rx={6} />
         {edges.map((e, i) => {
           const a = layout.positions.get(e.source);
           const b = layout.positions.get(e.target);
           if (!a || !b) return null;
+          const mx = (a[0] + b[0]) / 2;
+          const my = (a[1] + b[1]) / 2;
           return (
-            <line
-              key={i}
-              x1={a[0]}
-              y1={a[1]}
-              x2={b[0]}
-              y2={b[1]}
-              stroke="#c8d3e8"
-              strokeWidth={1.2}
-            />
+            <g key={i}>
+              <line
+                x1={a[0]}
+                y1={a[1]}
+                x2={b[0]}
+                y2={b[1]}
+                stroke="rgba(148,163,184,0.35)"
+                strokeWidth={1.5}
+                strokeDasharray="3 2"
+              />
+              {e.relation && e.relation !== "related_to" && (
+                <text
+                  x={mx}
+                  y={my}
+                  textAnchor="middle"
+                  fontSize={8}
+                  fontFamily="Helvetica, Arial, sans-serif"
+                  fill="rgba(148,163,184,0.7)"
+                  dy={-3}
+                >
+                  {e.relation.replace(/_/g, " ")}
+                </text>
+              )}
+            </g>
           );
         })}
         {nodes.map((n) => {
@@ -120,19 +138,21 @@ export function EntityGraph({ nodes, edges }: Props) {
           return (
             <g key={n.id} transform={`translate(${p[0]}, ${p[1]})`}>
               <circle
-                r={isEntity ? 8 : 5}
-                fill={isEntity ? "#0645ad" : "#54595d"}
-                stroke="#fff"
-                strokeWidth={1.5}
+                r={isEntity ? 10 : 6}
+                fill={isEntity ? "#3b82f6" : "#8b5cf6"}
+                stroke={isEntity ? "#93c5fd" : "#c4b5fd"}
+                strokeWidth={2}
+                style={{ filter: isEntity ? "drop-shadow(0 0 6px rgba(59,130,246,0.6))" : "drop-shadow(0 0 4px rgba(139,92,246,0.5))" }}
               />
               {isEntity ? (
                 <a href={`/wiki/${slug}`}>
                   <text
-                    y={-12}
+                    y={-14}
                     textAnchor="middle"
                     fontSize={11}
                     fontFamily="Helvetica, Arial, sans-serif"
-                    fill="#0645ad"
+                    fontWeight="600"
+                    fill="#93c5fd"
                     style={{ textDecoration: "underline", cursor: "pointer" }}
                   >
                     {n.label}
@@ -140,11 +160,11 @@ export function EntityGraph({ nodes, edges }: Props) {
                 </a>
               ) : (
                 <text
-                  y={-9}
+                  y={-10}
                   textAnchor="middle"
                   fontSize={10}
                   fontFamily="Helvetica, Arial, sans-serif"
-                  fill="#54595d"
+                  fill="#c4b5fd"
                 >
                   {n.label}
                 </text>

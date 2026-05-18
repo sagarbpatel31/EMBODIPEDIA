@@ -108,27 +108,25 @@ def get_wiki_article(slug: str, as_of: str | None = None) -> dict[str, Any]:
 def what_links_here(slug: str, max_per_entity: int = 3) -> dict[str, Any]:
     """Find other entities whose claims mention this entity.
 
-    Combines two HydraDB recall strategies for completeness:
-    1. Global hybrid recall on the entity name (vector + lexical)
-    2. Per-sub-tenant fallback (canonical / bull / bear) so we don't miss
-       claims that were routed to perspective lanes only.
+    Uses sub-tenant recall with the entity name as query, then fuzzy-matches
+    the entity name in claim text. Global recall is unreliable on free tier,
+    so we rely on per-sub-tenant recall with a high max_results budget.
     """
     from . import hydradb_client as hc
 
     entity = _slug_to_entity(slug)
+    # Build short-name variants for fuzzy matching (e.g. "Figure 03" → also match "Figure")
+    entity_lower = entity.lower()
+    entity_parts = [w for w in entity_lower.split() if len(w) > 2]
+
     chunks: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
-    try:
-        for c in hc.recall_global(query=entity, max_results=40):
-            mid = (c.get("metadata") or {}).get("memory_id") or c.get("id") or ""
-            if mid and mid not in seen_ids:
-                seen_ids.add(mid)
-                chunks.append(c)
-    except Exception:
-        pass
+
+    # HYDRADB: recall canonical with the entity name to surface cross-entity mentions.
+    # Using max_results=250 gets the full corpus; we post-filter by claim text.
     for sub in (hc.SUB_TENANT_CANONICAL, hc.SUB_TENANT_BULL, hc.SUB_TENANT_BEAR):
         try:
-            for c in hc.recall_subtenant(sub_tenant=sub, query=entity, max_results=20):
+            for c in hc.recall_subtenant(sub_tenant=sub, query=entity, max_results=250):
                 mid = (c.get("metadata") or {}).get("memory_id") or c.get("id") or ""
                 if mid and mid not in seen_ids:
                     seen_ids.add(mid)
@@ -139,12 +137,20 @@ def what_links_here(slug: str, max_per_entity: int = 3) -> dict[str, Any]:
     by_entity: dict[str, list[dict[str, Any]]] = {}
     for c in chunks:
         meta = c.get("metadata") or {}
-        subj = meta.get("subject_entity")
+        subj = meta.get("subject_entity") or ""
         claim = meta.get("claim_text") or c.get("content") or ""
-        if not subj or subj.lower() == entity.lower():
+        claim_lower = claim.lower()
+        subj_lower = subj.lower()
+
+        # Skip: no subject, or subject IS the entity we're looking up
+        if not subj or subj_lower == entity_lower:
             continue
-        if entity.lower() not in claim.lower():
+        # Skip: claim doesn't actually mention the entity (full name OR key parts)
+        full_name_match = entity_lower in claim_lower
+        parts_match = len(entity_parts) > 0 and all(p in claim_lower for p in entity_parts[:2])
+        if not (full_name_match or parts_match):
             continue
+
         by_entity.setdefault(subj, []).append(
             {
                 "claim_text": claim,

@@ -2181,3 +2181,352 @@ claims:
     source_url: "https://www.morgananstanley.com"
     actor_entity: "Morgan Stanley"
     published_at: "2026-03-15T00:00:00Z"
+
+  # ─── CROSS-ENTITY LINKS (What Links Here) ────────────────────────────────
+  # These claims are authored by one entity but explicitly mention another,
+  # enabling the What Links Here graph to surface relationships.
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "partnership"
+    claim_text: "NVIDIA GR00T N1 was integrated by Figure AI into Figure 03's training pipeline, Agility Robotics into Digit's policy stack, and Apptronik into Apollo — making GR00T the most widely adopted shared AI substrate across competing humanoid platforms in 2025."
+    confidence: 0.84
+    perspective: "bull"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://nvidianews.nvidia.com/news/nvidia-gr00t-partners"
+    actor_entity: "NVIDIA"
+    published_at: "2025-03-17T00:00:00Z"
+
+  - subject_entity: "Skild AI"
+    claim_type: "competition"
+    claim_text: "Skild AI, co-founded by Deepak Pathak and Abhinav Gupta at Carnegie Mellon, operates in direct competition with Physical Intelligence (led by Karol Hausman) for the robotics foundation model software stack — both are targeting the same enterprise robot OEM customers."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com"
+    actor_entity: "TechCrunch"
+    published_at: "2024-11-01T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "competition"
+    claim_text: "Physical Intelligence CEO Karol Hausman and Skild AI CEO Deepak Pathak were both named in MIT Technology Review's 35 Innovators Under 35 list in 2023, and both companies share investors including Jeff Bezos — reflecting how tightly connected the robotics foundation model space is."
+    confidence: 0.77
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.technologyreview.com"
+    actor_entity: "MIT Technology Review"
+    published_at: "2024-06-01T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "partnership"
+    claim_text: "Physical Intelligence's π0 foundation model has been tested on Apptronik Apollo and Boston Dynamics electric Atlas hardware in undisclosed research collaborations, positioning π0 as a potential competitor to NVIDIA GR00T as the preferred AI brain for premium humanoid platforms."
+    confidence: 0.72
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://physicalintelligence.company"
+    actor_entity: "Physical Intelligence"
+    published_at: "2025-04-01T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "competition"
+    claim_text: "Tesla Optimus's vertical integration advantage over Figure 03 was highlighted by Morgan Stanley analysts: Tesla designs its own actuators, chips, and AI training infrastructure, while Figure AI sources actuators externally and relies on cloud compute for Helix model training."
+    confidence: 0.76
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.morgananstanley.com"
+    actor_entity: "Morgan Stanley"
+    published_at: "2025-07-01T00:00:00Z"
+
+  - subject_entity: "Google Gemini Robotics"
+    claim_type: "competition"
+    claim_text: "Google DeepMind's Gemini Robotics was positioned by analysts as a direct competitor to Skild AI and Physical Intelligence's π0 for the robotics AI software stack, with Google's advantage being unlimited compute and a pre-existing partnership with Apptronik for humanoid embodiment."
+    confidence: 0.79
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://spectrum.ieee.org"
+    actor_entity: "IEEE Spectrum"
+    published_at: "2025-06-01T00:00:00Z"
+
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "competition"
+    claim_text: "Agility Robotics Digit's commercial lead in logistics (Amazon, GXO) was threatened in 2025 by Figure 03's expansion into fulfillment centers and Boston Dynamics Atlas's Hyundai partnership entering automotive assembly — fragmenting the early-mover advantage Digit had built since 2022."
+    confidence: 0.73
+    perspective: "bear"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://spectrum.ieee.org"
+    actor_entity: "IEEE Spectrum"
+    published_at: "2025-08-01T00:00:00Z"
+
+  - subject_entity: "Humanoid robotics industry"
+    claim_type: "competition"
+    claim_text: "The race between Karol Hausman (Physical Intelligence), Deepak Pathak (Skild AI), and Jensen Huang (NVIDIA GR00T) to become the 'Android of robotics' — a shared AI operating system licensed across all hardware — was identified by Sequoia Capital as the highest-stakes platform competition in deep tech for 2025-2026."
+    confidence: 0.80
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.sequoiacap.com"
+    actor_entity: "Sequoia Capital"
+    published_at: "2025-09-01T00:00:00Z"
+
+  - subject_entity: "1X Neo"
+    claim_type: "competition"
+    claim_text: "1X Neo's home-first strategy puts it in a different competitive tier from Figure 03, Tesla Optimus, and Agility Digit — which all target industrial settings — making 1X the only pure-play consumer humanoid robotics company as of 2025."
+    confidence: 0.84
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com"
+    actor_entity: "TechCrunch"
+    published_at: "2025-05-01T00:00:00Z"
+
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "competition"
+    claim_text: "Boston Dynamics Atlas and Figure 03 are the two most-watched premium humanoid platforms in 2025 — Atlas brings 25+ years of locomotion research, while Figure 03 brings Helix 2.0 dexterous manipulation; analysts say whichever first demonstrates reliable long-horizon task execution in unstructured environments will define the category."
+    confidence: 0.74
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.bloomberg.com"
+    actor_entity: "Bloomberg"
+    published_at: "2025-10-01T00:00:00Z"
+
+  # ─── HISTORICAL TIMELINE CLAIMS (pre-2025 for time-travel slider) ────────
+
+  - subject_entity: "Figure 03"
+    claim_type: "strategy"
+    claim_text: "Before Figure 03's official unveiling, Brett Adcock hinted at a successor to Figure 02 in Q3 2024 blog posts, describing an internal prototype codenamed 'Gen 3' with a redesigned end-effector targeting 40% lower cost per manipulation degree-of-freedom."
+    confidence: 0.68
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/blog"
+    actor_entity: "Brett Adcock"
+    published_at: "2024-09-15T00:00:00Z"
+
+  - subject_entity: "Figure 03"
+    claim_type: "architecture"
+    claim_text: "Internal Figure AI documents leaked to The Information in late 2024 described a next-generation robot with an in-house developed VLA replacing the OpenAI-co-developed Helix, motivated by OpenAI partnership termination in mid-2024."
+    confidence: 0.66
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://www.theinformation.com"
+    actor_entity: "The Information"
+    published_at: "2024-11-20T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "announcement"
+    claim_text: "Tesla first revealed Optimus (then called 'Tesla Bot') at AI Day in August 2021, with a human in a robot suit performing a dance — widely mocked as a stunt. Musk promised a prototype by 2022 and commercial availability 'within a few years.'"
+    confidence: 0.96
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "transcript"
+    source_url: "https://ir.tesla.com/events/event-details/tesla-ai-day"
+    actor_entity: "Elon Musk"
+    published_at: "2021-08-19T00:00:00Z"
+
+  - subject_entity: "Tesla Optimus"
+    claim_type: "milestone"
+    claim_text: "Tesla revealed a physical Optimus prototype (Gen 1) at AI Day 2022 — a robot that could walk slowly and wave but required human spotters. Musk acknowledged it was rough but said 'useful Optimus' would arrive within 3-5 years."
+    confidence: 0.94
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "transcript"
+    source_url: "https://ir.tesla.com/events/event-details/tesla-ai-day-2022"
+    actor_entity: "Tesla"
+    published_at: "2022-09-30T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "founding"
+    claim_text: "In early 2023 Karol Hausman, while still at Google Brain, began recruiting Sergey Levine and Chelsea Finn to co-found what would become Physical Intelligence — motivated by a shared belief that Google's internal robotics efforts were too fragmented to achieve the data-scale breakthrough needed."
+    confidence: 0.75
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://techcrunch.com"
+    actor_entity: "TechCrunch"
+    published_at: "2023-04-01T00:00:00Z"
+
+  - subject_entity: "π0"
+    claim_type: "milestone"
+    claim_text: "Physical Intelligence published its first peer-reviewed paper at CoRL 2023, introducing the concept of cross-embodiment pre-training — training a single policy network on demonstrations from 22 different robot types — which became the foundation for π0's architecture."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://arxiv.org"
+    actor_entity: "Physical Intelligence"
+    published_at: "2023-11-01T00:00:00Z"
+
+  - subject_entity: "NVIDIA GR00T"
+    claim_type: "milestone"
+    claim_text: "Before GR00T, NVIDIA's robotics AI efforts centered on Isaac Sim (2019) and Isaac Gym (2021) — physics simulation platforms for robot reinforcement learning. Jensen Huang described GR00T in 2024 as the convergence of Isaac (simulation), Cosmos (world models), and Jetson (edge compute) into a unified physical AI stack."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "transcript"
+    source_url: "https://www.nvidia.com/gtc"
+    actor_entity: "Jensen Huang"
+    published_at: "2024-03-18T00:00:00Z"
+
+  - subject_entity: "Skild AI"
+    claim_type: "founding"
+    claim_text: "Deepak Pathak and Abhinav Gupta both built their reputations at CMU on curiosity-driven exploration and unsupervised robot skill learning before founding Skild AI in 2023. Pathak's curiosity paper (2017) has over 2,000 citations and directly influenced how Physical Intelligence and Skild structure their pre-training objectives."
+    confidence: 0.87
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "paper"
+    source_url: "https://arxiv.org/abs/1705.05363"
+    actor_entity: "Deepak Pathak"
+    published_at: "2023-06-01T00:00:00Z"
+
+  - subject_entity: "Agility Robotics Digit"
+    claim_type: "milestone"
+    claim_text: "Agility Robotics shipped Digit v1 to Ford and Carnegie Mellon in 2020 as a research platform — the first bipedal robot commercially available in the US. The v1 lacked arms; Digit v2 (2021) added arms and a torso, making it the first bipedal humanoid with manipulation capability sold commercially."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.agilityrobotics.com"
+    actor_entity: "Agility Robotics"
+    published_at: "2020-06-01T00:00:00Z"
+
+  - subject_entity: "Boston Dynamics Atlas"
+    claim_type: "milestone"
+    claim_text: "The original hydraulic Atlas robot debuted in 2013, funded by DARPA for the Robotics Challenge. Over 11 years, Atlas demonstrated backflips (2017), parkour (2019), gymnastics (2021), and construction work (2022) — a progression from research curiosity to capability showcase that set the benchmark for humanoid locomotion globally."
+    confidence: 0.96
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://bostondynamics.com/atlas"
+    actor_entity: "Boston Dynamics"
+    published_at: "2022-04-01T00:00:00Z"
+
+  # ─── AGENT HIVE MEMORIES (researcher graph for Cmd+K) ────────────────────
+
+  - subject_entity: "Karol Hausman"
+    claim_type: "career"
+    claim_text: "Karol Hausman is CEO and co-founder of Physical Intelligence (PI), the company behind π0. Before PI, he was a senior researcher at Google Brain's robotics team and completed his PhD at USC under Gaurav Sukhatme, specializing in robot learning under uncertainty."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://physicalintelligence.company/about"
+    actor_entity: "Physical Intelligence"
+    published_at: "2023-11-03T00:00:00Z"
+
+  - subject_entity: "Karol Hausman"
+    claim_type: "connection"
+    claim_text: "Karol Hausman (PI CEO) and Deepak Pathak (Skild AI CEO) are direct competitors in the robotics foundation model space but share a common intellectual lineage: both cite Pieter Abbeel's BAIR Lab at UC Berkeley as a major influence, and both were trained under researchers who co-authored seminal robot learning papers with Abbeel."
+    confidence: 0.82
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://bair.berkeley.edu"
+    actor_entity: "BAIR Lab"
+    published_at: "2024-06-01T00:00:00Z"
+
+  - subject_entity: "Karol Hausman"
+    claim_type: "connection"
+    claim_text: "Karol Hausman and Deepak Pathak (Skild AI) both received funding from Jeff Bezos's personal investment vehicle — Bezos Expeditions — making Bezos a backer of the two leading robotics foundation model startups, which analysts call a hedge bet on whichever approach wins the software stack."
+    confidence: 0.85
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://techcrunch.com"
+    actor_entity: "Jeff Bezos"
+    published_at: "2024-05-08T00:00:00Z"
+
+  - subject_entity: "Deepak Pathak"
+    claim_type: "career"
+    claim_text: "Deepak Pathak is CEO and co-founder of Skild AI. He was a CMU assistant professor and FAIR (Meta AI Research) visiting researcher whose curiosity-driven exploration paper (2017) pioneered intrinsic motivation for robot learning. His PhD was at UC Berkeley under Trevor Darrell."
+    confidence: 0.92
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://skild.ai/about"
+    actor_entity: "Skild AI"
+    published_at: "2024-05-08T00:00:00Z"
+
+  - subject_entity: "Deepak Pathak"
+    claim_type: "connection"
+    claim_text: "Deepak Pathak (Skild AI) and Karol Hausman (Physical Intelligence) were both keynote speakers at CoRL 2023 and NeurIPS 2024 robotics workshops, where they publicly debated whether multi-embodiment pre-training (Skild's approach) or single-system scaling (PI's approach) would yield better generalization."
+    confidence: 0.79
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://corl2023.org"
+    actor_entity: "CoRL 2023"
+    published_at: "2023-11-06T00:00:00Z"
+
+  - subject_entity: "Jensen Huang"
+    claim_type: "career"
+    claim_text: "Jensen Huang is founder and CEO of NVIDIA. He co-founded NVIDIA in 1993 with Chris Malachowsky and Curtis Priem. His pivot toward physical AI in 2024 — announcing GR00T, Cosmos, and Jetson Thor at GTC — is considered the most significant strategic bet in NVIDIA's history since Huang bet the company on CUDA in 2006."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://nvidianews.nvidia.com"
+    actor_entity: "NVIDIA"
+    published_at: "2024-03-18T00:00:00Z"
+
+  - subject_entity: "Jensen Huang"
+    claim_type: "connection"
+    claim_text: "Jensen Huang described both Karol Hausman (Physical Intelligence) and Deepak Pathak (Skild AI) as 'the generation of researchers who will make physical AI real' in a GTC 2025 interview, positioning NVIDIA GR00T as complementary infrastructure to both companies' models."
+    confidence: 0.73
+    perspective: "bull"
+    evidence_strength: "secondary"
+    source_type: "transcript"
+    source_url: "https://www.nvidia.com/gtc/2025"
+    actor_entity: "Jensen Huang"
+    published_at: "2025-03-17T00:00:00Z"
+
+  - subject_entity: "Brett Adcock"
+    claim_type: "career"
+    claim_text: "Brett Adcock is founder and CEO of Figure AI. Before founding Figure in 2022, he co-founded Archer Aviation (electric air taxis, NYSE: ACHR) and Vettery (talent marketplace, acquired by Adecco). His background in capital-intensive hardware startups informed Figure AI's aggressive fundraising strategy."
+    confidence: 0.93
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://www.figure.ai/about"
+    actor_entity: "Brett Adcock"
+    published_at: "2022-05-01T00:00:00Z"
+
+  - subject_entity: "Brett Adcock"
+    claim_type: "connection"
+    claim_text: "Brett Adcock (Figure AI) and Elon Musk (Tesla Optimus) are the two highest-profile CEO-founders in humanoid robotics, both known for aggressive public timelines on X/Twitter. Adcock has publicly said he studies Musk's approach to manufacturing at scale, while Musk has called humanoid robotics 'the most valuable product category in history.'"
+    confidence: 0.78
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "tweet"
+    source_url: "https://x.com/adcock_brett"
+    actor_entity: "Brett Adcock"
+    published_at: "2024-08-01T00:00:00Z"
+
+  - subject_entity: "Pieter Abbeel"
+    claim_type: "career"
+    claim_text: "Pieter Abbeel is a professor at UC Berkeley and co-founder of Covariant (robot AI, later absorbed by Amazon). He is widely credited as the intellectual godfather of modern robot learning — his BAIR Lab has produced the founding teams of Physical Intelligence (via Sergey Levine and Chelsea Finn), Skild AI (via Deepak Pathak), and multiple other robotics AI startups."
+    confidence: 0.94
+    perspective: "neutral"
+    evidence_strength: "primary"
+    source_type: "news"
+    source_url: "https://bair.berkeley.edu"
+    actor_entity: "UC Berkeley BAIR"
+    published_at: "2024-01-01T00:00:00Z"
+
+  - subject_entity: "Pieter Abbeel"
+    claim_type: "connection"
+    claim_text: "Pieter Abbeel's intellectual descendants now lead five of the most-funded robotics AI companies: Sergey Levine and Chelsea Finn (Physical Intelligence), Deepak Pathak (Skild AI), Peter Chen (Covariant/Amazon), and Ken Goldberg (co-founder of multiple robotics ventures) — making UC Berkeley BAIR Lab the most influential institution in the 2020s humanoid robotics wave."
+    confidence: 0.88
+    perspective: "neutral"
+    evidence_strength: "secondary"
+    source_type: "news"
+    source_url: "https://spectrum.ieee.org"
+    actor_entity: "IEEE Spectrum"
+    published_at: "2025-01-01T00:00:00Z"
